@@ -1,0 +1,592 @@
+{
+  "source": "D:\\My\\play\\war3rpg-map\\extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D",
+  "totalRecipes": 12,
+  "recipes": [
+    {
+      "id": "recipe-1",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "drph",
+        "name": "【九天玄女珠】合成卷轴"
+      },
+      "result": {
+        "id": "I06B",
+        "name": "九天玄女珠",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_JiuTianXuanNvZhu.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_JiuTianXuanNvZhu.blp",
+          "png": "icons/png/BTNItem_JiuTianXuanNvZhu.png",
+          "jpg": "icons/jpg/BTNItem_JiuTianXuanNvZhu.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_JiuTianXuanNvZhu.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_JiuTianXuanNvZhu.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_JiuTianXuanNvZhu.png",
+          "png256": "icons/png-256/BTNItem_JiuTianXuanNvZhu.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_JiuTianXuanNvZhu.png"
+        }
+      },
+      "level": "S+",
+      "materials": [
+        {
+          "name": "雾幻云珠",
+          "quantity": 1,
+          "id": "I04I"
+        },
+        {
+          "name": "封神结",
+          "quantity": 1,
+          "id": "I01F"
+        },
+        {
+          "name": "失乐魔羽",
+          "quantity": 1,
+          "id": "I03F"
+        }
+      ],
+      "description": "需要材料\n雾幻云珠\n封神结\n失乐魔羽\n\n等级：S+\n\n东方天上界仙人镇守上古凶兽的千年宝珠。"
+    },
+    {
+      "id": "recipe-2",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "dtsb",
+        "name": "【月世界】合成卷轴"
+      },
+      "result": {
+        "id": "I060",
+        "name": "月世界",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_YueShiJie.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_YueShiJie.blp",
+          "png": "icons/png/BTNItem_YueShiJie.png",
+          "jpg": "icons/jpg/BTNItem_YueShiJie.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_YueShiJie.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_YueShiJie.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_YueShiJie.png",
+          "png256": "icons/png-256/BTNItem_YueShiJie.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_YueShiJie.png"
+        }
+      },
+      "level": "A+",
+      "materials": [
+        {
+          "name": "枯叶",
+          "quantity": 1,
+          "id": ""
+        },
+        {
+          "name": "银狐披风",
+          "quantity": 1,
+          "id": "pinv"
+        },
+        {
+          "name": "海璇灵",
+          "quantity": 6,
+          "id": ""
+        }
+      ],
+      "description": "需要材料\n枯叶\n银狐披风\n海璇灵x6\n等级：A+\n\n高纯度月亮石打造的术士法杖，里面还掺杂了一些神秘物质。"
+    },
+    {
+      "id": "recipe-3",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "gvsm",
+        "name": "【般若金刚印】合成卷轴"
+      },
+      "result": {
+        "id": "I06M",
+        "name": "般若金刚印",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_BoRuoJinGangYin.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_BoRuoJinGangYin.blp",
+          "png": "icons/png/BTNItem_BoRuoJinGangYin.png",
+          "jpg": "icons/jpg/BTNItem_BoRuoJinGangYin.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_BoRuoJinGangYin.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_BoRuoJinGangYin.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_BoRuoJinGangYin.png",
+          "png256": "icons/png-256/BTNItem_BoRuoJinGangYin.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_BoRuoJinGangYin.png"
+        }
+      },
+      "level": "S",
+      "materials": [
+        {
+          "name": "梵天纹章",
+          "quantity": 1,
+          "id": "kygh"
+        },
+        {
+          "name": "天皇祭冠",
+          "quantity": 1,
+          "id": "I01K"
+        },
+        {
+          "name": "金刚碎片",
+          "quantity": 5,
+          "id": "I01Y"
+        }
+      ],
+      "description": "需要材料\n梵天纹章\n天皇祭冠\n金刚碎片x5\n\n等级：S\n\n中古时代金刚天尊传入东方的藏密教印，刻有完整的金刚经。"
+    },
+    {
+      "id": "recipe-4",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "nflg",
+        "name": "【雾刃靴子】】合成卷轴"
+      },
+      "result": {
+        "id": "I05E",
+        "name": "雾刃靴子",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_WuRenXueZi.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_WuRenXueZi.blp",
+          "png": "icons/png/BTNItem_WuRenXueZi.png",
+          "jpg": "icons/jpg/BTNItem_WuRenXueZi.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_WuRenXueZi.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_WuRenXueZi.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_WuRenXueZi.png",
+          "png256": "icons/png-256/BTNItem_WuRenXueZi.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_WuRenXueZi.png"
+        }
+      },
+      "level": "B+",
+      "materials": [
+        {
+          "name": "风之子",
+          "quantity": 1,
+          "id": "I015"
+        },
+        {
+          "name": "千月发饰",
+          "quantity": 1,
+          "id": "sehr"
+        },
+        {
+          "name": "电螺",
+          "quantity": 6,
+          "id": "I01V"
+        }
+      ],
+      "description": "需要材料\n风之子\n千月发饰\n电螺x6\n等级：B+\n\n黑之商会最新研发的靴子，底部储存有幻影雾粉，能隐匿自身的行踪。"
+    },
+    {
+      "id": "recipe-5",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "oven",
+        "name": "【昆仑仙履】合成卷轴"
+      },
+      "result": {
+        "id": "I06A",
+        "name": "昆仑仙履",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_KunLunXianLv.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_KunLunXianLv.blp",
+          "png": "icons/png/BTNItem_KunLunXianLv.png",
+          "jpg": "icons/jpg/BTNItem_KunLunXianLv.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_KunLunXianLv.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_KunLunXianLv.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_KunLunXianLv.png",
+          "png256": "icons/png-256/BTNItem_KunLunXianLv.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_KunLunXianLv.png"
+        }
+      },
+      "level": "S+",
+      "materials": [
+        {
+          "name": "云霞舞梦.改",
+          "quantity": 1,
+          "id": "I050"
+        },
+        {
+          "name": "太古项链",
+          "quantity": 1,
+          "id": "I01E"
+        },
+        {
+          "name": "恶灵妖刺",
+          "quantity": 3,
+          "id": "I022"
+        },
+        {
+          "name": "镇魂花",
+          "quantity": 3,
+          "id": "fgsk"
+        }
+      ],
+      "description": "需要材料\n云霞舞梦.改\n太古项链\n恶灵妖刺x3\n镇魂花x3\n等级：S+\n\n秘藏在昆仑境深处的仙藤之靴，然而当世根本无人知晓昆仑境在何处。"
+    },
+    {
+      "id": "recipe-6",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "pgin",
+        "name": "【幻穹弓】合成卷轴"
+      },
+      "result": {
+        "id": "I04Q",
+        "name": "幻穹弓",
+        "icon": {
+          "source": "war3mapImported\\BTNHuanQiongGong.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNHuanQiongGong.blp",
+          "png": "icons/png/BTNHuanQiongGong.png",
+          "jpg": "icons/jpg/BTNHuanQiongGong.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNHuanQiongGong.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNHuanQiongGong.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNHuanQiongGong.png",
+          "png256": "icons/png-256/BTNHuanQiongGong.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNHuanQiongGong.png"
+        }
+      },
+      "level": "A+",
+      "materials": [
+        {
+          "name": "月轮剑",
+          "quantity": 1,
+          "id": "afac"
+        },
+        {
+          "name": "失乐魔羽",
+          "quantity": 1,
+          "id": "I03F"
+        },
+        {
+          "name": "恶灵妖刺",
+          "quantity": 3,
+          "id": "I022"
+        }
+      ],
+      "description": "需要材料\n月轮剑\n失乐魔羽\n恶灵妖刺x3\n等级：A+\n\n幻界少主雪艾诺曾经的佩弓，不知通过何种途径流落到了人界。"
+    },
+    {
+      "id": "recipe-7",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "ram1",
+        "name": "【阿玛菲特战刃】合成卷轴"
+      },
+      "result": {
+        "id": "I067",
+        "name": "阿玛菲特战刃",
+        "icon": {
+          "source": "war3mapImported\\BTNNewItem_AMaFeiTeZhanRen.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNNewItem_AMaFeiTeZhanRen.blp",
+          "png": "icons/png/BTNNewItem_AMaFeiTeZhanRen.png",
+          "jpg": "icons/jpg/BTNNewItem_AMaFeiTeZhanRen.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNNewItem_AMaFeiTeZhanRen.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNNewItem_AMaFeiTeZhanRen.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNNewItem_AMaFeiTeZhanRen.png",
+          "png256": "icons/png-256/BTNNewItem_AMaFeiTeZhanRen.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNNewItem_AMaFeiTeZhanRen.png"
+        }
+      },
+      "level": "A+",
+      "materials": [
+        {
+          "name": "洪荒戟",
+          "quantity": 1,
+          "id": "spsh"
+        },
+        {
+          "name": "杀神指环",
+          "quantity": 1,
+          "id": "engs"
+        },
+        {
+          "name": "戾魔角",
+          "quantity": 5,
+          "id": "I02C"
+        }
+      ],
+      "description": "需要材料\n洪荒戟\n杀神指环\n戾魔角x5\n等级：A+\n\n魔界灰之王阿玛菲特屠戮世界的魔刀。"
+    },
+    {
+      "id": "recipe-8",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "ram2",
+        "name": "【战神铁骑】】合成卷轴"
+      },
+      "result": {
+        "id": "I04P",
+        "name": "战神铁骑",
+        "icon": {
+          "source": "ReplaceableTextures\\CommandButtons\\BTNWarStomp.blp",
+          "archive": "war3.mpq",
+          "blp": "icons/blp/BTNWarStomp.blp",
+          "png": "icons/png/BTNWarStomp.png",
+          "jpg": "icons/jpg/BTNWarStomp.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNWarStomp.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNWarStomp.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNWarStomp.png",
+          "png256": "icons/png-256/BTNWarStomp.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNWarStomp.png"
+        }
+      },
+      "level": "B+",
+      "materials": [
+        {
+          "name": "将军履",
+          "quantity": 1,
+          "id": "I013"
+        },
+        {
+          "name": "军神刻印",
+          "quantity": 1,
+          "id": "skrt"
+        },
+        {
+          "name": "蚀锐刺",
+          "quantity": 5,
+          "id": "I01W"
+        }
+      ],
+      "description": "需要材料\n将军履\n军神刻印\n蚀锐刺x5\n等级：B+\n\n东方战神的铁靴，踏平过无数血铸的城池。"
+    },
+    {
+      "id": "recipe-9",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "ram3",
+        "name": "【冥蛇】合成卷轴"
+      },
+      "result": {
+        "id": "I06E",
+        "name": "冥蛇",
+        "icon": {
+          "source": "war3mapImported\\BTNItem_MingShe.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNItem_MingShe.blp",
+          "png": "icons/png/BTNItem_MingShe.png",
+          "jpg": "icons/jpg/BTNItem_MingShe.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_MingShe.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_MingShe.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNItem_MingShe.png",
+          "png256": "icons/png-256/BTNItem_MingShe.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_MingShe.png"
+        }
+      },
+      "level": "A+",
+      "materials": [
+        {
+          "name": "摩西诫杖",
+          "quantity": 1,
+          "id": "evtl"
+        },
+        {
+          "name": "灵蛇宝鞋",
+          "quantity": 1,
+          "id": "I014"
+        },
+        {
+          "name": "蚀锐刺",
+          "quantity": 5,
+          "id": "I01W"
+        },
+        {
+          "name": "谜之触角",
+          "quantity": 1,
+          "id": "I02E"
+        }
+      ],
+      "description": "需要材料\n摩西诫杖\n灵蛇宝鞋\n蚀锐刺x5\n谜之触角x1\n等级：A+\n\n幽界娲皇征服黄泉井千蛇百鬼之法杖，召唤出的每一条冥蛇都有来历。"
+    },
+    {
+      "id": "recipe-10",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "ram4",
+        "name": "【云霞舞梦-改】合成卷轴"
+      },
+      "result": {
+        "id": "ram4",
+        "name": "云霞舞梦-改",
+        "icon": null
+      },
+      "level": "A+",
+      "materials": [
+        {
+          "name": "云霞舞梦",
+          "quantity": 1,
+          "id": "I017"
+        },
+        {
+          "name": "海洋之星",
+          "quantity": 1,
+          "id": "I01I"
+        },
+        {
+          "name": "海漩灵",
+          "quantity": 3,
+          "id": "I01U"
+        }
+      ],
+      "description": "需要材料\n云霞舞梦\n海洋之星\n海漩灵x3\n等级：A+\n\n出自天界绝顶的丝织工艺，相传云霞仙子穿着这双靴子在星河中翩翩起舞。"
+    },
+    {
+      "id": "recipe-11",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "rej4",
+        "name": "【血魔刻印】合成卷轴"
+      },
+      "result": {
+        "id": "I04O",
+        "name": "血魔刻印",
+        "icon": {
+          "source": "war3mapImported\\BTNXueMoYinKe.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNXueMoYinKe.blp",
+          "png": "icons/png/BTNXueMoYinKe.png",
+          "jpg": "icons/jpg/BTNXueMoYinKe.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNXueMoYinKe.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNXueMoYinKe.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNXueMoYinKe.png",
+          "png256": "icons/png-256/BTNXueMoYinKe.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNXueMoYinKe.png"
+        }
+      },
+      "level": "B+",
+      "materials": [
+        {
+          "name": "军神刻印",
+          "quantity": 1,
+          "id": "skrt"
+        },
+        {
+          "name": "苍红勾玉",
+          "quantity": 1,
+          "id": "I03U"
+        },
+        {
+          "name": "血牙",
+          "quantity": 5,
+          "id": "woms"
+        }
+      ],
+      "description": "需要材料\n军神刻印\n苍红勾玉\n血牙x5\n等级：B+\n\n地狱血魔胸前的刻符，几百年来一直抑制着它嗜血的魔性。"
+    },
+    {
+      "id": "recipe-12",
+      "type": "synthesis-scroll",
+      "scroll": {
+        "id": "rej6",
+        "name": "【魔导师护胸-改】合成卷轴"
+      },
+      "result": {
+        "id": "I04N",
+        "name": "魔导师护胸-改",
+        "icon": {
+          "source": "war3mapImported\\BTNMoDaoShiXiongJia1.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNMoDaoShiXiongJia1.blp",
+          "png": "icons/png/BTNMoDaoShiXiongJia1.png",
+          "jpg": "icons/jpg/BTNMoDaoShiXiongJia1.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNMoDaoShiXiongJia1.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNMoDaoShiXiongJia1.png",
+          "needsJpegConversion": true,
+          "png128": "icons/png-128/BTNMoDaoShiXiongJia1.png",
+          "png256": "icons/png-256/BTNMoDaoShiXiongJia1.png",
+          "realesrganX4": "icons/realesrgan-x4-anime/BTNMoDaoShiXiongJia1.png"
+        }
+      },
+      "level": "B+",
+      "materials": [
+        {
+          "name": "魔导师护胸",
+          "quantity": 1,
+          "id": "tsct"
+        },
+        {
+          "name": "红莲灯芯",
+          "quantity": 1,
+          "id": "I03N"
+        },
+        {
+          "name": "棱龟壳",
+          "quantity": 3,
+          "id": "I01T"
+        }
+      ],
+      "description": "需要材料\n魔导师护胸\n红莲灯芯\n棱龟壳x3\n等级：B+\n\n改进过的魔导师护胸，能够极大提高志愿者少女的抗打击能力。"
+    }
+  ],
+  "byResult": {
+    "九天玄女珠": [
+      "recipe-1"
+    ],
+    "月世界": [
+      "recipe-2"
+    ],
+    "般若金刚印": [
+      "recipe-3"
+    ],
+    "雾刃靴子": [
+      "recipe-4"
+    ],
+    "昆仑仙履": [
+      "recipe-5"
+    ],
+    "幻穹弓": [
+      "recipe-6"
+    ],
+    "阿玛菲特战刃": [
+      "recipe-7"
+    ],
+    "战神铁骑": [
+      "recipe-8"
+    ],
+    "冥蛇": [
+      "recipe-9"
+    ],
+    "云霞舞梦-改": [
+      "recipe-10"
+    ],
+    "血魔刻印": [
+      "recipe-11"
+    ],
+    "魔导师护胸-改": [
+      "recipe-12"
+    ]
+  }
+}

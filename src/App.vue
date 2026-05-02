@@ -1,0 +1,1273 @@
+<template>
+  <div
+    @click="onClick"
+    @input="onInput"
+    @compositionstart="onCompositionStart"
+    @compositionend="onCompositionEnd"
+    @keydown="onKeydown"
+    @pointerdown="onPointerDown"
+    @pointerup="clearLongPress"
+    @pointercancel="clearLongPress"
+    @pointerleave="clearLongPress"
+    @dragstart="onDragStart"
+    @dragover="onDragOver"
+    @dragleave="onDragLeave"
+    @drop="onDrop"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+  >
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-mark">W3</span>
+        <span>西方世界的劫难3装备图鉴</span>
+        <span class="brand-version">v2.4.6</span>
+      </a>
+      <nav>
+        <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div>
+          <p class="notice">装备图鉴 · 炼化路线</p>
+          <h1>西方世界的劫难3装备图鉴</h1>
+          <p>{{ equipment.length }} 件装备，{{ recipes.length }} 条合成卷轴，{{ refiningRules.length }} 条炼化规则。</p>
+        </div>
+      </section>
+
+      <section class="query-band">
+        <aside class="filter-panel" v-html="filterHtml"></aside>
+        <section class="catalog-area" v-html="catalogHtml"></section>
+        <aside class="sim-panel" :class="{ open: state.simOpen }" aria-label="炼化查询" v-html="simulationHtml"></aside>
+      </section>
+    </main>
+    <button class="sim-anchor" :class="{ open: state.simOpen }" id="sim-anchor" type="button" :aria-label="state.simOpen ? '收起炼化查询' : '展开炼化查询'">
+      {{ state.simOpen ? "›" : "‹" }}
+    </button>
+    <div v-if="state.simOpen" class="sim-scrim" id="sim-scrim"></div>
+    <button class="to-top" id="to-top" type="button" aria-label="回到顶部">↑</button>
+    <div v-if="selectedItem" class="detail-shell" v-html="detailHtml"></div>
+    <div v-if="state.quizOpen" class="modal-shell" role="dialog" aria-label="帝都答题答案">
+      <div class="quiz-modal t-modal is-open">
+        <div class="modal-head">
+          <div>
+            <span class="category">v2.4.6</span>
+            <h2>帝都答题</h2>
+          </div>
+          <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">×</button>
+        </div>
+        <div class="quiz-tabs">
+          <button
+            v-for="tab in quizTabs"
+            :key="tab"
+            type="button"
+            :class="{ active: state.quizTab === tab }"
+            :data-quiz-tab="tab"
+          >
+            {{ tab }}
+          </button>
+        </div>
+        <div class="quiz-list">
+          <div
+            v-for="([question, answer], index) in quizAnswers[state.quizTab]"
+            :key="`${state.quizTab}-${index}`"
+            class="quiz-row"
+          >
+            <span>{{ index + 1 }}</span>
+            <p>{{ question }}</p>
+            <strong>{{ answer }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-html="mobilePickHtml"></div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, nextTick, reactive } from "vue";
+import equipmentJson from "./data/equipment.json";
+import recipesJson from "./data/recipes.json";
+import refiningJson from "./data/refining-rules.json";
+import { quizAnswers } from "./data/quiz";
+import type { Equipment, Output, Recipe, RefiningGroup, RefiningRule } from "./types";
+
+const equipment = (equipmentJson as { items: Equipment[] }).items;
+const recipes = (recipesJson as { recipes: Recipe[] }).recipes;
+const refiningRules = (refiningJson as unknown as { rules: RefiningRule[] }).rules;
+
+const gradeInfo = {
+  G: { label: "白色 G", color: "#8d8d93" },
+  F: { label: "绿色 F", color: "#44a75d" },
+  E: { label: "天青 E", color: "#27a7c2" },
+  D: { label: "黄色 D", color: "#d29a18" },
+  C: { label: "红色 C", color: "#d94848" },
+  B: { label: "紫色 B", color: "#8d55e6" },
+  A: { label: "粉色 A", color: "#d94f9b" },
+  S: { label: "暗金 S", color: "#aa761d" },
+} as const;
+
+const gradeOrder = ["S", "A", "B", "C", "D", "E", "F", "G"] as const;
+const levelToGrade: Record<number, keyof typeof gradeInfo> = { 1: "G", 2: "F", 3: "E", 4: "D", 5: "C", 6: "B", 7: "A", 8: "S" };
+const hotTags = ["梵天纹章", "天皇祭冠", "古代神铠", "阿修罗", "奥姆幽刃", "雾幻云珠", "谛听天镯", "千棱幻玉", "银河幻星鞋", "炽凰天衣", "北斗炼日印"];
+const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
+const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
+const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
+const itemTypeToClass: Record<string, string> = {
+  ITEM_TYPE_PERMANENT: "Permanent",
+  ITEM_TYPE_PURCHASABLE: "Purchasable",
+  ITEM_TYPE_ARTIFACT: "Artifact",
+  ITEM_TYPE_CAMPAIGN: "Campaign",
+};
+
+const itemById = new Map(equipment.map(item => [item.id, item]));
+const itemByName = new Map(equipment.map(item => [cleanGameText(item.name), item]));
+
+type State = {
+  nameQuery: string;
+  attrQuery: string;
+  refiningAttribute: string;
+  equipmentSlot: string;
+  grade: string;
+  filtersOpen: boolean;
+  selectedItemId: string;
+  assistantTarget: string;
+  assistantMain: string;
+  assistantMaterial: string;
+  quizOpen: boolean;
+  quizTab: keyof typeof quizAnswers;
+  simOpen: boolean;
+  mobilePickItemId: string;
+};
+
+const state = reactive<State>({
+  nameQuery: "",
+  attrQuery: "",
+  refiningAttribute: "",
+  equipmentSlot: "",
+  grade: "",
+  filtersOpen: false,
+  selectedItemId: "",
+  assistantTarget: "",
+  assistantMain: "",
+  assistantMaterial: "",
+  quizOpen: false,
+  quizTab: "普通",
+  simOpen: false,
+  mobilePickItemId: "",
+});
+
+let composing = false;
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[char] ?? char);
+}
+
+function cleanGameText(value = "") {
+  return value
+    .replace(/\|[cC][0-9a-fA-F]{8}/g, "")
+    .replace(/\|[rR]/g, "")
+    .replace(/\|n/g, "\n")
+    .replace(/\r/g, "")
+    .trim();
+}
+
+function normalize(value: string) {
+  return cleanGameText(value).trim().toLocaleLowerCase("zh-CN");
+}
+
+function normalizeForSearch(value: string) {
+  return normalize(value)
+    .replaceAll("首饰", "饰品")
+    .replaceAll("其他", "全能")
+    .replaceAll("法武", "法师武器")
+    .replaceAll("战武", "非法师武器")
+    .replaceAll("非法武", "非法师武器");
+}
+
+function assetUrl(path?: string) {
+  return path ? `/assets/${path.replaceAll("\\", "/")}` : "";
+}
+
+function iconUrl(item: Equipment) {
+  return assetUrl(item.icon?.realesrganX4 || item.icon?.png128 || item.icon?.png);
+}
+
+function itemName(item: Equipment) {
+  return cleanGameText(item.name);
+}
+
+function baseGrade(level = "") {
+  const match = cleanGameText(level).match(/[SGFEDCBA]/i);
+  return match ? match[0].toUpperCase() : "";
+}
+
+function gradeClass(level = "") {
+  const grade = baseGrade(level).toLowerCase();
+  return grade ? `grade-${grade}` : "grade-unknown";
+}
+
+function itemDisplayGrade(item: Equipment) {
+  return cleanGameText(item.level || item.refining?.displayLevel || "未知");
+}
+
+function levelValueForItem(item: Equipment) {
+  return item.refining?.itemLevel || Number(Object.entries(levelToGrade).find(([, grade]) => grade === baseGrade(item.level))?.[0] || 0);
+}
+
+function outputLabel(output: Output) {
+  if (output.kind === "fixed") return cleanGameText(output.name || output.id || output.expression);
+  const level = output.levelExpression?.replace("Uc[120]", "主物品等级") || "?";
+  return `${level}级随机池`;
+}
+
+function materialLabel(input: { name: string; id?: string; quantity?: number }) {
+  const name = cleanGameText(input.name || input.id || "");
+  return `${name}${(input.quantity || 1) > 1 ? ` x${input.quantity}` : ""}`;
+}
+
+function renderItemLink(name: string, className = "item-link") {
+  const clean = cleanGameText(name);
+  return `<button class="${className}" type="button" data-item-name="${escapeHtml(clean)}">${escapeHtml(clean)}</button>`;
+}
+
+type BranchContext = NonNullable<NonNullable<RefiningRule["probabilityBranches"]>[number]["context"]>;
+
+function levelsForOutput(output: Output, context?: BranchContext) {
+  if (output.kind !== "random-pool") return [];
+  const expression = output.levelExpression || "";
+  const numeric = expression.match(/^\d+$/);
+  if (numeric) return [Number(numeric[0])].filter(level => level >= 1 && level <= 8);
+
+  const relative = expression.match(/^Uc\[120\](?:([+-])(\d+))?$/);
+  const mainLevel = context?.mainItemLevel?.value || 0;
+  if (!relative || !mainLevel) return [];
+  const offset = relative[1] === "-" ? -Number(relative[2] || 0) : Number(relative[2] || 0);
+  return [mainLevel + offset].filter(level => level >= 1 && level <= 8);
+}
+
+function sortEquipment(a: Equipment, b: Equipment) {
+  return gradeOrder.indexOf(baseGrade(b.level) as keyof typeof gradeInfo) - gradeOrder.indexOf(baseGrade(a.level) as keyof typeof gradeInfo)
+    || itemName(a).localeCompare(itemName(b), "zh-CN");
+}
+
+function randomPoolCandidates(output: Output, context?: BranchContext) {
+  const levels = levelsForOutput(output, context);
+  const itemClass = itemTypeToClass[output.itemType || ""];
+  return equipment
+    .filter(item => levels.includes(levelValueForItem(item)))
+    .filter(item => !itemClass || item.class === itemClass)
+    .sort(sortEquipment);
+}
+
+function outputChanceForItem(output: Output, item: Equipment, context?: BranchContext, chance?: number) {
+  if (output.kind === "fixed") return outputMatchesItem(output, item) ? chance : undefined;
+  const candidates = randomPoolCandidates(output, context);
+  if (!candidates.some(candidate => candidate.id === item.id)) return undefined;
+  return chance == null ? undefined : Number((chance / candidates.length).toFixed(4));
+}
+
+function renderTokenItems(items: Equipment[], chance?: number) {
+  return items.map(item => `
+    <span class="token-choice">
+      ${renderItemLink(itemName(item), "token-item")}
+      ${chance == null ? "" : renderProbability(chance)}
+    </span>
+  `).join("");
+}
+
+function renderRandomPoolToken(output: Output, context?: BranchContext, chance?: number) {
+  const candidates = randomPoolCandidates(output, context);
+  const itemChance = chance == null || !candidates.length ? undefined : Number((chance / candidates.length).toFixed(4));
+  const label = outputLabel(output);
+  const chanceText = itemChance == null ? "" : `，每件约 ${Number.isInteger(itemChance) ? itemChance : itemChance.toFixed(4).replace(/0+$/, "").replace(/\.$/, "")}%`;
+  return `
+    <span class="route-token pool-token" tabindex="0">
+      ${escapeHtml(label)}
+      <span class="token-popover">
+        <strong>${escapeHtml(label)} 可选项</strong>
+        <span>${candidates.length ? `共 ${candidates.length} 件${chanceText}` : "没有匹配装备"}</span>
+        <span class="token-items">
+          ${renderTokenItems(candidates, itemChance) || "<em>没有匹配装备</em>"}
+        </span>
+      </span>
+    </span>
+  `;
+}
+
+function renderOutputLink(output: Output, context?: BranchContext, chance?: number) {
+  if (output.kind === "random-pool") return renderRandomPoolToken(output, context, chance);
+  return renderFormulaItem(outputLabel(output));
+}
+
+function tagLabelForItem(item: Equipment) {
+  return `${baseGrade(item.level)}${groupShortLabel({
+    label: item.refining?.label || "",
+    hpValues: item.refining?.hp ? [item.refining.hp] : [],
+    slots: item.refining?.slot ? [item.refining.slot] : [],
+    attributes: item.refining?.attribute ? [item.refining.attribute] : [],
+    names: item.refining?.label ? [item.refining.label] : [],
+    bySlot: {},
+    byAttribute: {},
+    unknownHpValues: [],
+  })}`;
+}
+
+function renderFormulaItem(name: string) {
+  const clean = cleanGameText(name);
+  const item = itemByName.get(clean.replace(/\s+x\d+$/i, ""));
+  if (!item) return renderItemLink(clean);
+  return `
+    <span class="gear-tag ${gradeClass(item.level)}">
+      ${renderItemLink(clean)}
+      <small>${escapeHtml(tagLabelForItem(item))}</small>
+    </span>
+  `;
+}
+
+function probabilityClass(value?: number) {
+  if (value == null) return "rate-muted";
+  if (value === 100) return "rate-100";
+  if (value >= 75) return "rate-high";
+  if (value >= 50) return "rate-mid";
+  if (value >= 25) return "rate-low";
+  return "rate-very-low";
+}
+
+function renderProbability(value?: number) {
+  if (value == null) return "";
+  return `<span class="probability ${probabilityClass(value)}">${Number.isInteger(value) ? value : value.toFixed(4).replace(/0+$/, "").replace(/\.$/, "")}%</span>`;
+}
+
+function compactHtmlText(html = "") {
+  return html
+    .replace(/<small[\s\S]*?<\/small>/g, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isAttributeLine(line: string) {
+  return /^(攻击力|力量|敏捷|智力|生命上限|魔法上限|生命恢复|魔法恢复|法术抗性|护甲|攻击速度|移动速度|全能力|闪避|格挡|暴击伤害)[^\n]*[+\-]\d/.test(cleanGameText(line));
+}
+
+function isSystemLine(line: string) {
+  return /^等级[:：]/.test(line) || /^ID\b/.test(line) || /^源码行/.test(line);
+}
+
+function splitDescription(item: Equipment) {
+  const rawLines = cleanGameText(item.description).split("\n");
+  const attributes: string[] = [];
+  const effects: string[] = [];
+  const exclusive: string[] = [];
+  const lore: string[] = [];
+  let currentExclusive = "";
+  let afterBlank = false;
+
+  for (const rawLine of rawLines) {
+    const line = cleanGameText(rawLine);
+    if (!line) {
+      afterBlank = true;
+      continue;
+    }
+    if (isSystemLine(line)) continue;
+    if (afterBlank) {
+      lore.push(line);
+      continue;
+    }
+    if (line.includes("专属：")) {
+      if (currentExclusive) exclusive.push(currentExclusive);
+      currentExclusive = line;
+      continue;
+    }
+    if (currentExclusive) {
+      currentExclusive += ` ${line}`;
+      continue;
+    }
+    if (isAttributeLine(line)) attributes.push(line);
+    else effects.push(line);
+  }
+
+  if (currentExclusive) exclusive.push(currentExclusive);
+  return { attributes, effects, exclusive, lore };
+}
+
+function renderAttributeEffects(item: Equipment, compact = false) {
+  const parsed = splitDescription(item);
+  const attributes = parsed.attributes.slice(0, compact ? 4 : 24);
+  const exclusive = parsed.exclusive.slice(0, compact ? 1 : 24);
+  const effects = parsed.effects.slice(0, compact ? 2 : 24);
+  return `
+    <div class="attribute-list">
+      ${attributes.map(line => `<span class="attribute-chip">${escapeHtml(line)}</span>`).join("") || `<span class="attribute-chip muted">暂无属性数值</span>`}
+    </div>
+    <div class="effect-list">
+      ${exclusive.map(line => `<span class="exclusive-chip">${escapeHtml(line)}</span>`).join("")}
+      ${effects.map(line => `<span class="effect-chip">${escapeHtml(line)}</span>`).join("") || (!exclusive.length ? `<span class="effect-chip muted">暂无效果说明</span>` : "")}
+    </div>
+  `;
+}
+
+function readItemByName(name: string) {
+  const clean = cleanGameText(name);
+  if (!clean) return undefined;
+  const exact = itemByName.get(clean);
+  if (exact) return exact;
+  const needle = normalize(clean);
+  return equipment.find(item => normalize(itemName(item)).includes(needle));
+}
+
+function outputMatchesItem(output: Output, item: Equipment) {
+  const name = outputLabel(output);
+  return output.kind === "fixed" && (output.id === item.id || name === itemName(item));
+}
+
+function outputMatchesName(output: Output, name: string) {
+  return outputLabel(output) === cleanGameText(name);
+}
+
+function groupShortLabel(group: RefiningGroup | undefined, role: "main" | "material" = "main") {
+  if (!group) return "分类";
+  if (role === "material" && group.attributes.length === 1 && group.attributes[0] !== "全能") return group.attributes[0];
+  if (group.label.includes("非法师武器")) return "非法武";
+  if (group.label.includes("法师武器")) return "法武";
+  if (group.label.includes("全能型武器")) return "全能武";
+  if (group.attributes.length === 1 && group.attributes[0] !== "全能") return group.attributes[0];
+  if (group.slots.length === 1 && group.attributes.length > 1) return group.slots[0];
+  if (group.attributes.length === 1) return group.attributes[0];
+  if (group.slots.length === 1) return group.slots[0];
+  return "任意";
+}
+
+function materialLevels(mainLevel: number, code?: string) {
+  if (!mainLevel) return [];
+  if (code === "same-level") return [mainLevel];
+  if (code === "material-higher-by-1") return [mainLevel + 1].filter(level => level <= 8);
+  if (code === "material-higher-by-2-plus") return [mainLevel + 2, mainLevel + 3, mainLevel + 4].filter(level => level <= 8);
+  if (code === "main-higher-by-1-to-2") return [mainLevel - 1, mainLevel - 2].filter(level => level >= 1);
+  if (code === "main-higher-by-3-plus") return [mainLevel - 3, mainLevel - 4, mainLevel - 5, mainLevel - 6, mainLevel - 7].filter(level => level >= 1);
+  return [];
+}
+
+function gradeTextFromLevels(levels: number[]) {
+  const grades = Array.from(new Set(levels.map(level => levelToGrade[level]).filter(Boolean)));
+  return grades.length === 1 ? grades[0] : grades.join("/");
+}
+
+function groupCandidates(group: RefiningGroup | undefined, levels: number[], excludedItemIds = new Set<string>()) {
+  const hpValues = new Set(group?.hpValues || []);
+  return equipment
+    .filter(item => hpValues.has(Number(item.refining?.hp)))
+    .filter(item => !levels.length || levels.includes(levelValueForItem(item)))
+    .filter(item => !excludedItemIds.has(item.id))
+    .sort(sortEquipment);
+}
+
+function renderGroupToken(label: string, group: RefiningGroup | undefined, levels: number[], excludedItemIds = new Set<string>()) {
+  const candidates = groupCandidates(group, levels, excludedItemIds);
+  return `
+    <span class="route-token" tabindex="0">
+      ${escapeHtml(label)}
+      <span class="token-popover">
+        <strong>${escapeHtml(label)} 可选项</strong>
+        <span>${escapeHtml(group?.label || "未分类")}</span>
+        <span class="token-items">
+          ${candidates.map(item => renderItemLink(itemName(item), "token-item")).join("") || "<em>没有匹配装备</em>"}
+        </span>
+      </span>
+    </span>
+  `;
+}
+
+function renderDynamicFormula(rule: RefiningRule, branch: NonNullable<RefiningRule["probabilityBranches"]>[number], targetName: string, chance?: number) {
+  const mainLevel = branch.context?.mainItemLevel?.value || 0;
+  const diffCode = branch.context?.levelDifference?.code;
+  const mainLevels = mainLevel ? [mainLevel] : [];
+  const materialLevelList = materialLevels(mainLevel, diffCode);
+  const mainToken = `${gradeTextFromLevels(mainLevels)}${groupShortLabel(rule.readable?.main, "main")}`;
+  const materialToken = `${gradeTextFromLevels(materialLevelList)}${groupShortLabel(rule.readable?.material, "material")}`;
+  const blockedItemIds = new Set((rule.requiredItems || []).map(item => item.id));
+  return `
+    <span class="formula-line">
+      ${renderFormulaItem(targetName)}
+      <span class="formula-eq">=</span>
+      ${renderGroupToken(mainToken, rule.readable?.main, mainLevels, blockedItemIds)}
+      <span class="formula-plus">+</span>
+      ${renderGroupToken(materialToken, rule.readable?.material, materialLevelList, blockedItemIds)}
+    </span>
+  `;
+}
+
+function dynamicFormulaText(rule: RefiningRule, branch: NonNullable<RefiningRule["probabilityBranches"]>[number], targetName: string, chance?: number) {
+  const mainLevel = branch.context?.mainItemLevel?.value || 0;
+  const diffCode = branch.context?.levelDifference?.code;
+  const mainToken = `${gradeTextFromLevels(mainLevel ? [mainLevel] : [])}${groupShortLabel(rule.readable?.main, "main")}`;
+  const materialToken = `${gradeTextFromLevels(materialLevels(mainLevel, diffCode))}${groupShortLabel(rule.readable?.material, "material")}`;
+  return `${targetName} = ${mainToken} + ${materialToken}${chance != null ? ` ${Number.isInteger(chance) ? chance : chance.toFixed(2)}%` : ""}`;
+}
+
+function recipeSources(item: Equipment) {
+  return recipes
+    .filter(recipe => recipe.result.id === item.id || cleanGameText(recipe.result.name) === itemName(item))
+    .map(recipe => ({
+      kind: "recipe",
+      title: "合成卷轴",
+      probability: 100,
+      plain: `${recipe.materials.map(materialLabel).join(" + ")} = ${cleanGameText(recipe.result.name)} 100%`,
+      html: `<span class="formula-line">${recipe.materials.map(material => renderFormulaItem(materialLabel(material))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${renderFormulaItem(recipe.result.name)}</span>`,
+    }));
+}
+
+function isSynthesisScrollRule(rule: RefiningRule) {
+  const output = rule.possibleOutputs.find(output => output.kind === "fixed");
+  if (!output) return false;
+  return recipes.some(recipe =>
+    (recipe.result.id === output.id || cleanGameText(recipe.result.name) === cleanGameText(output.name || ""))
+    && (rule.requiredItems || []).some(input => input.id === recipe.scroll.id),
+  );
+}
+
+function exactRefiningSources(item: Equipment) {
+  return refiningRules
+    .filter(rule => rule.type === "exact-refining")
+    .filter(rule => !isSynthesisScrollRule(rule))
+    .filter(rule => rule.possibleOutputs.some(output => outputMatchesItem(output, item)))
+    .map(rule => ({
+      kind: "exact",
+      title: "精确炼化",
+      probability: 100,
+      plain: `${(rule.requiredItems || []).map(materialLabel).join(" + ")} = ${rule.possibleOutputs.map(outputLabel).join(" / ")} 100%`,
+      html: `<span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>`,
+    }));
+}
+
+function dynamicRefiningSources(item: Equipment) {
+  const entries: Array<{ kind: string; title: string; probability?: number; plain: string; html: string }> = [];
+  const seen = new Set<string>();
+  for (const rule of refiningRules.filter(rule => rule.type === "dynamic-refining")) {
+    for (const branch of rule.probabilityBranches || []) {
+      for (const outcome of branch.outcomes) {
+        const matchedChance = outcome.outputs
+          .map(output => outputChanceForItem(output, item, branch.context, outcome.chancePercent))
+          .find(chance => chance != null);
+        if (matchedChance == null) continue;
+        const key = `${rule.id}:${JSON.stringify(branch.context)}:${matchedChance}:${outcome.outputs.map(outputLabel).join("|")}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        entries.push({
+          kind: "dynamic",
+          title: "动态炼化",
+          probability: matchedChance,
+          plain: dynamicFormulaText(rule, branch, itemName(item), matchedChance),
+          html: renderDynamicFormula(rule, branch, itemName(item), matchedChance),
+        });
+      }
+    }
+  }
+  return entries.sort((a, b) => (b.probability || 0) - (a.probability || 0));
+}
+
+function getSources(item: Equipment) {
+  return [...recipeSources(item), ...exactRefiningSources(item), ...dynamicRefiningSources(item)];
+}
+
+function fuzzyItems(query: string, limit = 8) {
+  const needle = normalize(query);
+  if (!needle) return [];
+  return equipment
+    .map(item => ({ item, name: normalizeForSearch(itemName(item)) }))
+    .filter(entry => entry.name.includes(normalizeForSearch(query)) || searchableText(entry.item).includes(normalizeForSearch(query)))
+    .slice(0, limit)
+    .map(entry => entry.item);
+}
+
+function filterItems() {
+  const nameNeedle = normalize(state.nameQuery);
+  const attrNeedle = normalizeForSearch(state.attrQuery);
+  return equipment.filter(item => {
+    const nameOk = !nameNeedle || normalizeForSearch(itemName(item)).includes(normalizeForSearch(state.nameQuery));
+    const attrOk = !attrNeedle || searchableText(item, false).includes(attrNeedle);
+    const refiningOk = !state.refiningAttribute || item.refining?.attribute === state.refiningAttribute;
+    const slotOk = !state.equipmentSlot || item.refining?.slot === state.equipmentSlot;
+    const gradeOk = !state.grade || baseGrade(item.level) === state.grade;
+    return nameOk && attrOk && refiningOk && slotOk && gradeOk;
+  });
+}
+
+function searchableText(item: Equipment, includeRefining = true) {
+  const parsed = splitDescription(item);
+  const aliases = [
+    item.refining?.label,
+    item.refining?.slot,
+    item.refining?.attribute,
+    item.refining?.label === "法师武器" ? "法武" : "",
+    item.refining?.label === "非法师武器" ? "战武 非法武" : "",
+    item.refining?.attribute === "全能" ? "其他" : "",
+    item.refining?.slot === "饰品" ? "首饰" : "",
+  ];
+  return normalizeForSearch([
+    ...parsed.attributes,
+    ...parsed.effects,
+    ...parsed.exclusive,
+    item.kind,
+    ...(includeRefining ? aliases : []),
+  ].join(" "));
+}
+
+function renderInput(id: string, label: string, value: string, placeholder: string, stateKey: keyof State) {
+  return `
+    <label class="field">
+      <span>${escapeHtml(label)}</span>
+      <span class="field-shell">
+        <input id="${id}" data-state-key="${String(stateKey)}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off" />
+        ${value ? `<button class="clear-input" type="button" data-clear="${String(stateKey)}" aria-label="清除 ${escapeHtml(label)}">×</button>` : ""}
+      </span>
+    </label>
+  `;
+}
+
+function renderGradeFilters() {
+  return `
+    <div class="grade-filter" role="group" aria-label="品级查询">
+      <button class="grade-pill ${state.grade ? "" : "active"}" type="button" data-grade="">全部</button>
+      ${gradeOrder.map(grade => `
+        <button class="grade-pill grade-${grade.toLowerCase()} ${state.grade === grade ? "active" : ""}" type="button" data-grade="${grade}">
+          <span>${grade}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderRefiningAttributeFilters() {
+  return `
+    <div class="refining-filter" role="group" aria-label="炼化属性">
+      <button class="grade-pill ${state.refiningAttribute ? "" : "active"}" type="button" data-refining-attribute="">全部</button>
+      ${refiningAttributes.map(attribute => `
+        <button class="grade-pill ${state.refiningAttribute === attribute ? "active" : ""}" type="button" data-refining-attribute="${attribute}">
+          <span>${attribute}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderEquipmentSlotFilters() {
+  return `
+    <div class="slot-filter" role="group" aria-label="装备类别">
+      <button class="grade-pill ${state.equipmentSlot ? "" : "active"}" type="button" data-equipment-slot="">全部</button>
+      ${equipmentSlots.map(slot => `
+        <button class="grade-pill ${state.equipmentSlot === slot ? "active" : ""}" type="button" data-equipment-slot="${slot}">
+          <span>${slot}</span>
+        </button>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderHotTags() {
+  return `<div class="hot-tags">${hotTags.map(tag => `<button type="button" data-hot-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}</div>`;
+}
+
+function renderFuzzySuggestions(query: string, target: "assistantTarget" | "assistantMain" | "assistantMaterial") {
+  const hits = fuzzyItems(query, 7);
+  if (!query || !hits.length) return "";
+  return `
+    <div class="suggestions">
+      ${hits.map(item => `<button type="button" data-pick="${target}" data-value="${escapeHtml(itemName(item))}"><img src="${escapeHtml(iconUrl(item))}" alt="" />${escapeHtml(itemName(item))}<span>${escapeHtml(itemDisplayGrade(item))}</span></button>`).join("")}
+    </div>
+  `;
+}
+
+function renderCard(item: Equipment) {
+  const sources = getSources(item);
+  const parsed = splitDescription(item);
+  const compactRoute = sources[0]?.plain || "暂无解析到来源";
+  const compactRouteHtml = sources[0]?.probability == null
+    ? escapeHtml(compactRoute)
+    : escapeHtml(compactRoute).replace(
+      /(\d+(?:\.\d+)?%)(?!.*\d(?:\.\d+)?%)/,
+      `<em class="route-rate ${probabilityClass(sources[0].probability)}">$1</em>`,
+    );
+  return `
+    <article class="equipment-card" data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" tabindex="0" draggable="true">
+      <div class="card-image">
+        <img class="item-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" loading="lazy" />
+        <span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span>
+      </div>
+      <div class="card-body">
+        <span class="category">装备 · ${escapeHtml(item.refining?.label || item.kind || "未分类")}</span>
+        <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
+        ${renderAttributeEffects(item, true)}
+        <p class="lore">${escapeHtml(parsed.lore.join("") || "暂无说明")}</p>
+      </div>
+      <div class="card-route">
+        <span>${compactRouteHtml}</span>
+      </div>
+    </article>
+  `;
+}
+
+function renderRouteList(item: Equipment) {
+  const sources = getSources(item);
+  if (!sources.length) return `<p class="empty-note">没有在当前解析数据中找到合成或炼化来源。</p>`;
+  return sources.map(source => `
+    <div class="route-detail ${source.kind}">
+      <div class="route-title">
+        <strong>${escapeHtml(source.title)}</strong>
+        ${renderProbability(source.probability)}
+      </div>
+      ${source.html}
+    </div>
+  `).join("");
+}
+
+function renderTargetRoutes() {
+  const target = readItemByName(state.assistantTarget);
+  if (!state.assistantTarget) return `<div class="empty-note">输入目标装备后，会展示精确公式和动态炼化路线。</div>`;
+  if (!target) {
+    const needle = normalize(state.assistantTarget);
+    const exactRules = refiningRules
+      .filter(rule => rule.type === "exact-refining")
+      .filter(rule => !isSynthesisScrollRule(rule))
+      .filter(rule => rule.possibleOutputs.some(output => normalize(outputLabel(output)).includes(needle)))
+      .slice(0, 8);
+    if (!exactRules.length) return `<div class="empty-note">没有找到目标装备或材料公式，试试更短的关键词。</div>${renderFuzzySuggestions(state.assistantTarget, "assistantTarget")}`;
+    return `
+      <div class="assistant-target">
+        <div>
+          <strong>${escapeHtml(cleanGameText(state.assistantTarget))}</strong>
+          <span>非装备材料 / 特殊产物</span>
+        </div>
+      </div>
+      <div class="route-stack">
+        ${exactRules.map(rule => `
+          <div class="route-detail exact">
+            <div class="route-title"><strong>精确炼化</strong>${renderProbability(100)}</div>
+            <span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+  return `
+    ${renderFuzzySuggestions(state.assistantTarget, "assistantTarget")}
+    <div class="assistant-target">
+      <img src="${escapeHtml(iconUrl(target))}" alt="" />
+      <div>
+        <strong>${escapeHtml(itemName(target))}</strong>
+        <span>${escapeHtml(itemDisplayGrade(target))} · ${escapeHtml(target.refining?.label || "未分类")}</span>
+      </div>
+    </div>
+    <div class="route-stack">${renderRouteList(target)}</div>
+  `;
+}
+
+function branchMatchesItems(branch: NonNullable<RefiningRule["probabilityBranches"]>[number], main: Equipment, material: Equipment) {
+  const mainLevel = levelValueForItem(main);
+  const materialLevel = levelValueForItem(material);
+  const context = branch.context;
+  if (context?.mainItemLevel?.value && context.mainItemLevel.value !== mainLevel) return false;
+  const diff = mainLevel - materialLevel;
+  const code = context?.levelDifference?.code;
+  if (!code) return true;
+  if (code === "same-level") return diff === 0;
+  if (code === "material-higher-by-1") return diff === -1;
+  if (code === "material-higher-by-2-plus") return diff < -1;
+  if (code === "main-higher-by-1-to-2") return diff <= 2 && diff > 0;
+  if (code === "main-higher-by-3-plus") return diff > 2;
+  return true;
+}
+
+function renderInputPairRoutes() {
+  const main = readItemByName(state.assistantMain);
+  const material = readItemByName(state.assistantMaterial);
+  const hasQuery = state.assistantMain || state.assistantMaterial;
+  if (!hasQuery) return `<div class="empty-note">也可以输入主装备与材料，直接反查会得到什么。</div>`;
+
+  const exactMatches = refiningRules
+    .filter(rule => rule.type === "exact-refining")
+    .filter(rule => !isSynthesisScrollRule(rule))
+    .map(rule => {
+      const selected = new Set([
+        main?.id,
+        material?.id,
+        main ? itemName(main) : "",
+        material ? itemName(material) : "",
+        cleanGameText(state.assistantMain),
+        cleanGameText(state.assistantMaterial),
+      ].filter(Boolean));
+      const hits = (rule.requiredItems || []).filter(input => selected.has(input.id) || selected.has(cleanGameText(input.name)));
+      const missing = (rule.requiredItems || []).filter(input => !selected.has(input.id) && !selected.has(cleanGameText(input.name)));
+      return { rule, hits, missing };
+    })
+    .filter(match => match.hits.length)
+    .filter(match => !(state.assistantMain && state.assistantMaterial) || match.missing.length === 0)
+    .sort((a, b) => a.missing.length - b.missing.length)
+    .slice(0, 6);
+
+  const dynamicMatches = main && material
+    ? refiningRules
+      .filter(rule => rule.type === "dynamic-refining")
+      .filter(rule => (rule.mainHpValues || []).includes(Number(main.refining?.hp)) && (rule.materialHpValues || []).includes(Number(material.refining?.hp)))
+      .flatMap(rule => (rule.probabilityBranches || [])
+        .filter(branch => branchMatchesItems(branch, main, material))
+        .flatMap(branch => branch.outcomes.map(outcome => ({ rule, branch, outcome }))))
+    : [];
+
+  return `
+    ${renderFuzzySuggestions(state.assistantMain, "assistantMain")}
+    ${renderFuzzySuggestions(state.assistantMaterial, "assistantMaterial")}
+    <div class="route-stack">
+      ${exactMatches.map(({ rule, missing }) => `
+        <div class="route-detail exact">
+          <div class="route-title"><strong>精确炼化${missing.length ? " · 缺材料" : ""}</strong>${renderProbability(100)}</div>
+          <span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>
+          ${missing.length ? `<p>还需要：${missing.map(input => renderFormulaItem(materialLabel(input))).join("、")}</p>` : ""}
+        </div>
+      `).join("")}
+      ${dynamicMatches.map(({ rule, branch, outcome }) => `
+        <div class="route-detail dynamic">
+          <div class="route-title"><strong>动态炼化</strong>${renderProbability(outcome.chancePercent)}</div>
+          <span class="formula-line">${renderFormulaItem(itemName(main as Equipment))}<span class="formula-plus">+</span>${renderFormulaItem(itemName(material as Equipment))}<span class="formula-eq">=</span>${outcome.outputs.map(output => renderOutputLink(output, branch.context, outcome.chancePercent)).join(" / ")}</span>
+          <small>${escapeHtml(branch.context?.levelDifference?.label || "固定条件")}</small>
+        </div>
+      `).join("")}
+      ${!exactMatches.length && !dynamicMatches.length ? `<div class="empty-note">没有找到直接匹配。可以只输入一个名字，先看精确炼化是否缺少其他材料。</div>` : ""}
+    </div>
+  `;
+}
+
+function renderSimulationPanel() {
+  return `
+    <span class="filter-kicker">Refine</span>
+    <div class="section-title compact">
+      <span>炼化查询</span>
+      <h2>目标反查 / 模拟炼化</h2>
+    </div>
+    <div class="sim-section">
+      <span class="sim-section-label">路线反查</span>
+      <div class="sim-drop" data-drop-slot="assistantTarget">
+        ${renderInput("assistant-target", "目标装备", state.assistantTarget, "输入 / 拖入目标装备", "assistantTarget")}
+      </div>
+      <div class="assistant-results sim-results">${renderTargetRoutes()}</div>
+    </div>
+    <div class="sim-section">
+      <span class="sim-section-label">模拟炼化</span>
+      <p class="sim-touch-hint">移动端长按卡片选择位置</p>
+      <div class="sim-drop" data-drop-slot="assistantMain">
+        ${renderInput("assistant-main", "主装备", state.assistantMain, "输入 / 拖入装备", "assistantMain")}
+      </div>
+      <div class="sim-drop" data-drop-slot="assistantMaterial">
+        ${renderInput("assistant-material", "材料", state.assistantMaterial, "输入 / 拖入材料", "assistantMaterial")}
+      </div>
+      <div class="assistant-results sim-results">${renderInputPairRoutes()}</div>
+    </div>
+  `;
+}
+
+function renderMobilePickModal(opening: boolean) {
+  const item = state.mobilePickItemId ? itemById.get(state.mobilePickItemId) : undefined;
+  if (!item) return "";
+  return `
+    <div class="pick-shell" role="dialog" aria-label="选择炼化位置">
+      <div class="pick-card t-modal ${opening ? "" : "is-open"}" ${opening ? 'data-transition-enter="modal"' : ""}>
+        <div class="assistant-target">
+          <img src="${escapeHtml(iconUrl(item))}" alt="" />
+          <div>
+            <strong>${escapeHtml(itemName(item))}</strong>
+            <span>${escapeHtml(itemDisplayGrade(item))} · ${escapeHtml(item.refining?.label || "未分类")}</span>
+          </div>
+        </div>
+        <div class="pick-actions">
+          <button type="button" data-pick-slot="assistantTarget">作为目标装备</button>
+          <button type="button" data-pick-slot="assistantMain">作为主装备</button>
+          <button type="button" data-pick-slot="assistantMaterial">作为材料</button>
+        </div>
+        <button class="reset-button" id="close-pick" type="button">取消</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderDetail(item: Equipment, opening: boolean) {
+  const parsed = splitDescription(item);
+  return `
+    <aside class="detail-panel t-modal ${opening ? "" : "is-open"}" ${opening ? 'data-transition-enter="modal"' : ""} role="dialog" aria-label="${escapeHtml(itemName(item))}详情">
+      <div class="detail-head">
+        <img class="detail-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" />
+        <div>
+          <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(item.refining?.label || "未分类")}</span>
+          <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
+          <p><span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span></p>
+        </div>
+        <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">×</button>
+      </div>
+      <section class="detail-section">
+        <h3>属性功能</h3>
+        ${renderAttributeEffects(item)}
+      </section>
+      <section class="detail-section">
+        <h3>来源与炼化路径</h3>
+        <div class="route-stack">${renderRouteList(item)}</div>
+      </section>
+      <section class="detail-section">
+        <h3>说明</h3>
+        <p>${escapeHtml(parsed.lore.join("\n") || "暂无说明").replaceAll("\n", "<br />")}</p>
+      </section>
+    </aside>
+  `;
+}
+
+function renderQuizModal(opening: boolean) {
+  if (!state.quizOpen) return "";
+  const rows = quizAnswers[state.quizTab];
+  return `
+    <div class="modal-shell" role="dialog" aria-label="帝都答题答案">
+      <div class="quiz-modal t-modal ${opening ? "" : "is-open"}" ${opening ? 'data-transition-enter="modal"' : ""}>
+        <div class="modal-head">
+          <div>
+            <span class="category">v2.4.6</span>
+            <h2>帝都答题</h2>
+          </div>
+          <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">×</button>
+        </div>
+        <div class="quiz-tabs">
+          ${quizTabs.map(tab => `<button type="button" class="${state.quizTab === tab ? "active" : ""}" data-quiz-tab="${escapeHtml(tab)}">${escapeHtml(tab)}</button>`).join("")}
+        </div>
+        <div class="quiz-list">
+          ${rows.map(([question, answer], index) => `
+            <div class="quiz-row">
+              <span>${index + 1}</span>
+              <p>${escapeHtml(question)}</p>
+              <strong>${escapeHtml(answer)}</strong>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+const selectedItem = computed(() => state.selectedItemId ? itemById.get(state.selectedItemId) : undefined);
+
+const filterHtml = computed(() => `
+  <span class="filter-kicker">Search</span>
+  ${renderInput("name-query", "名称查询", state.nameQuery, "例如：西方圣枪", "nameQuery")}
+  ${renderHotTags()}
+  <div class="advanced-filters t-panel-slide t-resize ${state.filtersOpen ? "open" : ""}" data-open="${state.filtersOpen ? "true" : "false"}">
+    ${renderInput("attr-query", "能力属性", state.attrQuery, "攻击力 / 吸血 / 专属", "attrQuery")}
+    <div class="field">
+      <span>炼化属性</span>
+      ${renderRefiningAttributeFilters()}
+    </div>
+    <div class="field">
+      <span>装备类别</span>
+      ${renderEquipmentSlotFilters()}
+    </div>
+    <div class="field">
+      <span>装备品级</span>
+      ${renderGradeFilters()}
+    </div>
+  </div>
+  <button id="toggle-filters" class="filter-toggle" type="button">${state.filtersOpen ? "收起筛选" : "展开筛选"}</button>
+  <button id="reset-filters" class="reset-button" type="button">重置筛选</button>
+`);
+
+const catalogHtml = computed(() => {
+  const items = filterItems();
+
+  return `
+    <div class="catalog-head">
+      <div>
+        <span class="category">Gears</span>
+        <h2>${items.length} 件匹配装备</h2>
+      </div>
+    </div>
+    <div class="catalog-grid">
+      ${items.map(renderCard).join("") || `<div class="empty-note wide">没有匹配结果，换一个名称、属性或品级试试。</div>`}
+    </div>
+  `;
+});
+
+const simulationHtml = computed(() => renderSimulationPanel());
+const detailHtml = computed(() => selectedItem.value ? renderDetail(selectedItem.value, false) : "");
+const mobilePickHtml = computed(() => renderMobilePickModal(false));
+
+function setStateValue(key: keyof State, value: string) {
+  if (typeof state[key] === "string") {
+    (state[key] as string) = value;
+  }
+}
+
+function resetTagFilters() {
+  state.refiningAttribute = "";
+  state.equipmentSlot = "";
+  state.grade = "";
+}
+
+function openItemByName(name: string) {
+  const item = readItemByName(name);
+  if (item) {
+    state.selectedItemId = item.id;
+  } else {
+    state.nameQuery = cleanGameText(name).replace(/\s+x\d+$/i, "");
+  }
+}
+
+function rememberFocus(input?: HTMLInputElement) {
+  const focus = input
+    ? { id: input.id, selectionStart: input.selectionStart }
+    : undefined;
+  nextTick(() => {
+    if (!focus || composing) return;
+    const nextActive = document.getElementById(focus.id);
+    if (nextActive instanceof HTMLInputElement) {
+      nextActive.focus();
+      if (focus.selectionStart !== null) {
+        nextActive.setSelectionRange(focus.selectionStart, focus.selectionStart);
+      }
+    }
+  });
+}
+
+function clickedElement(event: Event, selector: string) {
+  return event.target instanceof Element ? event.target.closest<HTMLElement>(selector) : null;
+}
+
+function setTextState(key: keyof State, value: string, input?: HTMLInputElement) {
+  setStateValue(key, value);
+  if ((key === "nameQuery" || key === "attrQuery") && value) resetTagFilters();
+  rememberFocus(input);
+}
+
+function onCompositionStart() {
+  composing = true;
+}
+
+function onCompositionEnd(event: CompositionEvent) {
+  composing = false;
+  if (event.target instanceof HTMLInputElement) {
+    const key = event.target.dataset.stateKey as keyof State | undefined;
+    if (key) setTextState(key, event.target.value, event.target);
+  }
+}
+
+function onInput(event: Event) {
+  if (composing || !(event.target instanceof HTMLInputElement)) return;
+  const key = event.target.dataset.stateKey as keyof State | undefined;
+  if (key) setTextState(key, event.target.value, event.target);
+}
+
+function onClick(event: MouseEvent) {
+  const itemLink = clickedElement(event, ".item-link, .token-item");
+  if (itemLink) {
+    event.stopPropagation();
+    openItemByName(itemLink.dataset.itemName || itemLink.textContent || "");
+    return;
+  }
+
+  const clearButton = clickedElement(event, "[data-clear]");
+  if (clearButton) {
+    setStateValue(clearButton.dataset.clear as keyof State, "");
+    rememberFocus();
+    return;
+  }
+
+  const gradeButton = clickedElement(event, "[data-grade]");
+  if (gradeButton) {
+    state.grade = gradeButton.dataset.grade || "";
+    return;
+  }
+
+  const refiningButton = clickedElement(event, "[data-refining-attribute]");
+  if (refiningButton) {
+    state.refiningAttribute = refiningButton.dataset.refiningAttribute || "";
+    return;
+  }
+
+  const slotButton = clickedElement(event, "[data-equipment-slot]");
+  if (slotButton) {
+    state.equipmentSlot = slotButton.dataset.equipmentSlot || "";
+    return;
+  }
+
+  const hotButton = clickedElement(event, "[data-hot-tag]");
+  if (hotButton) {
+    state.nameQuery = hotButton.dataset.hotTag || "";
+    resetTagFilters();
+    return;
+  }
+
+  if (clickedElement(event, "#toggle-filters")) {
+    state.filtersOpen = !state.filtersOpen;
+    return;
+  }
+
+  if (clickedElement(event, "#reset-filters")) {
+    state.nameQuery = "";
+    state.attrQuery = "";
+    state.refiningAttribute = "";
+    state.equipmentSlot = "";
+    state.grade = "";
+    return;
+  }
+
+  const suggestion = clickedElement(event, "[data-pick]");
+  if (suggestion) {
+    event.stopPropagation();
+    setStateValue(suggestion.dataset.pick as keyof State, suggestion.dataset.value || "");
+    return;
+  }
+
+  if (clickedElement(event, "#to-top")) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+
+  if (clickedElement(event, "#sim-anchor")) {
+    state.simOpen = !state.simOpen;
+    return;
+  }
+
+  if (clickedElement(event, "#sim-scrim")) {
+    state.simOpen = false;
+    return;
+  }
+
+  const pickSlot = clickedElement(event, "[data-pick-slot]");
+  if (pickSlot) {
+    const item = itemById.get(state.mobilePickItemId);
+    if (item) setStateValue(pickSlot.dataset.pickSlot as keyof State, itemName(item));
+    state.mobilePickItemId = "";
+    state.simOpen = true;
+    return;
+  }
+
+  if (clickedElement(event, "#close-pick")) {
+    state.mobilePickItemId = "";
+    return;
+  }
+
+  if (event.target instanceof HTMLElement && event.target.classList.contains("pick-shell")) {
+    state.mobilePickItemId = "";
+    return;
+  }
+
+  if (clickedElement(event, "#close-detail")) {
+    state.selectedItemId = "";
+    return;
+  }
+
+  if (event.target instanceof HTMLElement && event.target.classList.contains("detail-shell")) {
+    state.selectedItemId = "";
+    return;
+  }
+
+  if (clickedElement(event, "#quiz-open")) {
+    state.quizOpen = true;
+    state.quizTab = quizTabs[0];
+    return;
+  }
+
+  if (clickedElement(event, "#close-quiz")) {
+    state.quizOpen = false;
+    return;
+  }
+
+  const quizTab = clickedElement(event, "[data-quiz-tab]");
+  if (quizTab) {
+    state.quizTab = quizTab.dataset.quizTab as keyof typeof quizAnswers;
+    return;
+  }
+
+  if (event.target instanceof HTMLElement && event.target.classList.contains("modal-shell")) {
+    state.quizOpen = false;
+    return;
+  }
+
+  const card = clickedElement(event, ".equipment-card");
+  if (card) {
+    const itemId = card.dataset.itemId || "";
+    if (longPressedItemId === itemId) {
+      longPressedItemId = "";
+      return;
+    }
+    state.selectedItemId = itemId;
+  }
+}
+
+function onKeydown(event: KeyboardEvent) {
+  if (event.key !== "Enter") return;
+  const card = clickedElement(event, ".equipment-card");
+  if (card) state.selectedItemId = card.dataset.itemId || "";
+}
+
+let longPressTimer = 0;
+let longPressedItemId = "";
+
+function onPointerDown(event: PointerEvent) {
+  const card = clickedElement(event, ".equipment-card");
+  if (!card || !window.matchMedia("(max-width: 1040px)").matches || event.pointerType === "mouse") return;
+  clearLongPress();
+  const itemId = card.dataset.itemId || "";
+  longPressTimer = window.setTimeout(() => {
+    longPressedItemId = itemId;
+    state.mobilePickItemId = itemId;
+  }, 520);
+}
+
+function clearLongPress() {
+  window.clearTimeout(longPressTimer);
+}
+
+function onDragStart(event: DragEvent) {
+  const card = clickedElement(event, ".equipment-card");
+  if (!card) return;
+  event.dataTransfer?.setData("text/plain", card.dataset.itemName || "");
+  event.dataTransfer?.setData("application/x-war3-item", card.dataset.itemName || "");
+}
+
+function onDragOver(event: DragEvent) {
+  const drop = clickedElement(event, "[data-drop-slot]");
+  if (!drop) return;
+  event.preventDefault();
+  drop.classList.add("drag-over");
+}
+
+function onDragLeave(event: DragEvent) {
+  clickedElement(event, "[data-drop-slot]")?.classList.remove("drag-over");
+}
+
+function onDrop(event: DragEvent) {
+  const drop = clickedElement(event, "[data-drop-slot]");
+  if (!drop) return;
+  event.preventDefault();
+  drop.classList.remove("drag-over");
+  const value = event.dataTransfer?.getData("application/x-war3-item") || event.dataTransfer?.getData("text/plain") || "";
+  setStateValue(drop.dataset.dropSlot as keyof State, value);
+}
+
+let swipeStartX = 0;
+let trackingSwipe = false;
+
+function onTouchStart(event: TouchEvent) {
+  if (!clickedElement(event, "#sim-anchor, .sim-panel")) return;
+  trackingSwipe = true;
+  swipeStartX = event.touches[0]?.clientX || 0;
+}
+
+function onTouchEnd(event: TouchEvent) {
+  if (!trackingSwipe) return;
+  trackingSwipe = false;
+  const endX = event.changedTouches[0]?.clientX || swipeStartX;
+  const delta = endX - swipeStartX;
+  if (delta < -35) state.simOpen = true;
+  if (delta > 35) state.simOpen = false;
+}
+</script>
