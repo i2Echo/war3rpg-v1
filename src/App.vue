@@ -5,10 +5,13 @@
     @compositionstart="onCompositionStart"
     @compositionend="onCompositionEnd"
     @keydown="onKeydown"
+    @focusin="onFocusIn"
     @pointerdown="onPointerDown"
+    @pointerover="onPointerOver"
     @pointerup="clearLongPress"
     @pointercancel="clearLongPress"
     @pointerleave="clearLongPress"
+    @scroll.capture="onScrollCapture"
     @dragstart="onDragStart"
     @dragover="onDragOver"
     @dragleave="onDragLeave"
@@ -41,8 +44,8 @@
         <aside class="sim-panel" :class="{ open: state.simOpen }" aria-label="炼化查询" v-html="simulationHtml"></aside>
       </section>
     </main>
-    <button class="sim-anchor" :class="{ open: state.simOpen }" id="sim-anchor" type="button" :aria-label="state.simOpen ? '收起炼化查询' : '展开炼化查询'">
-      {{ state.simOpen ? "›" : "‹" }}
+    <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
+      ‹
     </button>
     <div v-if="state.simOpen" class="sim-scrim" id="sim-scrim"></div>
     <button
@@ -93,7 +96,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, reactive } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, watch } from "vue";
 import equipmentJson from "./data/equipment.json";
 import recipesJson from "./data/recipes.json";
 import refiningJson from "./data/refining-rules.json";
@@ -147,6 +150,7 @@ type State = {
   simOpen: boolean;
   mobilePickItemId: string;
   showToTop: boolean;
+  isDrawerLayout: boolean;
 };
 
 const state = reactive<State>({
@@ -165,9 +169,12 @@ const state = reactive<State>({
   simOpen: false,
   mobilePickItemId: "",
   showToTop: false,
+  isDrawerLayout: false,
 });
 
 let composing = false;
+let lockedScrollY = 0;
+let activeToken: HTMLElement | undefined;
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -966,6 +973,13 @@ function renderQuizModal(opening: boolean) {
 }
 
 const selectedItem = computed(() => state.selectedItemId ? itemById.get(state.selectedItemId) : undefined);
+const hasBlockingLayer = computed(() => Boolean(
+  selectedItem.value || state.quizOpen || state.mobilePickItemId || (state.simOpen && state.isDrawerLayout),
+));
+
+watch(hasBlockingLayer, locked => {
+  setPageScrollLock(locked);
+}, { immediate: true });
 
 const filterHtml = computed(() => `
   <span class="filter-kicker">Search</span>
@@ -1271,6 +1285,48 @@ function onDrop(event: DragEvent) {
   setStateValue(drop.dataset.dropSlot as keyof State, value);
 }
 
+function positionTokenPopover(target: EventTarget | Element | null) {
+  const element = target instanceof Element ? target : undefined;
+  const token = element?.closest<HTMLElement>(".sim-panel .route-token");
+  const popover = token?.querySelector<HTMLElement>(".token-popover");
+  if (!token || !popover) return;
+
+  const margin = 14;
+  const gap = 8;
+  const width = Math.max(220, Math.min(360, window.innerWidth - margin * 2));
+  const rect = token.getBoundingClientRect();
+  const left = Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin));
+  const below = window.innerHeight - rect.bottom - margin - gap;
+  const above = rect.top - margin - gap;
+  const placeBelow = below >= 170 || below >= above;
+  const maxHeight = Math.max(120, Math.min(420, placeBelow ? below : above));
+  const rawTop = placeBelow ? rect.bottom + gap : rect.top - maxHeight - gap;
+  const top = Math.max(margin, Math.min(rawTop, window.innerHeight - maxHeight - margin));
+  const panel = token.closest<HTMLElement>(".sim-panel");
+  const panelRect = panel && getComputedStyle(panel).transform !== "none"
+    ? panel.getBoundingClientRect()
+    : { left: 0, top: 0 };
+
+  popover.style.left = `${left - panelRect.left}px`;
+  popover.style.top = `${top - panelRect.top}px`;
+  popover.style.width = `${width}px`;
+  popover.style.maxHeight = `${maxHeight}px`;
+  activeToken = token;
+}
+
+function onPointerOver(event: PointerEvent) {
+  positionTokenPopover(event.target);
+}
+
+function onFocusIn(event: FocusEvent) {
+  positionTokenPopover(event.target);
+}
+
+function onScrollCapture() {
+  if (!activeToken?.isConnected || !activeToken.matches(":hover, :focus, :focus-within")) return;
+  positionTokenPopover(activeToken);
+}
+
 let swipeStartX = 0;
 let trackingSwipe = false;
 
@@ -1293,12 +1349,40 @@ function updateShowToTop() {
   state.showToTop = window.scrollY > 240;
 }
 
-onMounted(() => {
+function updateDrawerLayout() {
+  state.isDrawerLayout = window.innerWidth <= 760;
+}
+
+function setPageScrollLock(locked: boolean) {
+  const root = document.documentElement;
+  const body = document.body;
+  if (locked) {
+    if (body.classList.contains("layer-open")) return;
+    lockedScrollY = window.scrollY;
+    root.classList.add("layer-open");
+    body.classList.add("layer-open");
+    body.style.top = `-${lockedScrollY}px`;
+    return;
+  }
+
+  if (!body.classList.contains("layer-open")) return;
+  root.classList.remove("layer-open");
+  body.classList.remove("layer-open");
+  body.style.top = "";
+  window.scrollTo(0, lockedScrollY);
   updateShowToTop();
+}
+
+onMounted(() => {
+  updateDrawerLayout();
+  updateShowToTop();
+  window.addEventListener("resize", updateDrawerLayout);
   window.addEventListener("scroll", updateShowToTop, { passive: true });
 });
 
 onBeforeUnmount(() => {
+  setPageScrollLock(false);
+  window.removeEventListener("resize", updateDrawerLayout);
   window.removeEventListener("scroll", updateShowToTop);
 });
 </script>
