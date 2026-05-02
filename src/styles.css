@@ -19,6 +19,11 @@
   --motion-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-enter: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --panel-open-dur: 400ms;
+  --panel-close-dur: 350ms;
+  --panel-translate-y: 100px;
+  --panel-blur: 2px;
+  --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -974,7 +979,7 @@ input::placeholder {
   }
 
   .brand span:nth-child(2) {
-    max-width: 190px;
+    max-width: 200px;
     line-height: 1.2;
   }
 
@@ -1281,6 +1286,7 @@ input::placeholder {
 }
 
 .to-top {
+  --panel-translate-y: 18px;
   position: fixed;
   right: 22px;
   bottom: 22px;
@@ -1296,6 +1302,35 @@ input::placeholder {
   box-shadow: var(--shadow);
   font-size: 20px;
   font-weight: 900;
+}
+
+.t-panel-slide {
+  transform: translateY(var(--panel-translate-y));
+  opacity: 0;
+  filter: blur(var(--panel-blur));
+  pointer-events: none;
+  transition:
+    transform var(--panel-close-dur) var(--panel-ease),
+    opacity var(--panel-close-dur) var(--panel-ease),
+    filter var(--panel-close-dur) var(--panel-ease);
+  will-change: transform, opacity, filter;
+}
+
+.t-panel-slide[data-open="true"] {
+  transform: translateY(0);
+  opacity: 1;
+  filter: blur(0);
+  pointer-events: auto;
+  transition:
+    transform var(--panel-open-dur) var(--panel-ease),
+    opacity var(--panel-open-dur) var(--panel-ease),
+    filter var(--panel-open-dur) var(--panel-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-panel-slide {
+    transition: none !important;
+  }
 }
 
 .sim-anchor,

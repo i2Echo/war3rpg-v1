@@ -45,7 +45,15 @@
       {{ state.simOpen ? "›" : "‹" }}
     </button>
     <div v-if="state.simOpen" class="sim-scrim" id="sim-scrim"></div>
-    <button class="to-top" id="to-top" type="button" aria-label="回到顶部">↑</button>
+    <button
+      class="to-top t-panel-slide"
+      id="to-top"
+      type="button"
+      aria-label="回到顶部"
+      :aria-hidden="state.showToTop ? 'false' : 'true'"
+      :data-open="state.showToTop ? 'true' : 'false'"
+      :tabindex="state.showToTop ? 0 : -1"
+    >↑</button>
     <div v-if="selectedItem" class="detail-shell" v-html="detailHtml"></div>
     <div v-if="state.quizOpen" class="modal-shell" role="dialog" aria-label="帝都答题答案">
       <div class="quiz-modal t-modal is-open">
@@ -85,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive } from "vue";
 import equipmentJson from "./data/equipment.json";
 import recipesJson from "./data/recipes.json";
 import refiningJson from "./data/refining-rules.json";
@@ -138,6 +146,7 @@ type State = {
   quizTab: keyof typeof quizAnswers;
   simOpen: boolean;
   mobilePickItemId: string;
+  showToTop: boolean;
 };
 
 const state = reactive<State>({
@@ -155,6 +164,7 @@ const state = reactive<State>({
   quizTab: "普通",
   simOpen: false,
   mobilePickItemId: "",
+  showToTop: false,
 });
 
 let composing = false;
@@ -961,7 +971,7 @@ const filterHtml = computed(() => `
   <span class="filter-kicker">Search</span>
   ${renderInput("name-query", "名称查询", state.nameQuery, "例如：西方圣枪", "nameQuery")}
   ${renderHotTags()}
-  <div class="advanced-filters t-panel-slide t-resize ${state.filtersOpen ? "open" : ""}" data-open="${state.filtersOpen ? "true" : "false"}">
+  <div class="advanced-filters t-resize ${state.filtersOpen ? "open" : ""}" data-open="${state.filtersOpen ? "true" : "false"}">
     ${renderInput("attr-query", "能力属性", state.attrQuery, "攻击力 / 吸血 / 专属", "attrQuery")}
     <div class="field">
       <span>炼化属性</span>
@@ -1278,4 +1288,17 @@ function onTouchEnd(event: TouchEvent) {
   if (delta < -35) state.simOpen = true;
   if (delta > 35) state.simOpen = false;
 }
+
+function updateShowToTop() {
+  state.showToTop = window.scrollY > 240;
+}
+
+onMounted(() => {
+  updateShowToTop();
+  window.addEventListener("scroll", updateShowToTop, { passive: true });
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", updateShowToTop);
+});
 </script>
