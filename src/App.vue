@@ -622,7 +622,7 @@ function searchableText(item: Equipment, includeRefining = true) {
 function renderInput(id: string, label: string, value: string, placeholder: string, stateKey: keyof State) {
   return `
     <label class="field">
-      <span>${escapeHtml(label)}</span>
+      <span class="field-label">${label}</span>
       <span class="field-shell">
         <input id="${id}" data-state-key="${String(stateKey)}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off" />
         ${value ? `<button class="clear-input" type="button" data-clear="${String(stateKey)}" aria-label="清除 ${escapeHtml(label)}">×</button>` : ""}
@@ -679,7 +679,7 @@ function renderFuzzySuggestions(query: string, target: "assistantTarget" | "assi
   if (!query || !hits.length) return "";
   return `
     <div class="suggestions">
-      ${hits.map(item => `<button type="button" data-pick="${target}" data-value="${escapeHtml(itemName(item))}"><img src="${escapeHtml(iconUrl(item))}" alt="" />${escapeHtml(itemName(item))}<span>${escapeHtml(itemDisplayGrade(item))}</span></button>`).join("")}
+      ${hits.map(item => `<button class="suggestion-item ${gradeClass(item.level)}" type="button" data-pick="${target}" data-value="${escapeHtml(itemName(item))}"><img src="${escapeHtml(iconUrl(item))}" alt="" /><strong>${escapeHtml(itemName(item))}</strong><span>${escapeHtml(itemDisplayGrade(item))}</span></button>`).join("")}
     </div>
   `;
 }
@@ -737,7 +737,7 @@ function renderTargetRoutes() {
       .filter(rule => !isSynthesisScrollRule(rule))
       .filter(rule => rule.possibleOutputs.some(output => normalize(outputLabel(output)).includes(needle)))
       .slice(0, 8);
-    if (!exactRules.length) return `<div class="empty-note">没有找到目标装备或材料公式，试试更短的关键词。</div>${renderFuzzySuggestions(state.assistantTarget, "assistantTarget")}`;
+    if (!exactRules.length) return `<div class="empty-note">没有找到目标装备或材料公式，试试更短的关键词。</div>`;
     return `
       <div class="assistant-target">
         <div>
@@ -756,8 +756,7 @@ function renderTargetRoutes() {
     `;
   }
   return `
-    ${renderFuzzySuggestions(state.assistantTarget, "assistantTarget")}
-    <div class="assistant-target">
+    <div class="assistant-target selected-target ${gradeClass(target.level)}">
       <img src="${escapeHtml(iconUrl(target))}" alt="" />
       <div>
         <strong>${escapeHtml(itemName(target))}</strong>
@@ -844,11 +843,14 @@ function renderInputPairRoutes() {
 }
 
 function renderSimulationPanel() {
+  const materialLabel = state.assistantMain && state.assistantMaterial
+    ? `材料 <button class="swap-button" id="swap-assistant-items" type="button" aria-label="互换主装备与材料">⇅</button>`
+    : "材料";
   return `
     <span class="filter-kicker">Refine</span>
     <div class="section-title compact">
-      <span>目标反查 / 模拟炼化</span>
-      <h2>炼化查询</h2>
+      <span>炼化查询</span>
+      <h2>目标反查 / 模拟炼化</h2>
     </div>
     <div class="sim-section">
       <span class="sim-section-label">路线反查</span>
@@ -864,7 +866,7 @@ function renderSimulationPanel() {
         ${renderInput("assistant-main", "主装备", state.assistantMain, "输入 / 拖入装备", "assistantMain")}
       </div>
       <div class="sim-drop" data-drop-slot="assistantMaterial">
-        ${renderInput("assistant-material", "材料", state.assistantMaterial, "输入 / 拖入材料", "assistantMaterial")}
+        ${renderInput("assistant-material", materialLabel, state.assistantMaterial, "输入 / 拖入材料", "assistantMaterial")}
       </div>
       <div class="assistant-results sim-results">${renderInputPairRoutes()}</div>
     </div>
@@ -1136,6 +1138,13 @@ function onClick(event: MouseEvent) {
 
   if (clickedElement(event, "#sim-scrim")) {
     state.simOpen = false;
+    return;
+  }
+
+  if (clickedElement(event, "#swap-assistant-items")) {
+    const main = state.assistantMain;
+    state.assistantMain = state.assistantMaterial;
+    state.assistantMaterial = main;
     return;
   }
 

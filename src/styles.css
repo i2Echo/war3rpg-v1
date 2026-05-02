@@ -209,6 +209,13 @@ main {
   font-weight: 750;
 }
 
+.field-label {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
 .field-shell {
   position: relative;
   display: block;
@@ -228,6 +235,10 @@ input {
 input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(207, 95, 66, 0.16);
+}
+
+input::placeholder {
+  color: rgba(130, 117, 107, 0.52);
 }
 
 .clear-input,
@@ -678,6 +689,11 @@ input:focus {
   padding: 10px;
 }
 
+.assistant-target.selected-target {
+  border-color: currentColor;
+  color: currentColor;
+}
+
 .assistant-target img,
 .suggestions img {
   width: 34px;
@@ -694,6 +710,11 @@ input:focus {
 .assistant-target span {
   color: var(--muted);
   font-size: 12px;
+}
+
+.assistant-target.selected-target span {
+  color: currentColor;
+  opacity: 0.74;
 }
 
 .suggestions {
@@ -713,10 +734,23 @@ input:focus {
   text-align: left;
 }
 
+.suggestions .suggestion-item {
+  border-color: currentColor;
+  color: currentColor;
+}
+
+.suggestions .suggestion-item strong {
+  overflow: hidden;
+  color: currentColor;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .suggestions span {
   margin-left: auto;
-  color: var(--muted);
+  color: currentColor;
   font-size: 12px;
+  opacity: 0.72;
 }
 
 .route-detail,
@@ -1081,10 +1115,43 @@ input:focus {
   outline-offset: 4px;
 }
 
+.swap-button {
+  display: inline-grid;
+  width: 28px;
+  height: 24px;
+  justify-self: center;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: rgba(159, 51, 39, 0.48);
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.swap-button:hover,
+.swap-button:focus-visible {
+  color: var(--accent-dark);
+  font-weight: 950;
+  outline: none;
+}
+
 .sim-results {
   max-height: 62vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding-right: 2px;
+}
+
+.sim-panel .token-popover {
+  position: fixed;
+  left: auto;
+  right: 18px;
+  top: auto;
+  bottom: 18px;
+  width: min(360px, calc(100vw - 36px));
+  max-height: min(420px, 58vh);
+  overflow: auto;
 }
 
 .hero h1 {
