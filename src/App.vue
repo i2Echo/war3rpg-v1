@@ -19,7 +19,7 @@
     <header class="topbar">
       <a class="brand" href="#">
         <span class="brand-mark">W3</span>
-        <span>西方世界的劫难3装备图鉴</span>
+        <span>西方世界的劫难3 · 装备图鉴</span>
         <span class="brand-version">v2.4.6</span>
       </a>
       <nav>
@@ -30,7 +30,7 @@
       <section class="hero">
         <div>
           <p class="notice">装备图鉴 · 炼化路线</p>
-          <h1>西方世界的劫难3装备图鉴</h1>
+          <h1>西方世界的劫难3 · 装备图鉴</h1>
           <p>{{ equipment.length }} 件装备，{{ recipes.length }} 条合成卷轴，{{ refiningRules.length }} 条炼化规则。</p>
         </div>
       </section>
@@ -788,7 +788,7 @@ function renderInputPairRoutes() {
   const main = readItemByName(state.assistantMain);
   const material = readItemByName(state.assistantMaterial);
   const hasQuery = state.assistantMain || state.assistantMaterial;
-  if (!hasQuery) return `<div class="empty-note">也可以输入主装备与材料，直接反查会得到什么。</div>`;
+  if (!hasQuery) return `<div class="empty-note">也可以输入主装备与材料，直接展示会得到什么。</div>`;
 
   const exactMatches = refiningRules
     .filter(rule => rule.type === "exact-refining")
@@ -847,8 +847,8 @@ function renderSimulationPanel() {
   return `
     <span class="filter-kicker">Refine</span>
     <div class="section-title compact">
-      <span>炼化查询</span>
-      <h2>目标反查 / 模拟炼化</h2>
+      <span>目标反查 / 模拟炼化</span>
+      <h2>炼化查询</h2>
     </div>
     <div class="sim-section">
       <span class="sim-section-label">路线反查</span>
@@ -903,8 +903,7 @@ function renderDetail(item: Equipment, opening: boolean) {
         <img class="detail-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" />
         <div>
           <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(item.refining?.label || "未分类")}</span>
-          <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
-          <p><span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span></p>
+          <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))} · <span style="font-weight: normal;font-size: 24px;">${escapeHtml(itemDisplayGrade(item))}</span></h2>
         </div>
         <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">×</button>
       </div>
