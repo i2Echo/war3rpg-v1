@@ -11,11 +11,17 @@ export type Equipment = {
   kind: string;
   level: string;
   class?: string;
+  randomPool?: boolean;
   hp?: string;
   description: string;
   stats: string[];
   effects: string[];
   icon?: ItemIcon | null;
+  raw?: {
+    tip?: string;
+    itemClass?: string;
+    pickRandom?: string;
+  };
   refining?: {
     hp: number;
     slot: string;

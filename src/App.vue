@@ -44,6 +44,10 @@
         <aside class="sim-panel" :class="{ open: state.simOpen }" aria-label="炼化查询" v-html="simulationHtml"></aside>
       </section>
     </main>
+    <footer class="site-footer">
+      <span>© 爱吃海苔的猫</span>
+      <span>不可商用</span>
+    </footer>
     <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
       ‹
     </button>
@@ -103,7 +107,8 @@ import refiningJson from "./data/refining-rules.json";
 import { quizAnswers } from "./data/quiz";
 import type { Equipment, Output, Recipe, RefiningGroup, RefiningRule } from "./types";
 
-const equipment = (equipmentJson as { items: Equipment[] }).items;
+const allEquipment = (equipmentJson as { items: Equipment[] }).items;
+const equipment = dedupeCatalogItems(allEquipment);
 const recipes = (recipesJson as { recipes: Recipe[] }).recipes;
 const refiningRules = (refiningJson as unknown as { rules: RefiningRule[] }).rules;
 
@@ -120,7 +125,7 @@ const gradeInfo = {
 
 const gradeOrder = ["S", "A", "B", "C", "D", "E", "F", "G"] as const;
 const levelToGrade: Record<number, keyof typeof gradeInfo> = { 1: "G", 2: "F", 3: "E", 4: "D", 5: "C", 6: "B", 7: "A", 8: "S" };
-const hotTags = ["梵天纹章", "天皇祭冠", "古代神铠", "阿修罗", "奥姆幽刃", "雾幻云珠", "谛听天镯", "千棱幻玉", "银河幻星鞋", "炽凰天衣", "北斗炼日印"];
+const hotTags = ["梵天纹章", "天皇祭冠", "古代神铠", "奥姆幽刃", "雾幻云珠", "谛听天镯", "千棱幻玉", "银河幻星鞋", "炽凰天衣", "北斗炼日印"];
 const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
@@ -131,8 +136,12 @@ const itemTypeToClass: Record<string, string> = {
   ITEM_TYPE_CAMPAIGN: "Campaign",
 };
 
-const itemById = new Map(equipment.map(item => [item.id, item]));
-const itemByName = new Map(equipment.map(item => [cleanGameText(item.name), item]));
+const itemById = new Map(allEquipment.map(item => [item.id, item]));
+const itemByName = new Map<string, Equipment>();
+for (const item of equipment) {
+  const name = cleanGameText(item.name);
+  if (!itemByName.has(name)) itemByName.set(name, item);
+}
 
 type State = {
   nameQuery: string;
@@ -192,6 +201,17 @@ function cleanGameText(value = "") {
     .replace(/\|n/g, "\n")
     .replace(/\r/g, "")
     .trim();
+}
+
+function dedupeCatalogItems(items: Equipment[]) {
+  const seen = new Set<string>();
+  return items.filter(item => {
+    const key = cleanGameText(item.name);
+    if (!key) return true;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function normalize(value: string) {
@@ -277,16 +297,31 @@ function randomPoolCandidates(output: Output, context?: BranchContext) {
   const levels = levelsForOutput(output, context);
   const itemClass = itemTypeToClass[output.itemType || ""];
   return equipment
+    .filter(item => item.randomPool)
     .filter(item => levels.includes(levelValueForItem(item)))
     .filter(item => !itemClass || item.class === itemClass)
     .sort(sortEquipment);
 }
 
 function outputChanceForItem(output: Output, item: Equipment, context?: BranchContext, chance?: number) {
-  if (output.kind === "fixed") return outputMatchesItem(output, item) ? chance : undefined;
+  if (output.kind === "fixed") {
+    return !isBlockedDynamicFixedOutput(output, context) && outputMatchesItem(output, item) ? chance : undefined;
+  }
   const candidates = randomPoolCandidates(output, context);
   if (!candidates.some(candidate => candidate.id === item.id)) return undefined;
   return chance == null ? undefined : Number((chance / candidates.length).toFixed(4));
+}
+
+function isBlockedDynamicFixedOutput(output: Output, context?: BranchContext) {
+  return output.id === "I00A"
+    && context?.levelDifference?.code === "same-level"
+    && context?.mainItemLevel?.value === 8;
+}
+
+function dynamicOutputEligible(output: Output, context?: BranchContext) {
+  if (output.kind === "random-pool") return randomPoolCandidates(output, context).length > 0;
+  const item = output.id ? itemById.get(output.id) : readItemByName(outputLabel(output));
+  return Boolean(item && !isBlockedDynamicFixedOutput(output, context));
 }
 
 function renderTokenItems(items: Equipment[], chance?: number) {
@@ -450,10 +485,15 @@ function outputMatchesName(output: Output, name: string) {
 
 function groupShortLabel(group: RefiningGroup | undefined, role: "main" | "material" = "main") {
   if (!group) return "分类";
+  if (role === "material" && group.attributes.length === 1 && group.label.includes("法师武器")) return `${group.attributes[0]}/法武`;
+  if (role === "material" && group.attributes.length === 1 && group.label.includes("非法师武器")) return `${group.attributes[0]}/非法武`;
   if (role === "material" && group.attributes.length === 1 && group.attributes[0] !== "全能") return group.attributes[0];
+  if (group.label.includes("全能型武器") && group.slots.length > 1 && group.attributes.length === 1) return "全能武/饰/衣/鞋";
+  if (group.label.includes("全能型武器") && group.label.includes("非法师武器")) return "全能武/非法武";
   if (group.label.includes("非法师武器")) return "非法武";
   if (group.label.includes("法师武器")) return "法武";
   if (group.label.includes("全能型武器")) return "全能武";
+  if (role === "material" && group.attributes.length > 1 && group.attributes.length < refiningAttributes.length) return group.attributes.join("/");
   if (group.attributes.length === 1 && group.attributes[0] !== "全能") return group.attributes[0];
   if (group.slots.length === 1 && group.attributes.length > 1) return group.slots[0];
   if (group.attributes.length === 1) return group.attributes[0];
@@ -833,7 +873,13 @@ function renderInputPairRoutes() {
       .filter(rule => (rule.mainHpValues || []).includes(Number(main.refining?.hp)) && (rule.materialHpValues || []).includes(Number(material.refining?.hp)))
       .flatMap(rule => (rule.probabilityBranches || [])
         .filter(branch => branchMatchesItems(branch, main, material))
-        .flatMap(branch => branch.outcomes.map(outcome => ({ rule, branch, outcome }))))
+        .flatMap(branch => branch.outcomes
+          .map(outcome => ({
+            ...outcome,
+            outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context)),
+          }))
+          .filter(outcome => outcome.outputs.length)
+          .map(outcome => ({ rule, branch, outcome }))))
     : [];
 
   return `
@@ -863,11 +909,15 @@ function renderSimulationPanel() {
   const materialLabel = state.assistantMain && state.assistantMaterial
     ? `材料 <button class="swap-button" id="swap-assistant-items" type="button" aria-label="互换主装备与材料">⇅</button>`
     : "材料";
+  const canClear = state.assistantTarget || state.assistantMain || state.assistantMaterial;
   return `
     <span class="filter-kicker">Refine</span>
     <div class="section-title compact">
-      <span>炼化查询</span>
-      <h2>目标反查 / 模拟炼化</h2>
+      <div>
+        <span>炼化查询</span>
+        <h2>目标反查 / 模拟炼化</h2>
+      </div>
+      <button class="sim-clear-button" id="clear-simulation" type="button" aria-label="一键清除炼化查询" ${canClear ? "" : "disabled"}>清除</button>
     </div>
     <div class="sim-section">
       <span class="sim-section-label">路线反查</span>
@@ -1169,6 +1219,13 @@ function onClick(event: MouseEvent) {
     const main = state.assistantMain;
     state.assistantMain = state.assistantMaterial;
     state.assistantMaterial = main;
+    return;
+  }
+
+  if (clickedElement(event, "#clear-simulation")) {
+    state.assistantTarget = "";
+    state.assistantMain = "";
+    state.assistantMaterial = "";
     return;
   }
 

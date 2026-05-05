@@ -184,7 +184,7 @@
     "8": [
       {
         "label": "S+",
-        "count": 55
+        "count": 53
       },
       {
         "label": "S",
@@ -196,7 +196,7 @@
       }
     ]
   },
-  "totalRules": 80,
+  "totalRules": 83,
   "rules": [
     {
       "id": "dynamic-refining-1",
@@ -21616,7 +21616,7 @@
       "probabilityBranches": []
     },
     {
-      "id": "exact-refining-46-1",
+      "id": "exact-refining-46-1-1",
       "type": "exact-refining",
       "functionName": "BSK",
       "sourceLines": {
@@ -21668,11 +21668,131 @@
           "name": "仙气葫芦",
           "expression": "$49303754",
           "quantity": 1
+        }
+      ],
+      "condition": "",
+      "possibleOutputs": [
+        {
+          "kind": "fixed",
+          "id": "I07X",
+          "name": "蓬莱仙珠",
+          "expression": "$49303758"
+        }
+      ],
+      "probabilityBranches": []
+    },
+    {
+      "id": "exact-refining-46-1-2",
+      "type": "exact-refining",
+      "functionName": "BSK",
+      "sourceLines": {
+        "start": 21435,
+        "end": 21475
+      },
+      "summary": {
+        "mainSlot": 1,
+        "materialSlot": 2,
+        "consumesBothItems": true,
+        "requiresMainItemLevelAtLeast": 0,
+        "blockedItemIds": []
+      },
+      "mainHpValues": [],
+      "materialHpValues": [],
+      "readable": {
+        "main": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "material": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "levelRequirement": "",
+        "blockedItems": []
+      },
+      "requiredItems": [
+        {
+          "id": "I04I",
+          "name": "雾幻云珠",
+          "expression": "$49303449",
+          "quantity": 1
         },
         {
           "id": "I07W",
           "name": "仙气葫芦+",
           "expression": "$49303757",
+          "quantity": 1
+        }
+      ],
+      "condition": "",
+      "possibleOutputs": [
+        {
+          "kind": "fixed",
+          "id": "I07X",
+          "name": "蓬莱仙珠",
+          "expression": "$49303758"
+        }
+      ],
+      "probabilityBranches": []
+    },
+    {
+      "id": "exact-refining-46-1-3",
+      "type": "exact-refining",
+      "functionName": "BSK",
+      "sourceLines": {
+        "start": 21435,
+        "end": 21475
+      },
+      "summary": {
+        "mainSlot": 1,
+        "materialSlot": 2,
+        "consumesBothItems": true,
+        "requiresMainItemLevelAtLeast": 0,
+        "blockedItemIds": []
+      },
+      "mainHpValues": [],
+      "materialHpValues": [],
+      "readable": {
+        "main": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "material": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "levelRequirement": "",
+        "blockedItems": []
+      },
+      "requiredItems": [
+        {
+          "id": "I04I",
+          "name": "雾幻云珠",
+          "expression": "$49303449",
           "quantity": 1
         },
         {
@@ -23627,6 +23747,72 @@
           "id": "I06M",
           "name": "般若金刚印",
           "expression": "$4930364D"
+        }
+      ],
+      "probabilityBranches": []
+    },
+    {
+      "id": "manual-exact-aomu-youren",
+      "type": "exact-refining",
+      "functionName": "manual-correction: 千幕之夜 + 米迦勒之翼",
+      "sourceLines": {
+        "start": 0,
+        "end": 0
+      },
+      "summary": {
+        "mainSlot": 1,
+        "materialSlot": 2,
+        "consumesBothItems": true,
+        "requiresMainItemLevelAtLeast": 0,
+        "blockedItemIds": []
+      },
+      "mainHpValues": [],
+      "materialHpValues": [],
+      "readable": {
+        "main": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "material": {
+          "label": "不限",
+          "hpValues": [],
+          "slots": [],
+          "attributes": [],
+          "names": [],
+          "bySlot": {},
+          "byAttribute": {},
+          "unknownHpValues": []
+        },
+        "levelRequirement": "",
+        "blockedItems": []
+      },
+      "requiredItems": [
+        {
+          "id": "I009",
+          "name": "千幕之夜",
+          "expression": "$49303039",
+          "quantity": 1
+        },
+        {
+          "id": "I01L",
+          "name": "米迦勒之翼",
+          "expression": "$4930314C",
+          "quantity": 1
+        }
+      ],
+      "condition": "manual-correction: 千幕之夜 + 米迦勒之翼",
+      "possibleOutputs": [
+        {
+          "kind": "fixed",
+          "id": "I00A",
+          "name": "奥姆幽刃",
+          "expression": "$49303041"
         }
       ],
       "probabilityBranches": []

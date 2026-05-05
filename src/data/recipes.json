@@ -23,9 +23,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_JiuTianXuanNvZhu.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_JiuTianXuanNvZhu.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_JiuTianXuanNvZhu.png",
           "png256": "icons/png-256/BTNItem_JiuTianXuanNvZhu.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_JiuTianXuanNvZhu.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_JiuTianXuanNvZhu.jpg"
         }
       },
       "level": "S+",
@@ -69,9 +68,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_YueShiJie.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_YueShiJie.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_YueShiJie.png",
           "png256": "icons/png-256/BTNItem_YueShiJie.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_YueShiJie.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_YueShiJie.jpg"
         }
       },
       "level": "A+",
@@ -115,9 +113,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_BoRuoJinGangYin.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_BoRuoJinGangYin.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_BoRuoJinGangYin.png",
           "png256": "icons/png-256/BTNItem_BoRuoJinGangYin.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_BoRuoJinGangYin.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_BoRuoJinGangYin.jpg"
         }
       },
       "level": "S",
@@ -161,9 +158,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_WuRenXueZi.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_WuRenXueZi.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_WuRenXueZi.png",
           "png256": "icons/png-256/BTNItem_WuRenXueZi.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_WuRenXueZi.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_WuRenXueZi.jpg"
         }
       },
       "level": "B+",
@@ -207,9 +203,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_KunLunXianLv.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_KunLunXianLv.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_KunLunXianLv.png",
           "png256": "icons/png-256/BTNItem_KunLunXianLv.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_KunLunXianLv.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_KunLunXianLv.jpg"
         }
       },
       "level": "S+",
@@ -258,9 +253,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNHuanQiongGong.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNHuanQiongGong.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNHuanQiongGong.png",
           "png256": "icons/png-256/BTNHuanQiongGong.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNHuanQiongGong.png"
+          "realesrganX4": "icons/jpg-128/BTNHuanQiongGong.jpg"
         }
       },
       "level": "A+",
@@ -304,9 +298,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNNewItem_AMaFeiTeZhanRen.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNNewItem_AMaFeiTeZhanRen.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNNewItem_AMaFeiTeZhanRen.png",
           "png256": "icons/png-256/BTNNewItem_AMaFeiTeZhanRen.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNNewItem_AMaFeiTeZhanRen.png"
+          "realesrganX4": "icons/jpg-128/BTNNewItem_AMaFeiTeZhanRen.jpg"
         }
       },
       "level": "A+",
@@ -350,9 +343,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNWarStomp.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNWarStomp.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNWarStomp.png",
           "png256": "icons/png-256/BTNWarStomp.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNWarStomp.png"
+          "realesrganX4": "icons/jpg-128/BTNWarStomp.jpg"
         }
       },
       "level": "B+",
@@ -396,9 +388,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNItem_MingShe.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNItem_MingShe.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNItem_MingShe.png",
           "png256": "icons/png-256/BTNItem_MingShe.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNItem_MingShe.png"
+          "realesrganX4": "icons/jpg-128/BTNItem_MingShe.jpg"
         }
       },
       "level": "A+",
@@ -434,9 +425,22 @@
         "name": "【云霞舞梦-改】合成卷轴"
       },
       "result": {
-        "id": "ram4",
-        "name": "云霞舞梦-改",
-        "icon": null
+        "id": "I050",
+        "name": "云霞舞梦.改",
+        "icon": {
+          "source": "war3mapImported\\BTNYunXiaMengWu.blp",
+          "archive": "map",
+          "blp": "icons/blp/BTNYunXiaMengWu.blp",
+          "png": "icons/png/BTNYunXiaMengWu.png",
+          "jpg": "icons/jpg/BTNYunXiaMengWu.jpg",
+          "missing": false,
+          "conversion": "blp1-jpeg",
+          "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNYunXiaMengWu.jpg",
+          "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNYunXiaMengWu.png",
+          "needsJpegConversion": true,
+          "png256": "icons/png-256/BTNYunXiaMengWu.png",
+          "realesrganX4": "icons/jpg-128/BTNYunXiaMengWu.jpg"
+        }
       },
       "level": "A+",
       "materials": [
@@ -479,9 +483,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNXueMoYinKe.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNXueMoYinKe.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNXueMoYinKe.png",
           "png256": "icons/png-256/BTNXueMoYinKe.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNXueMoYinKe.png"
+          "realesrganX4": "icons/jpg-128/BTNXueMoYinKe.jpg"
         }
       },
       "level": "B+",
@@ -525,9 +528,8 @@
           "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNMoDaoShiXiongJia1.jpg",
           "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNMoDaoShiXiongJia1.png",
           "needsJpegConversion": true,
-          "png128": "icons/png-128/BTNMoDaoShiXiongJia1.png",
           "png256": "icons/png-256/BTNMoDaoShiXiongJia1.png",
-          "realesrganX4": "icons/realesrgan-x4-anime/BTNMoDaoShiXiongJia1.png"
+          "realesrganX4": "icons/jpg-128/BTNMoDaoShiXiongJia1.jpg"
         }
       },
       "level": "B+",
@@ -579,7 +581,7 @@
     "冥蛇": [
       "recipe-9"
     ],
-    "云霞舞梦-改": [
+    "云霞舞梦.改": [
       "recipe-10"
     ],
     "血魔刻印": [

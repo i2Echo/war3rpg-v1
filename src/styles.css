@@ -138,6 +138,22 @@ main {
   padding: 0 clamp(10px, 1.6vw, 24px) 72px;
 }
 
+.site-footer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px 32px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.site-footer span + span::before {
+  content: "·";
+  margin-right: 10px;
+  color: var(--line-strong);
+}
+
 .hero {
   display: grid;
   min-height: 170px;
@@ -1106,6 +1122,40 @@ input::placeholder {
 
 .section-title.compact h2 {
   font-size: 22px;
+}
+
+.section-title.compact {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.sim-clear-button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff8ee;
+  color: var(--accent-dark);
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.sim-clear-button:hover,
+.sim-clear-button:focus-visible {
+  border-color: var(--line-strong);
+  background: #fff2df;
+  color: var(--ink);
+  outline: none;
+}
+
+.sim-clear-button:disabled {
+  cursor: not-allowed;
+  border-color: rgba(234, 223, 206, 0.74);
+  background: rgba(255, 253, 248, 0.58);
+  color: rgba(130, 117, 107, 0.48);
 }
 
 .sim-section {

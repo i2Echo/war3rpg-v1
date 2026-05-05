@@ -50,7 +50,8 @@
       "recipe": [],
       "raw": {
         "tip": "独裁者",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSiJiaoZhiZhang.blp",
@@ -74,7 +75,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I002",
@@ -110,7 +112,8 @@
       "recipe": [],
       "raw": {
         "tip": "泣血巨人",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQiXueJuRen.blp",
@@ -134,7 +137,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I003",
@@ -178,7 +182,8 @@
       "recipe": [],
       "raw": {
         "tip": "阿修罗",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNAXiuLuo.blp",
@@ -202,7 +207,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I004",
@@ -242,7 +248,8 @@
       "recipe": [],
       "raw": {
         "tip": "七曜神权",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQiYaoShenQuan.blp",
@@ -266,7 +273,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I005",
@@ -306,7 +314,8 @@
       "recipe": [],
       "raw": {
         "tip": "焚寂",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNFenJi.blp",
@@ -330,7 +339,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I006",
@@ -376,7 +386,8 @@
       "recipe": [],
       "raw": {
         "tip": "圣母颂",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShengMuSong.blp",
@@ -400,7 +411,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I007",
@@ -439,7 +451,8 @@
       "recipe": [],
       "raw": {
         "tip": "九霄环佩琴",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJiuXiaoHuanPeiQin.blp",
@@ -463,7 +476,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I008",
@@ -505,7 +519,8 @@
       "recipe": [],
       "raw": {
         "tip": "光络镜杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXingChenZhiLi.blp",
@@ -529,7 +544,8 @@
         "label": "法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I009",
@@ -568,7 +584,8 @@
       "recipe": [],
       "raw": {
         "tip": "千幕之夜",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQianMuZhiYe.blp",
@@ -592,7 +609,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00A",
@@ -632,7 +650,8 @@
       "recipe": [],
       "raw": {
         "tip": "奥姆幽刃",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNAoMuYouRen.blp",
@@ -656,7 +675,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00B",
@@ -696,7 +716,8 @@
       "recipe": [],
       "raw": {
         "tip": "弥赛亚圣典",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNMiSaiYaShengDian.blp",
@@ -720,7 +741,8 @@
         "label": "法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00C",
@@ -759,7 +781,8 @@
       "recipe": [],
       "raw": {
         "tip": "圣剑-奥梅利嘉",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNShiTuShiZi.blp",
@@ -783,7 +806,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00D",
@@ -823,7 +847,8 @@
       "recipe": [],
       "raw": {
         "tip": "轩辕剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXuanYuanJian.blp",
@@ -847,7 +872,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00E",
@@ -888,7 +914,8 @@
       "recipe": [],
       "raw": {
         "tip": "亚特兰蒂斯之怨",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNZhenShenZhiLi.blp",
@@ -912,7 +939,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00F",
@@ -952,7 +980,8 @@
       "recipe": [],
       "raw": {
         "tip": "黑暗司教之杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNHeiAnSiJiaoZhiZhang.blp",
@@ -976,7 +1005,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00G",
@@ -1018,7 +1048,8 @@
       "recipe": [],
       "raw": {
         "tip": "无相神衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNWuXiangShenYi.blp",
@@ -1042,7 +1073,8 @@
         "label": "智力衣服",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00H",
@@ -1082,7 +1114,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔影战甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMoYingZhanJia.blp",
@@ -1106,7 +1139,8 @@
         "label": "敏捷衣服",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00I",
@@ -1147,7 +1181,8 @@
       "recipe": [],
       "raw": {
         "tip": "碧垠圣袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNBiYinShengPao.blp",
@@ -1171,7 +1206,8 @@
         "label": "智力衣服",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00J",
@@ -1209,7 +1245,8 @@
       "recipe": [],
       "raw": {
         "tip": "白金皇铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuDaiShenKai.blp",
@@ -1233,7 +1270,8 @@
         "label": "力量衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00K",
@@ -1278,7 +1316,8 @@
       "recipe": [],
       "raw": {
         "tip": "党魂战甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNDangHunZhanKai.blp",
@@ -1302,7 +1341,8 @@
         "label": "全能衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00L",
@@ -1342,7 +1382,8 @@
       "recipe": [],
       "raw": {
         "tip": "死之衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNSiZhiYi.blp",
@@ -1366,7 +1407,8 @@
         "label": "全能衣服",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00M",
@@ -1408,7 +1450,8 @@
       "recipe": [],
       "raw": {
         "tip": "风神战衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFengShenZhanYi.blp",
@@ -1432,7 +1475,8 @@
         "label": "敏捷衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00N",
@@ -1475,7 +1519,8 @@
       "recipe": [],
       "raw": {
         "tip": "幽日神袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYouRiShenPao.blp",
@@ -1499,7 +1544,8 @@
         "label": "全能衣服",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00O",
@@ -1544,7 +1590,8 @@
       "recipe": [],
       "raw": {
         "tip": "教皇禁袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJiaoHuangJinPao.blp",
@@ -1568,7 +1615,8 @@
         "label": "智力衣服",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00P",
@@ -1605,7 +1653,8 @@
       "recipe": [],
       "raw": {
         "tip": "尘世巨蟒",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNChenShiJuMang.blp",
@@ -1629,7 +1678,8 @@
         "label": "力量衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00Q",
@@ -1667,7 +1717,8 @@
       "recipe": [],
       "raw": {
         "tip": "蚩尤魔铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAdvancedCreatureCarapace.blp",
@@ -1691,7 +1742,8 @@
         "label": "力量衣服",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00R",
@@ -1741,7 +1793,8 @@
       "recipe": [],
       "raw": {
         "tip": "炽凰天衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNChiHuangTianYi.blp",
@@ -1765,7 +1818,8 @@
         "label": "敏捷衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00S",
@@ -1806,7 +1860,8 @@
       "recipe": [],
       "raw": {
         "tip": "苍寰界衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNCangHuanJieYi.blp",
@@ -1830,7 +1885,8 @@
         "label": "智力衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I00T",
@@ -1865,7 +1921,8 @@
       "recipe": [],
       "raw": {
         "tip": "紫色布鞋",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNZiSeBuXie.blp",
@@ -1889,7 +1946,8 @@
         "label": "全能鞋子",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00U",
@@ -1925,7 +1983,8 @@
       "recipe": [],
       "raw": {
         "tip": "天方战靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNTianFangZhanXue.blp",
@@ -1949,7 +2008,8 @@
         "label": "全能鞋子",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00V",
@@ -1987,7 +2047,8 @@
       "recipe": [],
       "raw": {
         "tip": "琉璃金鞋",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLiuLiJinXue.blp",
@@ -2011,7 +2072,8 @@
         "label": "全能鞋子",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00W",
@@ -2046,7 +2108,8 @@
       "recipe": [],
       "raw": {
         "tip": "合成防护靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHeChengFangHuXue.blp",
@@ -2070,7 +2133,8 @@
         "label": "力量鞋子",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00X",
@@ -2108,7 +2172,8 @@
       "recipe": [],
       "raw": {
         "tip": "飞虹靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFeiHongXue.blp",
@@ -2132,7 +2197,8 @@
         "label": "智力鞋子",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00Y",
@@ -2170,7 +2236,8 @@
       "recipe": [],
       "raw": {
         "tip": "混元宝靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHunYuanBaoXue.blp",
@@ -2194,7 +2261,8 @@
         "label": "全能鞋子",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I00Z",
@@ -2232,7 +2300,8 @@
       "recipe": [],
       "raw": {
         "tip": "影武靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYingWuXue.blp",
@@ -2256,7 +2325,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I010",
@@ -2294,7 +2364,8 @@
       "recipe": [],
       "raw": {
         "tip": "力量绑腿",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLiLiangBangTui.blp",
@@ -2318,7 +2389,8 @@
         "label": "力量鞋子",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I011",
@@ -2362,7 +2434,8 @@
       "recipe": [],
       "raw": {
         "tip": "炎帝战靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYanDi.blp",
@@ -2386,7 +2459,8 @@
         "label": "力量鞋子",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I012",
@@ -2426,7 +2500,8 @@
       "recipe": [],
       "raw": {
         "tip": "桑楚靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNSangChuXue.blp",
@@ -2450,7 +2525,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I013",
@@ -2488,7 +2564,8 @@
       "recipe": [],
       "raw": {
         "tip": "将军履",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJiangJunLv.blp",
@@ -2512,7 +2589,8 @@
         "label": "全能鞋子",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I014",
@@ -2548,7 +2626,8 @@
       "recipe": [],
       "raw": {
         "tip": "灵蛇宝鞋",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLingSheBaoXue.blp",
@@ -2572,7 +2651,8 @@
         "label": "智力鞋子",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I015",
@@ -2610,7 +2690,8 @@
       "recipe": [],
       "raw": {
         "tip": "风之子",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFengZhiZi.blp",
@@ -2634,7 +2715,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I016",
@@ -2672,7 +2754,8 @@
       "recipe": [],
       "raw": {
         "tip": "帕特农之靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNPaTeNongZhiXue.blp",
@@ -2696,7 +2779,8 @@
         "label": "全能鞋子",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I017",
@@ -2737,7 +2821,8 @@
       "recipe": [],
       "raw": {
         "tip": "云霞舞梦",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYunXiaMengWu.blp",
@@ -2761,7 +2846,8 @@
         "label": "智力鞋子",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I018",
@@ -2797,7 +2883,8 @@
       "recipe": [],
       "raw": {
         "tip": "芬里尔之爪",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFenLiErZhiZhua.blp",
@@ -2821,7 +2908,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I019",
@@ -2862,7 +2950,8 @@
       "recipe": [],
       "raw": {
         "tip": "黄泉鬼靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHuangQuanGuiXue.blp",
@@ -2886,7 +2975,8 @@
         "label": "力量鞋子",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01A",
@@ -2921,7 +3011,8 @@
       "recipe": [],
       "raw": {
         "tip": "忏魂",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAdvancedCreatureAttack.blp",
@@ -2945,7 +3036,8 @@
         "label": "全能鞋子",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01B",
@@ -2983,7 +3075,8 @@
       "recipe": [],
       "raw": {
         "tip": "昊天神靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYanDiZhanXue.blp",
@@ -3007,7 +3100,8 @@
         "label": "力量鞋子",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01C",
@@ -3047,7 +3141,8 @@
       "recipe": [],
       "raw": {
         "tip": "银河幻星鞋",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYinHeHuanXingXue.blp",
@@ -3071,7 +3166,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01D",
@@ -3110,7 +3206,8 @@
       "recipe": [],
       "raw": {
         "tip": "天狼邪眼",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNTianLangXieYan.blp",
@@ -3134,7 +3231,8 @@
         "label": "敏捷饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01E",
@@ -3174,7 +3272,8 @@
       "recipe": [],
       "raw": {
         "tip": "太古项链",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNTaiGuXiangLian.blp",
@@ -3198,7 +3297,8 @@
         "label": "智力饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01F",
@@ -3238,7 +3338,8 @@
       "recipe": [],
       "raw": {
         "tip": "封神结",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFengShenJie.blp",
@@ -3262,7 +3363,8 @@
         "label": "敏捷饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01G",
@@ -3299,7 +3401,8 @@
       "recipe": [],
       "raw": {
         "tip": "战鬼之心",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNZhanGuiZhiXin.blp",
@@ -3323,7 +3426,8 @@
         "label": "力量饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01H",
@@ -3364,7 +3468,8 @@
       "recipe": [],
       "raw": {
         "tip": "以太环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYiTaiHuan.blp",
@@ -3388,7 +3493,8 @@
         "label": "全能饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01I",
@@ -3423,7 +3529,8 @@
       "recipe": [],
       "raw": {
         "tip": "海洋之星",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHaiYangZhiXin.blp",
@@ -3447,7 +3554,8 @@
         "label": "敏捷饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01J",
@@ -3484,7 +3592,8 @@
       "recipe": [],
       "raw": {
         "tip": "人马银座",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNRenMaYinZuo.blp",
@@ -3508,7 +3617,8 @@
         "label": "敏捷饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01K",
@@ -3545,7 +3655,8 @@
       "recipe": [],
       "raw": {
         "tip": "天皇祭冠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNTianHuangJiGuan.blp",
@@ -3569,7 +3680,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01L",
@@ -3611,7 +3723,8 @@
       "recipe": [],
       "raw": {
         "tip": "米迦勒之翼",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMiJiaLeZhiYi.blp",
@@ -3635,7 +3748,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01M",
@@ -3670,7 +3784,8 @@
       "recipe": [],
       "raw": {
         "tip": "六芒星印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLiuMangXingYin.blp",
@@ -3694,7 +3809,8 @@
         "label": "力量饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01N",
@@ -3734,7 +3850,8 @@
       "recipe": [],
       "raw": {
         "tip": "斯贝斯之诅咒",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSiBeiSiZhiZuZhou.blp",
@@ -3758,7 +3875,8 @@
         "label": "力量饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01O",
@@ -3793,7 +3911,8 @@
       "recipe": [],
       "raw": {
         "tip": "玛丽亚圣石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMaLiYaShengShi.blp",
@@ -3817,7 +3936,8 @@
         "label": "全能饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I01Q",
@@ -3852,7 +3972,8 @@
       "recipe": [],
       "raw": {
         "tip": "断裂的以太环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYiTaiHuan.blp",
@@ -3876,7 +3997,8 @@
         "label": "全能饰品",
         "itemLevel": 8,
         "displayLevel": "？？"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01R",
@@ -3919,7 +4041,8 @@
       "recipe": [],
       "raw": {
         "tip": "幽日神弓",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYouRiShenGong.blp",
@@ -3943,7 +4066,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I01S",
@@ -3979,7 +4103,8 @@
       "recipe": [],
       "raw": {
         "tip": "娜迦之怨",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNNaJiaZhiYuan.blp",
@@ -4003,7 +4128,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I025",
@@ -4034,7 +4160,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFFFF00火酒",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLiquidFire.blp",
@@ -4058,7 +4185,8 @@
         "label": "",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I026",
@@ -4089,7 +4217,8 @@
       "recipe": [],
       "raw": {
         "tip": "焚魔酒",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNEnchantedCrows.blp",
@@ -4113,7 +4242,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I027",
@@ -4143,7 +4273,8 @@
       "recipe": [],
       "raw": {
         "tip": "神奇菠萝",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSmash.blp",
@@ -4167,7 +4298,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I028",
@@ -4196,7 +4328,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFF8000FF帝都肉卷",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNDiDuRouJuan.blp",
@@ -4220,7 +4353,8 @@
         "label": "",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I02F",
@@ -4260,7 +4394,8 @@
       "recipe": [],
       "raw": {
         "tip": "东正护符",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNDongZhengHuFu.blp",
@@ -4284,7 +4419,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I02S",
@@ -4317,7 +4453,8 @@
       "recipe": [],
       "raw": {
         "tip": "饕餮扳指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNTaoTieBanZhi.blp",
@@ -4341,7 +4478,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I02T",
@@ -4385,7 +4523,8 @@
       "recipe": [],
       "raw": {
         "tip": "真.饕餮扳指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNTaoTieBanZhi.blp",
@@ -4409,7 +4548,8 @@
         "label": "全能饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I031",
@@ -4452,7 +4592,8 @@
       "recipe": [],
       "raw": {
         "tip": "金耀晚礼服",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJinYaoWanLiFu.blp",
@@ -4476,7 +4617,8 @@
         "label": "智力衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I033",
@@ -4522,7 +4664,8 @@
       "recipe": [],
       "raw": {
         "tip": "歌神之靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNGeShenZhiXue.blp",
@@ -4546,7 +4689,8 @@
         "label": "全能鞋子",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I034",
@@ -4585,7 +4729,8 @@
       "recipe": [],
       "raw": {
         "tip": "苦难女神",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNKuNanNvShen.blp",
@@ -4609,7 +4754,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I035",
@@ -4647,7 +4793,8 @@
       "recipe": [],
       "raw": {
         "tip": "党魂巨锤",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNDangHunJuChui.blp",
@@ -4671,7 +4818,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I036",
@@ -4709,7 +4857,8 @@
       "recipe": [],
       "raw": {
         "tip": "西风",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXiFeng.blp",
@@ -4733,7 +4882,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I037",
@@ -4776,7 +4926,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔枪-诺亚",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNMoQiangNuoYa.blp",
@@ -4800,7 +4951,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I038",
@@ -4837,7 +4989,8 @@
       "recipe": [],
       "raw": {
         "tip": "西方圣枪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNFlamingArrows.blp",
@@ -4861,7 +5014,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I039",
@@ -4896,7 +5050,8 @@
       "recipe": [],
       "raw": {
         "tip": "古代神铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLongHuangBaKai.blp",
@@ -4920,7 +5075,8 @@
         "label": "力量衣服",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03A",
@@ -4947,7 +5103,8 @@
       "recipe": [],
       "raw": {
         "tip": "三叶雪桑果",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSanYeXueSangGuo.blp",
@@ -4971,7 +5128,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03B",
@@ -4998,7 +5156,8 @@
       "recipe": [],
       "raw": {
         "tip": "梦见草",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNMengJianCao.blp",
@@ -5022,7 +5181,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03C",
@@ -5049,7 +5209,8 @@
       "recipe": [],
       "raw": {
         "tip": "石葫芦",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNClayFigurine.blp",
@@ -5073,7 +5234,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03D",
@@ -5100,7 +5262,8 @@
       "recipe": [],
       "raw": {
         "tip": "妖精之尾",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYaoJingZhiWei.blp",
@@ -5124,7 +5287,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03E",
@@ -5151,7 +5315,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF古代圣油",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLesserInvulneralbility.blp",
@@ -5175,7 +5340,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03F",
@@ -5210,7 +5376,8 @@
       "recipe": [],
       "raw": {
         "tip": "失乐魔羽",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShiLeMoYu.blp",
@@ -5234,7 +5401,8 @@
         "label": "敏捷饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03G",
@@ -5268,7 +5436,8 @@
       "recipe": [],
       "raw": {
         "tip": "匠神之手",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp",
@@ -5292,7 +5461,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03H",
@@ -5319,7 +5489,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF瑰丽之果",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbOfVenom.blp",
@@ -5343,7 +5514,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03I",
@@ -5370,7 +5542,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFF00CCFF精灵祭叶",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
@@ -5394,7 +5567,8 @@
         "label": "",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I03N",
@@ -5431,7 +5605,8 @@
       "recipe": [],
       "raw": {
         "tip": "红莲灯芯",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHongLianDengXin.blp",
@@ -5455,7 +5630,8 @@
         "label": "智力饰品",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03U",
@@ -5489,7 +5665,8 @@
       "recipe": [],
       "raw": {
         "tip": "苍红勾玉",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp",
@@ -5513,7 +5690,8 @@
         "label": "力量饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03V",
@@ -5549,7 +5727,8 @@
       "recipe": [],
       "raw": {
         "tip": "夜莺之铃",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYeYinZhiLing.blp",
@@ -5573,7 +5752,8 @@
         "label": "敏捷饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03W",
@@ -5608,7 +5788,8 @@
       "recipe": [],
       "raw": {
         "tip": "英气宝石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbofSlowness.blp",
@@ -5632,7 +5813,8 @@
         "label": "智力饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03X",
@@ -5671,7 +5853,8 @@
       "recipe": [],
       "raw": {
         "tip": "金罡头盔",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJinGangTouKui.blp",
@@ -5695,7 +5878,8 @@
         "label": "全能饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03Y",
@@ -5729,7 +5913,8 @@
       "recipe": [],
       "raw": {
         "tip": "万宝藤环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNWanBaoTengHuan.blp",
@@ -5753,7 +5938,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I03Z",
@@ -5787,7 +5973,8 @@
       "recipe": [],
       "raw": {
         "tip": "幻木宝镜",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNHuanMuBaoJing.blp",
@@ -5811,7 +5998,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I040",
@@ -5852,7 +6040,8 @@
       "recipe": [],
       "raw": {
         "tip": "世界之铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNShiJieZhiKai.blp",
@@ -5876,7 +6065,8 @@
         "label": "全能衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I041",
@@ -5903,7 +6093,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF雪仙露",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNXueXianLu.blp",
@@ -5927,7 +6118,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I042",
@@ -5954,7 +6146,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF月舍利",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYueSheLi.blp",
@@ -5978,7 +6171,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I043",
@@ -6005,7 +6199,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF血岚精",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPhilosophersStone.blp",
@@ -6029,7 +6224,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I044",
@@ -6069,7 +6265,8 @@
       "recipe": [],
       "raw": {
         "tip": "黑天鹅",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNHeiTianE.blp",
@@ -6093,7 +6290,8 @@
         "label": "全能鞋子",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I047",
@@ -6126,7 +6324,8 @@
       "recipe": [],
       "raw": {
         "tip": "自由之徽",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAnkh.blp",
@@ -6150,7 +6349,8 @@
         "label": "全能饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I048",
@@ -6187,7 +6387,8 @@
       "recipe": [],
       "raw": {
         "tip": "愚者项链",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNNecklace.blp",
@@ -6211,7 +6412,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I049",
@@ -6254,7 +6456,8 @@
       "recipe": [],
       "raw": {
         "tip": "月之女神纹章",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp",
@@ -6278,7 +6481,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04C",
@@ -6314,7 +6518,8 @@
       "recipe": [],
       "raw": {
         "tip": "月之秘铃",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNIcyTreasureBox.blp",
@@ -6338,7 +6543,8 @@
         "label": "智力饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04D",
@@ -6385,7 +6591,8 @@
       "recipe": [],
       "raw": {
         "tip": "使徒十字",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSTSZ.blp",
@@ -6409,7 +6616,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04E",
@@ -6445,7 +6653,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔龙魂壤",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNDestroyer.blp",
@@ -6469,147 +6678,8 @@
         "label": "",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
-    },
-    {
-      "id": "I04F",
-      "name": "使徒十字",
-      "kind": "武器",
-      "level": "S+",
-      "suitableFor": "",
-      "hp": "2",
-      "class": "Permanent",
-      "goldCost": 220000,
-      "lumberCost": 3500,
-      "abilities": [
-        "A0R5",
-        "A0R3",
-        "A0QT"
-      ],
-      "iconSource": "war3mapImported\\BTNSTSZ.blp",
-      "description": "攻击力+7000\n护甲+100\n法术抗性+30%\n吸血能力+20%\n15%几率造成6倍暴击\n十字冥切：可任意切换三种属性\n当前-敏捷+450\n沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。\n等级：S+\n\n东正教祭仪之十字剑，操控此剑之人的地位甚至在十二教士之上。",
-      "lines": [
-        "攻击力+7000",
-        "护甲+100",
-        "法术抗性+30%",
-        "吸血能力+20%",
-        "15%几率造成6倍暴击",
-        "十字冥切：可任意切换三种属性",
-        "当前-敏捷+450",
-        "沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。",
-        "等级：S+",
-        "东正教祭仪之十字剑，操控此剑之人的地位甚至在十二教士之上。"
-      ],
-      "stats": [
-        "攻击力+7000",
-        "护甲+100",
-        "法术抗性+30%",
-        "吸血能力+20%",
-        "15%几率造成6倍暴击",
-        "当前-敏捷+450"
-      ],
-      "effects": [
-        "十字冥切：可任意切换三种属性",
-        "沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。"
-      ],
-      "recipe": [],
-      "raw": {
-        "tip": "使徒十字",
-        "itemClass": "Permanent"
       },
-      "icon": {
-        "source": "war3mapImported\\BTNSTSZ.blp",
-        "archive": "map",
-        "blp": "icons/blp/BTNSTSZ.blp",
-        "png": "icons/png/BTNSTSZ.png",
-        "jpg": "icons/jpg/BTNSTSZ.jpg",
-        "missing": false,
-        "conversion": "blp1-jpeg",
-        "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNSTSZ.jpg",
-        "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNSTSZ.png",
-        "needsJpegConversion": true,
-        "png256": "icons/png-256/BTNSTSZ.png",
-        "realesrganX4": "icons/jpg-128/BTNSTSZ.jpg"
-      },
-      "refining": {
-        "hp": 2,
-        "slot": "武器",
-        "attribute": "全能",
-        "name": "全能型武器",
-        "label": "全能型武器",
-        "itemLevel": 8,
-        "displayLevel": "S+"
-      }
-    },
-    {
-      "id": "I04G",
-      "name": "使徒十字",
-      "kind": "武器",
-      "level": "S+",
-      "suitableFor": "",
-      "hp": "2",
-      "class": "Permanent",
-      "goldCost": 220000,
-      "lumberCost": 3500,
-      "abilities": [
-        "A0R5",
-        "A08J",
-        "A0QT"
-      ],
-      "iconSource": "war3mapImported\\BTNSTSZ.blp",
-      "description": "攻击力+7000\n护甲+100\n法术抗性+30%\n吸血能力+20%\n15%几率造成6倍暴击\n十字冥切：可任意切换三种属性\n当前-智力+600\n沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。\n等级：S+\n\n东正教祭仪之十字剑，操控此剑之人的地位甚至在十二教士之上。",
-      "lines": [
-        "攻击力+7000",
-        "护甲+100",
-        "法术抗性+30%",
-        "吸血能力+20%",
-        "15%几率造成6倍暴击",
-        "十字冥切：可任意切换三种属性",
-        "当前-智力+600",
-        "沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。",
-        "等级：S+",
-        "东正教祭仪之十字剑，操控此剑之人的地位甚至在十二教士之上。"
-      ],
-      "stats": [
-        "攻击力+7000",
-        "护甲+100",
-        "法术抗性+30%",
-        "吸血能力+20%",
-        "15%几率造成6倍暴击",
-        "当前-智力+600"
-      ],
-      "effects": [
-        "十字冥切：可任意切换三种属性",
-        "沉默十字：每隔18秒沉默附近600范围内的敌人，造成等级x200的伤害，持续4秒。"
-      ],
-      "recipe": [],
-      "raw": {
-        "tip": "使徒十字",
-        "itemClass": "Permanent"
-      },
-      "icon": {
-        "source": "war3mapImported\\BTNSTSZ.blp",
-        "archive": "map",
-        "blp": "icons/blp/BTNSTSZ.blp",
-        "png": "icons/png/BTNSTSZ.png",
-        "jpg": "icons/jpg/BTNSTSZ.jpg",
-        "missing": false,
-        "conversion": "blp1-jpeg",
-        "jpgAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\jpg\\BTNSTSZ.jpg",
-        "pngAbsolute": "extracted\\510F7E04DB3FFE578BF1F04D9ED3E37D\\icons\\png\\BTNSTSZ.png",
-        "needsJpegConversion": true,
-        "png256": "icons/png-256/BTNSTSZ.png",
-        "realesrganX4": "icons/jpg-128/BTNSTSZ.jpg"
-      },
-      "refining": {
-        "hp": 2,
-        "slot": "武器",
-        "attribute": "全能",
-        "name": "全能型武器",
-        "label": "全能型武器",
-        "itemLevel": 8,
-        "displayLevel": "S+"
-      }
+      "randomPool": false
     },
     {
       "id": "I04H",
@@ -6653,7 +6723,8 @@
       "recipe": [],
       "raw": {
         "tip": "死亡之蝎",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNDeathXie.blp",
@@ -6677,7 +6748,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04I",
@@ -6716,7 +6788,8 @@
       "recipe": [],
       "raw": {
         "tip": "雾幻云珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNWuHuanYunZhu.blp",
@@ -6740,7 +6813,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I04L",
@@ -6779,7 +6853,8 @@
       "recipe": [],
       "raw": {
         "tip": "投币式铠甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNTouBiShiKaiJia.blp",
@@ -6803,7 +6878,8 @@
         "label": "全能衣服",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04M",
@@ -6845,7 +6921,8 @@
       "recipe": [],
       "raw": {
         "tip": "乾坤太弩",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNQianKunTaiNu.blp",
@@ -6869,7 +6946,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04N",
@@ -6906,7 +6984,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔导师护胸-改",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNMoDaoShiXiongJia1.blp",
@@ -6930,7 +7009,8 @@
         "label": "智力衣服",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04O",
@@ -6961,7 +7041,8 @@
       "recipe": [],
       "raw": {
         "tip": "血魔刻印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNXueMoYinKe.blp",
@@ -6985,7 +7066,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04P",
@@ -7027,7 +7109,8 @@
       "recipe": [],
       "raw": {
         "tip": "战神铁骑",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNWarStomp.blp",
@@ -7051,7 +7134,8 @@
         "label": "力量鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04Q",
@@ -7093,7 +7177,8 @@
       "recipe": [],
       "raw": {
         "tip": "幻穹弓",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNHuanQiongGong.blp",
@@ -7117,7 +7202,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04S",
@@ -7151,7 +7237,8 @@
       "recipe": [],
       "raw": {
         "tip": "圣剑骑士纹章",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp",
@@ -7175,7 +7262,8 @@
         "label": "全能饰品",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04T",
@@ -7217,7 +7305,8 @@
       "recipe": [],
       "raw": {
         "tip": "酸与羽扇",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
@@ -7241,7 +7330,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I04U",
@@ -7282,7 +7372,8 @@
       "recipe": [],
       "raw": {
         "tip": "奥姆邪瞳",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNaomuxietong.blp",
@@ -7306,7 +7397,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04V",
@@ -7343,7 +7435,8 @@
       "recipe": [],
       "raw": {
         "tip": "真.千幕之夜",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNQianMuZhiYe.blp",
@@ -7367,7 +7460,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04W",
@@ -7408,7 +7502,8 @@
       "recipe": [],
       "raw": {
         "tip": "雅典娜神杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNyadiannashenzhang.blp",
@@ -7432,7 +7527,8 @@
         "label": "法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I04X",
@@ -7459,7 +7555,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF星界之树圣果",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbofSlowness.blp",
@@ -7483,7 +7580,8 @@
         "label": "",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I04Y",
@@ -7521,7 +7619,8 @@
       "recipe": [],
       "raw": {
         "tip": "圣痕",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPortal.blp",
@@ -7545,7 +7644,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I050",
@@ -7584,7 +7684,8 @@
       "recipe": [],
       "raw": {
         "tip": "云霞舞梦.改",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYunXiaMengWu.blp",
@@ -7608,7 +7709,8 @@
         "label": "智力鞋子",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I051",
@@ -7650,7 +7752,8 @@
       "recipe": [],
       "raw": {
         "tip": "灾厄骸甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNUndeadBattleShip.blp",
@@ -7674,7 +7777,8 @@
         "label": "力量衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I052",
@@ -7715,7 +7819,8 @@
       "recipe": [],
       "raw": {
         "tip": "太古真理",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNDizzy.blp",
@@ -7739,7 +7844,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I053",
@@ -7768,7 +7874,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔雾",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSpell_QunMoWuYe.blp",
@@ -7792,7 +7899,8 @@
         "label": "力量饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I054",
@@ -7827,7 +7935,8 @@
       "recipe": [],
       "raw": {
         "tip": "沐蓝手套",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNReplenishMana.blp",
@@ -7851,7 +7960,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I055",
@@ -7891,7 +8001,8 @@
       "recipe": [],
       "raw": {
         "tip": "光羽之靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNIllidanPrisonWagon.blp",
@@ -7915,7 +8026,8 @@
         "label": "智力鞋子",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I05C",
@@ -7946,7 +8058,8 @@
       "recipe": [],
       "raw": {
         "tip": "八维腰带",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSlow.blp",
@@ -7970,7 +8083,8 @@
         "label": "智力饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I05D",
@@ -8008,7 +8122,8 @@
       "recipe": [],
       "raw": {
         "tip": "领袖之靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LingXiuZhiXue.blp",
@@ -8032,7 +8147,8 @@
         "label": "力量鞋子",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I05E",
@@ -8071,7 +8187,8 @@
       "recipe": [],
       "raw": {
         "tip": "刃靴子",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_WuRenXueZi.blp",
@@ -8095,7 +8212,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05F",
@@ -8139,7 +8257,8 @@
       "recipe": [],
       "raw": {
         "tip": "太阳神剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_TaiYangShenJian.blp",
@@ -8163,7 +8282,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05G",
@@ -8204,7 +8324,8 @@
       "recipe": [],
       "raw": {
         "tip": "时轮球",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNCrystalBall.blp",
@@ -8228,7 +8349,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05I",
@@ -8264,7 +8386,8 @@
       "recipe": [],
       "raw": {
         "tip": "古魂小灯",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLamp.blp",
@@ -8288,7 +8411,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05L",
@@ -8325,7 +8449,8 @@
       "recipe": [],
       "raw": {
         "tip": "不朽战枪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_BuXiuZhanQiang.blp",
@@ -8349,7 +8474,8 @@
         "label": "全能型武器",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05M",
@@ -8382,7 +8508,8 @@
       "recipe": [],
       "raw": {
         "tip": "先祖灵石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_XianZuLingShi.blp",
@@ -8406,7 +8533,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05N",
@@ -8445,7 +8573,8 @@
       "recipe": [],
       "raw": {
         "tip": "罪神之枪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ZuiShenZhiQiang.blp",
@@ -8469,7 +8598,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05O",
@@ -8512,7 +8642,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔王军铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_MoWangJunKai.blp",
@@ -8536,7 +8667,8 @@
         "label": "力量衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I05P",
@@ -8577,7 +8709,8 @@
       "recipe": [],
       "raw": {
         "tip": "界罗",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_JieLuo.blp",
@@ -8601,7 +8734,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I05Y",
@@ -8646,7 +8780,8 @@
       "recipe": [],
       "raw": {
         "tip": "奥斯特里克神剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_TaiYangShenJian.blp",
@@ -8670,7 +8805,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I060",
@@ -8713,7 +8849,8 @@
       "recipe": [],
       "raw": {
         "tip": "月世界",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_YueShiJie.blp",
@@ -8737,7 +8874,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I061",
@@ -8778,7 +8916,8 @@
       "recipe": [],
       "raw": {
         "tip": "罪神之枪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ZuiShenZhiQiang.blp",
@@ -8802,7 +8941,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I062",
@@ -8847,7 +8987,8 @@
       "recipe": [],
       "raw": {
         "tip": "歼灭天使",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_JianMieTianShi.blp",
@@ -8871,7 +9012,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I063",
@@ -8912,7 +9054,8 @@
       "recipe": [],
       "raw": {
         "tip": "煌魔战靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_HuangMoZhanXue.blp",
@@ -8936,7 +9079,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I064",
@@ -8974,7 +9118,8 @@
       "recipe": [],
       "raw": {
         "tip": "煌魔暗瞳",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_HuangMoAnTong.blp",
@@ -8998,7 +9143,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I066",
@@ -9041,7 +9187,8 @@
       "recipe": [],
       "raw": {
         "tip": "银河巨铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYinHeJuKai.blp",
@@ -9065,7 +9212,8 @@
         "label": "敏捷衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I067",
@@ -9105,7 +9253,8 @@
       "recipe": [],
       "raw": {
         "tip": "阿玛菲特战刃",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNNewItem_AMaFeiTeZhanRen.blp",
@@ -9129,7 +9278,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I068",
@@ -9173,7 +9323,8 @@
       "recipe": [],
       "raw": {
         "tip": "七象孤星",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYouRiShenGong.blp",
@@ -9197,7 +9348,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06A",
@@ -9236,7 +9388,8 @@
       "recipe": [],
       "raw": {
         "tip": "昆仑仙履",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_KunLunXianLv.blp",
@@ -9260,7 +9413,8 @@
         "label": "智力鞋子",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06B",
@@ -9300,7 +9454,8 @@
       "recipe": [],
       "raw": {
         "tip": "九天玄女珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_JiuTianXuanNvZhu.blp",
@@ -9324,7 +9479,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06C",
@@ -9360,7 +9516,8 @@
       "recipe": [],
       "raw": {
         "tip": "罪恶王冠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ZuiEWangGuan.blp",
@@ -9384,7 +9541,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06E",
@@ -9423,7 +9581,8 @@
       "recipe": [],
       "raw": {
         "tip": "冥蛇",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_MingShe.blp",
@@ -9447,7 +9606,8 @@
         "label": "法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06H",
@@ -9484,7 +9644,8 @@
       "recipe": [],
       "raw": {
         "tip": "漆黑之牙",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_QiHeiZhiYa.blp",
@@ -9508,7 +9669,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06I",
@@ -9550,7 +9712,8 @@
       "recipe": [],
       "raw": {
         "tip": "真.漆黑之牙",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_QiHeiZhiYa.blp",
@@ -9574,7 +9737,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06K",
@@ -9612,7 +9776,8 @@
       "recipe": [],
       "raw": {
         "tip": "冥神之镜",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_MingShenZhiJing.blp",
@@ -9636,7 +9801,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06L",
@@ -9676,7 +9842,8 @@
       "recipe": [],
       "raw": {
         "tip": "界罗杀生",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_JieLuo.blp",
@@ -9700,7 +9867,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06M",
@@ -9738,7 +9906,8 @@
       "recipe": [],
       "raw": {
         "tip": "般若金刚印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_BoRuoJinGangYin.blp",
@@ -9762,7 +9931,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06N",
@@ -9804,7 +9974,8 @@
       "recipe": [],
       "raw": {
         "tip": "五雷神机",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpThree.blp",
@@ -9828,7 +9999,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06O",
@@ -9866,7 +10038,8 @@
       "recipe": [],
       "raw": {
         "tip": "生锈的发簪",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_WuCaiYuZan.blp",
@@ -9890,7 +10063,8 @@
         "label": "全能饰品",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06P",
@@ -9929,7 +10103,8 @@
       "recipe": [],
       "raw": {
         "tip": "龙骑兵铠甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LongLinKaiJia.blp",
@@ -9953,7 +10128,8 @@
         "label": "全能衣服",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I06Q",
@@ -9996,7 +10172,8 @@
       "recipe": [],
       "raw": {
         "tip": "龙鳞战铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LongLinKaiJia.blp",
@@ -10020,7 +10197,8 @@
         "label": "全能衣服",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06R",
@@ -10070,7 +10248,8 @@
       "recipe": [],
       "raw": {
         "tip": "幻剑-天胧",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_HuanJianTianLong.blp",
@@ -10094,7 +10273,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06S",
@@ -10128,7 +10308,8 @@
       "recipe": [],
       "raw": {
         "tip": "土人偶",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp",
@@ -10152,7 +10333,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06U",
@@ -10196,7 +10378,8 @@
       "recipe": [],
       "raw": {
         "tip": "星云G战术盔甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ZhanShuG.blp",
@@ -10220,7 +10403,8 @@
         "label": "智力衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06V",
@@ -10257,7 +10441,8 @@
       "recipe": [],
       "raw": {
         "tip": "干部徽章+",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
@@ -10281,7 +10466,8 @@
         "label": "力量饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06W",
@@ -10326,7 +10512,8 @@
       "recipe": [],
       "raw": {
         "tip": "党魂劫焰",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_DangHuiJieYan.blp",
@@ -10350,7 +10537,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06X",
@@ -10395,7 +10583,8 @@
       "recipe": [],
       "raw": {
         "tip": "耶华剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_YeHuaJian.blp",
@@ -10419,7 +10608,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06Y",
@@ -10461,7 +10651,8 @@
       "recipe": [],
       "raw": {
         "tip": "圣十字铠甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ShengShiZiKaiJia.blp",
@@ -10485,7 +10676,8 @@
         "label": "全能衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I06Z",
@@ -10530,7 +10722,8 @@
       "recipe": [],
       "raw": {
         "tip": "东皇天手",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_DongHuangTianShou.blp",
@@ -10554,7 +10747,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I070",
@@ -10595,7 +10789,8 @@
       "recipe": [],
       "raw": {
         "tip": "黄金加特林",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNFlakCannons.blp",
@@ -10619,7 +10814,8 @@
         "label": "全能型武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I071",
@@ -10654,7 +10850,8 @@
       "recipe": [],
       "raw": {
         "tip": "古兰圣珠+",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp",
@@ -10678,7 +10875,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I073",
@@ -10719,7 +10917,8 @@
       "recipe": [],
       "raw": {
         "tip": "古兰猬甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSirenAdept.blp",
@@ -10743,7 +10942,8 @@
         "label": "全能衣服",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I074",
@@ -10781,7 +10981,8 @@
       "recipe": [],
       "raw": {
         "tip": "古兰圣火令",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNJanggo.blp",
@@ -10805,7 +11006,8 @@
         "label": "智力饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I075",
@@ -10847,7 +11049,8 @@
       "recipe": [],
       "raw": {
         "tip": "真知之石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
@@ -10871,7 +11074,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I076",
@@ -10906,7 +11110,8 @@
       "recipe": [],
       "raw": {
         "tip": "兰花印+",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNLanHuaYin.blp",
@@ -10930,7 +11135,8 @@
         "label": "敏捷饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I077",
@@ -10975,7 +11181,8 @@
       "recipe": [],
       "raw": {
         "tip": "星莲萃梦",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_XingLianCuiMeng.blp",
@@ -10999,7 +11206,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I079",
@@ -11048,7 +11256,8 @@
       "recipe": [],
       "raw": {
         "tip": "虚空SM战术盔甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ZhanShuG.blp",
@@ -11072,7 +11281,8 @@
         "label": "智力衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07A",
@@ -11115,7 +11325,8 @@
       "recipe": [],
       "raw": {
         "tip": "百草仙鞋",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_BaiCaoXianXie.blp",
@@ -11139,7 +11350,8 @@
         "label": "全能鞋子",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07B",
@@ -11178,7 +11390,8 @@
       "recipe": [],
       "raw": {
         "tip": "北斗炼日印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_BeiDouLianRiYin.blp",
@@ -11202,7 +11415,8 @@
         "label": "智力饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07C",
@@ -11245,7 +11459,8 @@
       "recipe": [],
       "raw": {
         "tip": "命运石之坠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNFeedBack.blp",
@@ -11269,7 +11484,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07D",
@@ -11315,7 +11531,8 @@
       "recipe": [],
       "raw": {
         "tip": "罂粟骨杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LGYSweapon.blp",
@@ -11339,7 +11556,8 @@
         "label": "法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07E",
@@ -11388,7 +11606,8 @@
       "recipe": [],
       "raw": {
         "tip": "赤柬明王",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_DDZWeapon.blp",
@@ -11412,7 +11631,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07F",
@@ -11448,7 +11668,8 @@
       "recipe": [],
       "raw": {
         "tip": "烈神珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrbOfCorruption.blp",
@@ -11472,7 +11693,8 @@
         "label": "全能饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07G",
@@ -11499,7 +11721,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF0000暴走之血",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNSpell_LuHunJue.blp",
@@ -11523,7 +11746,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "？？"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07H",
@@ -11554,7 +11778,8 @@
       "recipe": [],
       "raw": {
         "tip": "粒子瓶",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LiZiKongPin.blp",
@@ -11578,7 +11803,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": ""
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07I",
@@ -11612,7 +11838,8 @@
       "recipe": [],
       "raw": {
         "tip": "粒子瓶(黄)",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LiZiYellow.blp",
@@ -11636,7 +11863,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": ""
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07J",
@@ -11670,7 +11898,8 @@
       "recipe": [],
       "raw": {
         "tip": "粒子瓶(绿)",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LiZiGreen.blp",
@@ -11694,7 +11923,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": ""
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07K",
@@ -11728,7 +11958,8 @@
       "recipe": [],
       "raw": {
         "tip": "粒子瓶(红)",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LiZiPink.blp",
@@ -11752,7 +11983,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": ""
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07L",
@@ -11786,7 +12018,8 @@
       "recipe": [],
       "raw": {
         "tip": "粒子瓶(蓝)",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LiZiBlue.blp",
@@ -11810,7 +12043,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": ""
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07M",
@@ -11850,7 +12084,8 @@
       "recipe": [],
       "raw": {
         "tip": "天空女神圣衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_TianKongNvShenShengYi.blp",
@@ -11874,7 +12109,8 @@
         "label": "全能衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07N",
@@ -11920,7 +12156,8 @@
       "recipe": [],
       "raw": {
         "tip": "废墟之刃",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_Lucifer_Weapon.blp",
@@ -11944,7 +12181,8 @@
         "label": "全能型武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07O",
@@ -11973,7 +12211,8 @@
       "recipe": [],
       "raw": {
         "tip": "琅琊玉坠+",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLangYaJieHuan.blp",
@@ -11997,7 +12236,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07P",
@@ -12031,7 +12271,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔悲石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_MoBeiShi.blp",
@@ -12055,7 +12296,8 @@
         "label": "智力饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07Q",
@@ -12091,7 +12333,8 @@
       "recipe": [],
       "raw": {
         "tip": "阿拉伯头盔",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_CJSHTK.blp",
@@ -12115,7 +12358,8 @@
         "label": "力量饰品",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07R",
@@ -12154,7 +12398,8 @@
       "recipe": [],
       "raw": {
         "tip": "藤蔓手套",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNReplenishHealth.blp",
@@ -12178,7 +12423,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07S",
@@ -12220,7 +12466,8 @@
       "recipe": [],
       "raw": {
         "tip": "机械血珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_JiXieXueZhu.blp",
@@ -12244,7 +12491,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07T",
@@ -12285,7 +12533,8 @@
       "recipe": [],
       "raw": {
         "tip": "仙气葫芦",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_XianShuiHuLu.blp",
@@ -12309,7 +12558,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07U",
@@ -12355,7 +12605,8 @@
       "recipe": [],
       "raw": {
         "tip": "昴星神袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_MaoXingShenPao.blp",
@@ -12379,7 +12630,8 @@
         "label": "智力衣服",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07V",
@@ -12412,7 +12664,8 @@
       "recipe": [],
       "raw": {
         "tip": "小丑靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNWirtsOtherLeg.blp",
@@ -12436,7 +12689,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I07W",
@@ -12480,7 +12734,8 @@
       "recipe": [],
       "raw": {
         "tip": "仙气葫芦+",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_XianShuiHuLu.blp",
@@ -12504,7 +12759,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07X",
@@ -12545,7 +12801,8 @@
       "recipe": [],
       "raw": {
         "tip": "蓬莱仙珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_PengLaiShenZhu.blp",
@@ -12569,7 +12826,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07Y",
@@ -12613,7 +12871,8 @@
       "recipe": [],
       "raw": {
         "tip": "变异葫芦",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_BianYiHuLu.blp",
@@ -12637,7 +12896,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I07Z",
@@ -12677,7 +12937,8 @@
       "recipe": [],
       "raw": {
         "tip": "谛听天镯",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_DiTingTianZhuo.blp",
@@ -12701,7 +12962,8 @@
         "label": "力量饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I080",
@@ -12737,7 +12999,8 @@
       "recipe": [],
       "raw": {
         "tip": "千棱幻玉",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_QianLengHuanYu.blp",
@@ -12761,7 +13024,8 @@
         "label": "敏捷饰品",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "I081",
@@ -12798,7 +13062,8 @@
       "recipe": [],
       "raw": {
         "tip": "炼妖靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_LianYaoXue.blp",
@@ -12822,7 +13087,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I082",
@@ -12862,7 +13128,8 @@
       "recipe": [],
       "raw": {
         "tip": "超雄铁骑",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_ChaoXiongTieJi.blp",
@@ -12886,7 +13153,8 @@
         "label": "力量鞋子",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "I083",
@@ -12931,7 +13199,8 @@
       "recipe": [],
       "raw": {
         "tip": "炼狱",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNItem_GuiQi.blp",
@@ -12955,7 +13224,8 @@
         "label": "非法师武器",
         "itemLevel": 8,
         "displayLevel": "S+"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "afac",
@@ -12997,7 +13267,8 @@
       "recipe": [],
       "raw": {
         "tip": "月轮剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYueLunJian.blp",
@@ -13021,7 +13292,8 @@
         "label": "全能型武器",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ajen",
@@ -13054,7 +13326,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买钢爪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp",
@@ -13078,7 +13351,8 @@
         "label": "非法师武器",
         "itemLevel": 1,
         "displayLevel": "G+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "azhr",
@@ -13110,7 +13384,8 @@
       "recipe": [],
       "raw": {
         "tip": "犬牙项链",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQuanYaXiangLian.blp",
@@ -13134,7 +13409,8 @@
         "label": "敏捷饰品",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "belv",
@@ -13170,7 +13446,8 @@
       "recipe": [],
       "raw": {
         "tip": "紫檀杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNDOTAdeptTraining.blp",
@@ -13194,7 +13471,8 @@
         "label": "法师武器",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "bgst",
@@ -13229,7 +13507,8 @@
       "recipe": [],
       "raw": {
         "tip": "云羽扇",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYunYuShan.blp",
@@ -13253,7 +13532,8 @@
         "label": "法师武器",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "brac",
@@ -13290,7 +13570,8 @@
       "recipe": [],
       "raw": {
         "tip": "天岚",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNBrilliance.blp",
@@ -13314,7 +13595,8 @@
         "label": "全能型武器",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "bspd",
@@ -13352,7 +13634,8 @@
       "recipe": [],
       "raw": {
         "tip": "刑天战斧",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
@@ -13376,7 +13659,8 @@
         "label": "非法师武器",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "bzbe",
@@ -13409,7 +13693,8 @@
       "recipe": [],
       "raw": {
         "tip": "净化之瓶",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNVialEmpty.blp",
@@ -13433,7 +13718,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "bzbf",
@@ -13469,7 +13755,8 @@
       "recipe": [],
       "raw": {
         "tip": "古兰圣珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp",
@@ -13493,7 +13780,8 @@
         "label": "智力饰品",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ches",
@@ -13522,7 +13810,8 @@
       "recipe": [],
       "raw": {
         "tip": "生命项链",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShengMingXiangLian.blp",
@@ -13546,7 +13835,8 @@
         "label": "全能饰品",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ciri",
@@ -13583,7 +13873,8 @@
       "recipe": [],
       "raw": {
         "tip": "太极棍",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAlleriaFlute.blp",
@@ -13607,7 +13898,8 @@
         "label": "全能型武器",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ckng",
@@ -13640,7 +13932,8 @@
       "recipe": [],
       "raw": {
         "tip": "战斗靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNBootsOfSpeed.blp",
@@ -13664,7 +13957,8 @@
         "label": "全能鞋子",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "clfm",
@@ -13702,7 +13996,8 @@
       "recipe": [],
       "raw": {
         "tip": "碧蛇毒吻",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNBiSheDuWen.blp",
@@ -13726,7 +14021,8 @@
         "label": "法师武器",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "clsd",
@@ -13764,7 +14060,8 @@
       "recipe": [],
       "raw": {
         "tip": "镇魔杵",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPurification.blp",
@@ -13788,7 +14085,8 @@
         "label": "全能型武器",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "cnhn",
@@ -13823,7 +14121,8 @@
       "recipe": [],
       "raw": {
         "tip": "玄钢臂",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXuanGangBing.blp",
@@ -13847,7 +14146,8 @@
         "label": "力量饰品",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "cnob",
@@ -13885,7 +14185,8 @@
       "recipe": [],
       "raw": {
         "tip": "诛仙邪刃",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXuanMingBaoDao.blp",
@@ -13909,7 +14210,8 @@
         "label": "非法师武器",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "crys",
@@ -13944,7 +14246,8 @@
       "recipe": [],
       "raw": {
         "tip": "藏秘洛迦爪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNShamanMaster.blp",
@@ -13968,7 +14271,8 @@
         "label": "非法师武器",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "desc",
@@ -14000,7 +14304,8 @@
       "recipe": [],
       "raw": {
         "tip": "古典鞋子",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuDianXueZi.blp",
@@ -14024,7 +14329,8 @@
         "label": "智力鞋子",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "dkfw",
@@ -14061,7 +14367,8 @@
       "recipe": [],
       "raw": {
         "tip": "洗礼圣瓶",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXiLiShengPin.blp",
@@ -14085,7 +14392,8 @@
         "label": "智力饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "dphe",
@@ -14123,7 +14431,8 @@
       "recipe": [],
       "raw": {
         "tip": "经纬磐石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNThunderLizardEgg.blp",
@@ -14147,7 +14456,8 @@
         "label": "全能饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "dsum",
@@ -14178,7 +14488,8 @@
       "recipe": [],
       "raw": {
         "tip": "苗刀",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMiaoDao.blp",
@@ -14202,7 +14513,8 @@
         "label": "非法师武器",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "dthb",
@@ -14235,7 +14547,8 @@
       "recipe": [],
       "raw": {
         "tip": "天魅珠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSoulGem.blp",
@@ -14259,7 +14572,8 @@
         "label": "全能饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "dust",
@@ -14286,7 +14600,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买驱浊香(D)",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNUrnOfKelThuzad.blp",
@@ -14310,7 +14625,8 @@
         "label": "",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "engs",
@@ -14344,7 +14660,8 @@
       "recipe": [],
       "raw": {
         "tip": "杀神指环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShaShenZhiHuan.blp",
@@ -14368,7 +14685,8 @@
         "label": "敏捷饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "evtl",
@@ -14406,7 +14724,8 @@
       "recipe": [],
       "raw": {
         "tip": "摩西诫杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMoXiJieZhang.blp",
@@ -14430,7 +14749,8 @@
         "label": "法师武器",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "fgdg",
@@ -14460,7 +14780,8 @@
       "recipe": [],
       "raw": {
         "tip": "九魂汤",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNJiuHunTang.blp",
@@ -14484,7 +14805,8 @@
         "label": "",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "fgrg",
@@ -14511,7 +14833,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔力药剂（超）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNGreaterInvisibility.blp",
@@ -14535,7 +14858,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "gcel",
@@ -14564,7 +14888,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买战斧",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpTwo.blp",
@@ -14588,7 +14913,8 @@
         "label": "非法师武器",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "glsk",
@@ -14620,7 +14946,8 @@
       "recipe": [],
       "raw": {
         "tip": "精力戒指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRingSkull.blp",
@@ -14644,7 +14971,8 @@
         "label": "全能饰品",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "gmfr",
@@ -14673,7 +15001,8 @@
       "recipe": [],
       "raw": {
         "tip": "法老魔环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNBoneChimes.blp",
@@ -14697,7 +15026,8 @@
         "label": "智力饰品",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "gopr",
@@ -14729,7 +15059,8 @@
       "recipe": [],
       "raw": {
         "tip": "鼓舞头巾",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuWuTouJin.blp",
@@ -14753,7 +15084,8 @@
         "label": "敏捷饰品",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "hcun",
@@ -14789,7 +15121,8 @@
       "recipe": [],
       "raw": {
         "tip": "玄铁剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXuanTieJian.blp",
@@ -14813,7 +15146,8 @@
         "label": "非法师武器",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "hlst",
@@ -14840,7 +15174,8 @@
       "recipe": [],
       "raw": {
         "tip": "治愈药水（大）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionGreen.blp",
@@ -14864,7 +15199,8 @@
         "label": "",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "hslv",
@@ -14900,7 +15236,8 @@
       "recipe": [],
       "raw": {
         "tip": "豹纹披风",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNNagaArmorUp2.blp",
@@ -14924,7 +15261,8 @@
         "label": "全能衣服",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "hval",
@@ -14963,7 +15301,8 @@
       "recipe": [],
       "raw": {
         "tip": "枯夜",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuYe.blp",
@@ -14987,7 +15326,8 @@
         "label": "全能型武器",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "infs",
@@ -15017,7 +15357,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF0000黑暗咖啡",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionOfDivinity.blp",
@@ -15041,7 +15382,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "jpnt",
@@ -15075,7 +15417,8 @@
       "recipe": [],
       "raw": {
         "tip": "龙牙项链",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp",
@@ -15099,7 +15442,8 @@
         "label": "全能饰品",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "k3m1",
@@ -15131,7 +15475,8 @@
       "recipe": [],
       "raw": {
         "tip": "兰花印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLanHuaYin.blp",
@@ -15155,7 +15500,8 @@
         "label": "敏捷饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "k3m2",
@@ -15185,7 +15531,8 @@
       "recipe": [],
       "raw": {
         "tip": "琉璃戒指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.blp",
@@ -15209,7 +15556,8 @@
         "label": "智力饰品",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "k3m3",
@@ -15241,7 +15589,8 @@
       "recipe": [],
       "raw": {
         "tip": "古铜手镯",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRingGreen.blp",
@@ -15265,7 +15614,8 @@
         "label": "力量饰品",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "kpin",
@@ -15301,7 +15651,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买桃木杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorAdept.blp",
@@ -15325,7 +15676,8 @@
         "label": "法师武器",
         "itemLevel": 1,
         "displayLevel": "G+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ktrm",
@@ -15357,7 +15709,8 @@
       "recipe": [],
       "raw": {
         "tip": "凝心凌舞环",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNNingXinLingWuHuan.blp",
@@ -15381,7 +15734,8 @@
         "label": "智力饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "kybl",
@@ -15415,7 +15769,8 @@
       "recipe": [],
       "raw": {
         "tip": "党魂军令",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNBigBadVoodooSpell.blp",
@@ -15439,7 +15794,8 @@
         "label": "力量饰品",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "kygh",
@@ -15476,7 +15832,8 @@
       "recipe": [],
       "raw": {
         "tip": "梵天纹章",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAnimalWarTraining.blp",
@@ -15500,7 +15857,8 @@
         "label": "力量饰品",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "kymn",
@@ -15532,7 +15890,8 @@
       "recipe": [],
       "raw": {
         "tip": "威武石",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNWeiWuShi.blp",
@@ -15556,7 +15915,8 @@
         "label": "力量饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "kysn",
@@ -15590,7 +15950,8 @@
       "recipe": [],
       "raw": {
         "tip": "薰衣草香袋",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXiangDai1.blp",
@@ -15614,7 +15975,8 @@
         "label": "智力饰品",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ledg",
@@ -15647,7 +16009,8 @@
       "recipe": [],
       "raw": {
         "tip": "力量护腕",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRunedBracers.blp",
@@ -15671,7 +16034,8 @@
         "label": "力量饰品",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "lgdh",
@@ -15707,7 +16071,8 @@
       "recipe": [],
       "raw": {
         "tip": "八尺乌",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNBaChiWu.blp",
@@ -15731,7 +16096,8 @@
         "label": "非法师武器",
         "itemLevel": 5,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "lhst",
@@ -15771,7 +16137,8 @@
       "recipe": [],
       "raw": {
         "tip": "玄冥宝刀",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNZhuXianXieRen.blp",
@@ -15795,7 +16162,8 @@
         "label": "非法师武器",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "mcou",
@@ -15824,7 +16192,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买古枪",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp",
@@ -15848,7 +16217,8 @@
         "label": "非法师武器",
         "itemLevel": 1,
         "displayLevel": "G+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "mcri",
@@ -15884,7 +16254,8 @@
       "recipe": [],
       "raw": {
         "tip": "乌蚕衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNWuChanYi.blp",
@@ -15908,7 +16279,8 @@
         "label": "力量衣服",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "mgtk",
@@ -15944,7 +16316,8 @@
       "recipe": [],
       "raw": {
         "tip": "斗魂扎头巾",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNHoodOfCunning.blp",
@@ -15968,7 +16341,8 @@
         "label": "敏捷饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "modt",
@@ -16000,7 +16374,8 @@
       "recipe": [],
       "raw": {
         "tip": "蛛丝靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSlippersOfAgility.blp",
@@ -16024,7 +16399,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "moon",
@@ -16060,7 +16436,8 @@
       "recipe": [],
       "raw": {
         "tip": "重型盔甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp",
@@ -16084,7 +16461,8 @@
         "label": "力量衣服",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "odef",
@@ -16122,7 +16500,8 @@
       "recipe": [],
       "raw": {
         "tip": "色空",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNSeKong.blp",
@@ -16146,7 +16525,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ofro",
@@ -16181,7 +16561,8 @@
       "recipe": [],
       "raw": {
         "tip": "哨兵靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShaoBingXue.blp",
@@ -16205,7 +16586,8 @@
         "label": "全能鞋子",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pclr",
@@ -16241,7 +16623,8 @@
       "recipe": [],
       "raw": {
         "tip": "绿绸袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLvChouPao.blp",
@@ -16265,7 +16648,8 @@
         "label": "全能衣服",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "penr",
@@ -16302,7 +16686,8 @@
       "recipe": [],
       "raw": {
         "tip": "浴火红莲",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYuHuoHongLian.blp",
@@ -16326,7 +16711,8 @@
         "label": "法师武器",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pghe",
@@ -16353,7 +16739,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔力药剂（小）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionOfClarity.blp",
@@ -16377,7 +16764,8 @@
         "label": "",
         "itemLevel": 1,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pgma",
@@ -16404,7 +16792,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔力药剂（中）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueSmall.blp",
@@ -16428,7 +16817,8 @@
         "label": "",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "phea",
@@ -16465,7 +16855,8 @@
       "recipe": [],
       "raw": {
         "tip": "白虎战袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNBaiHuZhanPao.blp",
@@ -16489,7 +16880,8 @@
         "label": "敏捷衣服",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "phlt",
@@ -16522,7 +16914,8 @@
       "recipe": [],
       "raw": {
         "tip": "血纹石戒指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXueWenShiJieZhi.blp",
@@ -16546,7 +16939,8 @@
         "label": "智力饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pinv",
@@ -16586,7 +16980,8 @@
       "recipe": [],
       "raw": {
         "tip": "银狐披风",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYinHuPiFeng.blp",
@@ -16610,7 +17005,8 @@
         "label": "敏捷衣服",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "plcl",
@@ -16648,7 +17044,8 @@
       "recipe": [],
       "raw": {
         "tip": "百香衫",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
@@ -16672,7 +17069,8 @@
         "label": "全能衣服",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pman",
@@ -16709,7 +17107,8 @@
       "recipe": [],
       "raw": {
         "tip": "紫凰衫",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNZiHuangShan.blp",
@@ -16733,7 +17132,8 @@
         "label": "智力衣服",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pmna",
@@ -16776,7 +17176,8 @@
       "recipe": [],
       "raw": {
         "tip": "幻魂胧月",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHuanHunLongYue.blp",
@@ -16800,7 +17201,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pnvl",
@@ -16837,7 +17239,8 @@
       "recipe": [],
       "raw": {
         "tip": "鬼青符衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuiQinFuYi.blp",
@@ -16861,7 +17264,8 @@
         "label": "智力衣服",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pomn",
@@ -16888,7 +17292,8 @@
       "recipe": [],
       "raw": {
         "tip": "治愈药水（小）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNHealingSalve.blp",
@@ -16912,7 +17317,8 @@
         "label": "",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "pres",
@@ -16943,7 +17349,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFF00CCFF桑果茶",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
@@ -16967,7 +17374,8 @@
         "label": "",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "prvt",
@@ -17007,7 +17415,8 @@
       "recipe": [],
       "raw": {
         "tip": "草雉剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNCaoTiJian.blp",
@@ -17031,7 +17440,8 @@
         "label": "非法师武器",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rag1",
@@ -17065,7 +17475,8 @@
       "recipe": [],
       "raw": {
         "tip": "赤霄扇",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNChiXiaoShan.blp",
@@ -17089,7 +17500,8 @@
         "label": "法师武器",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rat6",
@@ -17124,7 +17536,8 @@
       "recipe": [],
       "raw": {
         "tip": "巽狼刀",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXunLangDao.blp",
@@ -17148,7 +17561,8 @@
         "label": "非法师武器",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rat9",
@@ -17186,7 +17600,8 @@
       "recipe": [],
       "raw": {
         "tip": "妖术师权杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorMaster.blp",
@@ -17210,7 +17625,8 @@
         "label": "法师武器",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ratc",
@@ -17245,7 +17661,8 @@
       "recipe": [],
       "raw": {
         "tip": "破光",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNPoGuang.blp",
@@ -17269,7 +17686,8 @@
         "label": "非法师武器",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ratf",
@@ -17304,7 +17722,8 @@
       "recipe": [],
       "raw": {
         "tip": "牛皮旅靴",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNBoots.blp",
@@ -17328,7 +17747,8 @@
         "label": "力量鞋子",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rde1",
@@ -17364,7 +17784,8 @@
       "recipe": [],
       "raw": {
         "tip": "鬼牙刀",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNGuiYaDao.blp",
@@ -17388,7 +17809,8 @@
         "label": "非法师武器",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rde2",
@@ -17423,7 +17845,8 @@
       "recipe": [],
       "raw": {
         "tip": "天心法杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
@@ -17447,7 +17870,8 @@
         "label": "法师武器",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rde3",
@@ -17477,7 +17901,8 @@
       "recipe": [],
       "raw": {
         "tip": "军剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNThoriumMelee.blp",
@@ -17501,7 +17926,8 @@
         "label": "非法师武器",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rde4",
@@ -17534,7 +17960,8 @@
       "recipe": [],
       "raw": {
         "tip": "大木屐",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNDaMuJi.blp",
@@ -17558,7 +17985,8 @@
         "label": "全能鞋子",
         "itemLevel": 1,
         "displayLevel": "G+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rej3",
@@ -17588,7 +18016,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFFFF00压缩饼干",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "war3mapImported\\BTNYaSuoBingGan.blp",
@@ -17612,7 +18041,8 @@
         "label": "",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "rhth",
@@ -17644,7 +18074,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买手杖",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRallyPointNightElf.blp",
@@ -17668,7 +18099,8 @@
         "label": "法师武器",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rin1",
@@ -17703,7 +18135,8 @@
       "recipe": [],
       "raw": {
         "tip": "七玄离魄",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp",
@@ -17727,7 +18160,8 @@
         "label": "法师武器",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rlif",
@@ -17763,7 +18197,8 @@
       "recipe": [],
       "raw": {
         "tip": "沙之战刃",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp1.blp",
@@ -17787,7 +18222,8 @@
         "label": "非法师武器",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rnec",
@@ -17830,7 +18266,8 @@
       "recipe": [],
       "raw": {
         "tip": "天师道袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNTianShiDaoPao.blp",
@@ -17854,7 +18291,8 @@
         "label": "智力衣服",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rst1",
@@ -17892,7 +18330,8 @@
       "recipe": [],
       "raw": {
         "tip": "伏羲琴",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFuXiQin.blp",
@@ -17916,7 +18355,8 @@
         "label": "法师武器",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "rwiz",
@@ -17954,7 +18394,8 @@
       "recipe": [],
       "raw": {
         "tip": "擎天柱",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQinTianZhu.blp",
@@ -17978,7 +18419,8 @@
         "label": "非法师武器",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sand",
@@ -18006,7 +18448,8 @@
       "recipe": [],
       "raw": {
         "tip": "|CFFFF00FF圣女之血",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPhilosophersStone.blp",
@@ -18030,7 +18473,8 @@
         "label": "",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": false
     },
     {
       "id": "sbch",
@@ -18066,7 +18510,8 @@
       "recipe": [],
       "raw": {
         "tip": "蛇影鞭",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNSheYingBiao.blp",
@@ -18090,7 +18535,8 @@
         "label": "非法师武器",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sclp",
@@ -18122,7 +18568,8 @@
       "recipe": [],
       "raw": {
         "tip": "黑鳞",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNReinforcedHides.blp",
@@ -18146,7 +18593,8 @@
         "label": "全能饰品",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sehr",
@@ -18178,7 +18626,8 @@
       "recipe": [],
       "raw": {
         "tip": "千月发饰",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNQianYueFaShi.blp",
@@ -18202,7 +18651,8 @@
         "label": "智力饰品",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "shar",
@@ -18229,7 +18679,8 @@
       "recipe": [],
       "raw": {
         "tip": "治愈药水（中）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionGreenSmall.blp",
@@ -18253,7 +18704,8 @@
         "label": "",
         "itemLevel": 2,
         "displayLevel": "F"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "shas",
@@ -18291,7 +18743,8 @@
       "recipe": [],
       "raw": {
         "tip": "战国铠甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp",
@@ -18315,7 +18768,8 @@
         "label": "力量衣服",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "shea",
@@ -18350,7 +18804,8 @@
       "recipe": [],
       "raw": {
         "tip": "中型盔甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeTwo.blp",
@@ -18374,7 +18829,8 @@
         "label": "全能衣服",
         "itemLevel": 2,
         "displayLevel": "E-"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "shwd",
@@ -18407,7 +18863,8 @@
       "recipe": [],
       "raw": {
         "tip": "降龙戒指",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNGoldRing.blp",
@@ -18431,7 +18888,8 @@
         "label": "全能饰品",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "silk",
@@ -18466,7 +18924,8 @@
       "recipe": [],
       "raw": {
         "tip": "金锻铁袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJinduanTiePao.blp",
@@ -18490,7 +18949,8 @@
         "label": "全能衣服",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "skrt",
@@ -18526,7 +18986,8 @@
       "recipe": [],
       "raw": {
         "tip": "军神刻印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNJunShenYinKe.blp",
@@ -18550,7 +19011,8 @@
         "label": "力量饰品",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "skul",
@@ -18586,7 +19048,8 @@
       "recipe": [],
       "raw": {
         "tip": "兽王大衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShouWangDaoYi.blp",
@@ -18610,7 +19073,8 @@
         "label": "力量衣服",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sman",
@@ -18647,7 +19111,8 @@
       "recipe": [],
       "raw": {
         "tip": "狩猎重铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNShouLieZhongKai.blp",
@@ -18671,7 +19136,8 @@
         "label": "力量衣服",
         "itemLevel": 6,
         "displayLevel": "B"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sneg",
@@ -18709,7 +19175,8 @@
       "recipe": [],
       "raw": {
         "tip": "夜行衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNYeXingYi.blp",
@@ -18733,7 +19200,8 @@
         "label": "敏捷衣服",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sorf",
@@ -18765,7 +19233,8 @@
       "recipe": [],
       "raw": {
         "tip": "紫苏玉戒",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNRingVioletSpider.blp",
@@ -18789,7 +19258,8 @@
         "label": "全能饰品",
         "itemLevel": 2,
         "displayLevel": "F+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "spro",
@@ -18825,7 +19295,8 @@
       "recipe": [],
       "raw": {
         "tip": "青铜战铠",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNImprovedMoonArmor.blp",
@@ -18849,7 +19320,8 @@
         "label": "全能衣服",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "spsh",
@@ -18889,7 +19361,8 @@
       "recipe": [],
       "raw": {
         "tip": "洪荒戟",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNShockWave.blp",
@@ -18913,7 +19386,8 @@
         "label": "非法师武器",
         "itemLevel": 7,
         "displayLevel": "A"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sreg",
@@ -18950,7 +19424,8 @@
       "recipe": [],
       "raw": {
         "tip": "幻蝶衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHuanDieYi.blp",
@@ -18974,7 +19449,8 @@
         "label": "敏捷衣服",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "sres",
@@ -19001,7 +19477,8 @@
       "recipe": [],
       "raw": {
         "tip": "祝福秘药（超）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNHolyWater.blp",
@@ -19025,7 +19502,8 @@
         "label": "",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "srrc",
@@ -19052,7 +19530,8 @@
       "recipe": [],
       "raw": {
         "tip": "治愈药水（超）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionOfRestoration.blp",
@@ -19076,7 +19555,8 @@
         "label": "",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ssan",
@@ -19112,7 +19592,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔骸甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyArmor.blp",
@@ -19136,7 +19617,8 @@
         "label": "力量衣服",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ssil",
@@ -19174,7 +19656,8 @@
       "recipe": [],
       "raw": {
         "tip": "德川武士刀",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNDeChuanWuShiDao.blp",
@@ -19198,7 +19681,8 @@
         "label": "非法师武器",
         "itemLevel": 5,
         "displayLevel": "C"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "stel",
@@ -19228,7 +19712,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买铁剑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNSteelMelee.blp",
@@ -19252,7 +19737,8 @@
         "label": "全能型武器",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "stwp",
@@ -19288,7 +19774,8 @@
       "recipe": [],
       "raw": {
         "tip": "护心镜",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHuXinJing.blp",
@@ -19312,7 +19799,8 @@
         "label": "全能衣服",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "tcas",
@@ -19351,7 +19839,8 @@
       "recipe": [],
       "raw": {
         "tip": "子龙甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNNagaArmorUp1.blp",
@@ -19375,7 +19864,8 @@
         "label": "力量衣服",
         "itemLevel": 4,
         "displayLevel": "D+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "tgrh",
@@ -19413,7 +19903,8 @@
       "recipe": [],
       "raw": {
         "tip": "豪龙战衣",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNNagaArmorUp3.blp",
@@ -19437,7 +19928,8 @@
         "label": "全能衣服",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "thle",
@@ -19476,7 +19968,8 @@
       "recipe": [],
       "raw": {
         "tip": "摩尼尊印",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMoNiZunYin.blp",
@@ -19500,7 +19993,8 @@
         "label": "全能饰品",
         "itemLevel": 6,
         "displayLevel": "B+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "tkno",
@@ -19535,7 +20029,8 @@
       "recipe": [],
       "raw": {
         "tip": "风火轮",
-        "itemClass": "Artifact"
+        "itemClass": "Artifact",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNFengHuoLun.blp",
@@ -19559,7 +20054,8 @@
         "label": "敏捷鞋子",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "tret",
@@ -19595,7 +20091,8 @@
       "recipe": [],
       "raw": {
         "tip": "购买藤甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNTengJia.blp",
@@ -19619,7 +20116,8 @@
         "label": "全能衣服",
         "itemLevel": 2,
         "displayLevel": "F-"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "tsct",
@@ -19656,7 +20154,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔导师护胸",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNMoDaoShiXiongJia1.blp",
@@ -19680,7 +20179,8 @@
         "label": "智力衣服",
         "itemLevel": 5,
         "displayLevel": "C+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "vamp",
@@ -19716,7 +20216,8 @@
       "recipe": [],
       "raw": {
         "tip": "白色法袍",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNBaoSeFaPao.blp",
@@ -19740,7 +20241,8 @@
         "label": "智力衣服",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "ward",
@@ -19775,7 +20277,8 @@
       "recipe": [],
       "raw": {
         "tip": "血玑",
-        "itemClass": "Permanent"
+        "itemClass": "Permanent",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNXueJi.blp",
@@ -19799,7 +20302,8 @@
         "label": "非法师武器",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "will",
@@ -19826,7 +20330,8 @@
       "recipe": [],
       "raw": {
         "tip": "祝福秘药（中）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLesserRejuvPotion.blp",
@@ -19850,7 +20355,8 @@
         "label": "",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wneg",
@@ -19886,7 +20392,8 @@
       "recipe": [],
       "raw": {
         "tip": "红色战甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNHongSeZhanJia.blp",
@@ -19910,7 +20417,8 @@
         "label": "力量衣服",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wneu",
@@ -19942,7 +20450,8 @@
       "recipe": [],
       "raw": {
         "tip": "轻盔甲",
-        "itemClass": "Purchasable"
+        "itemClass": "Purchasable",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeOne.blp",
@@ -19966,7 +20475,8 @@
         "label": "全能衣服",
         "itemLevel": 1,
         "displayLevel": "G"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wolg",
@@ -19996,7 +20506,8 @@
       "recipe": [],
       "raw": {
         "tip": "琅琊玉坠",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "war3mapImported\\BTNLangYaJieHuan.blp",
@@ -20020,7 +20531,8 @@
         "label": "全能饰品",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wshs",
@@ -20047,7 +20559,8 @@
       "recipe": [],
       "raw": {
         "tip": "祝福秘药（大）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNGreaterRejuvPotion.blp",
@@ -20071,7 +20584,8 @@
         "label": "",
         "itemLevel": 4,
         "displayLevel": "D"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wswd",
@@ -20098,7 +20612,8 @@
       "recipe": [],
       "raw": {
         "tip": "魔力药剂（大）",
-        "itemClass": "Charged"
+        "itemClass": "Charged",
+        "pickRandom": "1"
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNPotionBlueBig.blp",
@@ -20122,7 +20637,8 @@
         "label": "",
         "itemLevel": 3,
         "displayLevel": "E"
-      }
+      },
+      "randomPool": true
     },
     {
       "id": "wtlg",
@@ -20159,7 +20675,8 @@
       "recipe": [],
       "raw": {
         "tip": "干部徽章",
-        "itemClass": "Campaign"
+        "itemClass": "Campaign",
+        "pickRandom": ""
       },
       "icon": {
         "source": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
@@ -20183,7 +20700,8 @@
         "label": "力量饰品",
         "itemLevel": 3,
         "displayLevel": "E+"
-      }
+      },
+      "randomPool": false
     }
   ]
 }
