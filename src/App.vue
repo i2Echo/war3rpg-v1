@@ -273,18 +273,39 @@ function renderItemLink(name: string, className = "item-link") {
   return `<button class="${className}" type="button" data-item-name="${escapeHtml(clean)}">${escapeHtml(clean)}</button>`;
 }
 
-type BranchContext = NonNullable<NonNullable<RefiningRule["probabilityBranches"]>[number]["context"]>;
+type ProbabilityBranch = NonNullable<RefiningRule["probabilityBranches"]>[number];
+type BranchContext = NonNullable<ProbabilityBranch["context"]>;
+type DynamicSourceMatch = {
+  rule: RefiningRule;
+  branch: ProbabilityBranch;
+  probability: number;
+  mainLevel: number;
+  materialGroup?: RefiningGroup;
+};
 
-function levelsForOutput(output: Output, context?: BranchContext) {
+function outputLevelOffset(output: Output) {
+  const relative = output.levelExpression?.match(/^Uc\[120\](?:([+-])(\d+))?$/);
+  if (!relative) return undefined;
+  return relative[1] === "-" ? -Number(relative[2] || 0) : Number(relative[2] || 0);
+}
+
+function mainLevelForOutputTarget(output: Output, item: Equipment, context?: BranchContext) {
+  if (context?.mainItemLevel?.value) return context.mainItemLevel.value;
+  const offset = outputLevelOffset(output);
+  if (offset == null) return undefined;
+  const mainLevel = levelValueForItem(item) - offset;
+  return mainLevel >= 1 && mainLevel <= 8 ? mainLevel : undefined;
+}
+
+function levelsForOutput(output: Output, context?: BranchContext, mainLevelOverride?: number) {
   if (output.kind !== "random-pool") return [];
   const expression = output.levelExpression || "";
   const numeric = expression.match(/^\d+$/);
   if (numeric) return [Number(numeric[0])].filter(level => level >= 1 && level <= 8);
 
-  const relative = expression.match(/^Uc\[120\](?:([+-])(\d+))?$/);
-  const mainLevel = context?.mainItemLevel?.value || 0;
-  if (!relative || !mainLevel) return [];
-  const offset = relative[1] === "-" ? -Number(relative[2] || 0) : Number(relative[2] || 0);
+  const offset = outputLevelOffset(output);
+  const mainLevel = mainLevelOverride || context?.mainItemLevel?.value || 0;
+  if (offset == null || !mainLevel) return [];
   return [mainLevel + offset].filter(level => level >= 1 && level <= 8);
 }
 
@@ -293,8 +314,8 @@ function sortEquipment(a: Equipment, b: Equipment) {
     || itemName(a).localeCompare(itemName(b), "zh-CN");
 }
 
-function randomPoolCandidates(output: Output, context?: BranchContext) {
-  const levels = levelsForOutput(output, context);
+function randomPoolCandidates(output: Output, context?: BranchContext, mainLevelOverride?: number) {
+  const levels = levelsForOutput(output, context, mainLevelOverride);
   const itemClass = itemTypeToClass[output.itemType || ""];
   return equipment
     .filter(item => item.randomPool)
@@ -307,7 +328,7 @@ function outputChanceForItem(output: Output, item: Equipment, context?: BranchCo
   if (output.kind === "fixed") {
     return !isBlockedDynamicFixedOutput(output, context) && outputMatchesItem(output, item) ? chance : undefined;
   }
-  const candidates = randomPoolCandidates(output, context);
+  const candidates = randomPoolCandidates(output, context, mainLevelForOutputTarget(output, item, context));
   if (!candidates.some(candidate => candidate.id === item.id)) return undefined;
   return chance == null ? undefined : Number((chance / candidates.length).toFixed(4));
 }
@@ -318,8 +339,8 @@ function isBlockedDynamicFixedOutput(output: Output, context?: BranchContext) {
     && context?.mainItemLevel?.value === 8;
 }
 
-function dynamicOutputEligible(output: Output, context?: BranchContext) {
-  if (output.kind === "random-pool") return randomPoolCandidates(output, context).length > 0;
+function dynamicOutputEligible(output: Output, context?: BranchContext, mainLevelOverride?: number) {
+  if (output.kind === "random-pool") return randomPoolCandidates(output, context, mainLevelOverride).length > 0;
   const item = output.id ? itemById.get(output.id) : readItemByName(outputLabel(output));
   return Boolean(item && !isBlockedDynamicFixedOutput(output, context));
 }
@@ -333,8 +354,8 @@ function renderTokenItems(items: Equipment[], chance?: number) {
   `).join("");
 }
 
-function renderRandomPoolToken(output: Output, context?: BranchContext, chance?: number) {
-  const candidates = randomPoolCandidates(output, context);
+function renderRandomPoolToken(output: Output, context?: BranchContext, chance?: number, mainLevelOverride?: number) {
+  const candidates = randomPoolCandidates(output, context, mainLevelOverride);
   const itemChance = chance == null || !candidates.length ? undefined : Number((chance / candidates.length).toFixed(4));
   const label = outputLabel(output);
   const chanceText = itemChance == null ? "" : `，每件约 ${Number.isInteger(itemChance) ? itemChance : itemChance.toFixed(4).replace(/0+$/, "").replace(/\.$/, "")}%`;
@@ -352,8 +373,8 @@ function renderRandomPoolToken(output: Output, context?: BranchContext, chance?:
   `;
 }
 
-function renderOutputLink(output: Output, context?: BranchContext, chance?: number) {
-  if (output.kind === "random-pool") return renderRandomPoolToken(output, context, chance);
+function renderOutputLink(output: Output, context?: BranchContext, chance?: number, mainLevelOverride?: number) {
+  if (output.kind === "random-pool") return renderRandomPoolToken(output, context, chance, mainLevelOverride);
   return renderFormulaItem(outputLabel(output));
 }
 
@@ -525,6 +546,84 @@ function groupCandidates(group: RefiningGroup | undefined, levels: number[], exc
     .sort(sortEquipment);
 }
 
+function itemRefiningGroup(items: Equipment[], label: string): RefiningGroup {
+  const entries = items
+    .map(item => item.refining)
+    .filter((refining): refining is NonNullable<Equipment["refining"]> => Boolean(refining?.hp));
+  const hpValues = Array.from(new Set(entries.map(entry => entry.hp))).sort((a, b) => a - b);
+  const slots = equipmentSlots.filter(slot => entries.some(entry => entry.slot === slot));
+  const attributes = refiningAttributes.filter(attribute => entries.some(entry => entry.attribute === attribute));
+  return {
+    label,
+    hpValues,
+    slots,
+    attributes,
+    names: Array.from(new Set(entries.map(entry => entry.label).filter(Boolean))),
+    bySlot: Object.fromEntries(slots.map(slot => [
+      slot,
+      refiningAttributes.filter(attribute => entries.some(entry => entry.slot === slot && entry.attribute === attribute)),
+    ])),
+    byAttribute: Object.fromEntries(attributes.map(attribute => [
+      attribute,
+      equipmentSlots.filter(slot => entries.some(entry => entry.attribute === attribute && entry.slot === slot)),
+    ])),
+    unknownHpValues: [],
+  };
+}
+
+function allMaterialCandidates(levels: number[], excludedItemIds = new Set<string>()) {
+  return equipment
+    .filter(item => item.refining?.slot && item.refining?.attribute)
+    .filter(item => !levels.length || levels.includes(levelValueForItem(item)))
+    .filter(item => !excludedItemIds.has(item.id))
+    .sort(sortEquipment);
+}
+
+function combinedMaterialGroup(matches: DynamicSourceMatch[]) {
+  if (matches.length < 2) return undefined;
+  const first = matches[0];
+  const diffCode = first.branch.context?.levelDifference?.code;
+  const materialLevelList = materialLevels(first.mainLevel, diffCode);
+  if (!materialLevelList.length) return undefined;
+  const excludedItemIds = new Set((first.rule.requiredItems || []).map(item => item.id));
+  const allCandidates = allMaterialCandidates(materialLevelList, excludedItemIds);
+  if (!allCandidates.length) return undefined;
+  const coveredIds = new Set(matches.flatMap(match =>
+    groupCandidates(match.rule.readable?.material, materialLevelList, excludedItemIds).map(item => item.id),
+  ));
+  return allCandidates.every(item => coveredIds.has(item.id))
+    ? itemRefiningGroup(allCandidates, "任意装备 · 任意炼化属性")
+    : undefined;
+}
+
+function dynamicMatchKey(match: DynamicSourceMatch) {
+  return JSON.stringify({
+    probability: match.probability,
+    mainLevel: match.mainLevel,
+    diffCode: match.branch.context?.levelDifference?.code || "",
+    mainHpValues: match.rule.readable?.main.hpValues || [],
+  });
+}
+
+function mergeDynamicMatches(matches: DynamicSourceMatch[]) {
+  const groups = new Map<string, DynamicSourceMatch[]>();
+  for (const match of matches) {
+    const key = dynamicMatchKey(match);
+    groups.set(key, [...(groups.get(key) || []), match]);
+  }
+
+  const merged: DynamicSourceMatch[] = [];
+  for (const group of groups.values()) {
+    const materialGroup = combinedMaterialGroup(group);
+    if (materialGroup) {
+      merged.push({ ...group[0], materialGroup });
+    } else {
+      merged.push(...group);
+    }
+  }
+  return merged;
+}
+
 function renderGroupToken(label: string, group: RefiningGroup | undefined, levels: number[], excludedItemIds = new Set<string>()) {
   const candidates = groupCandidates(group, levels, excludedItemIds);
   return `
@@ -541,13 +640,14 @@ function renderGroupToken(label: string, group: RefiningGroup | undefined, level
   `;
 }
 
-function renderDynamicFormula(rule: RefiningRule, branch: NonNullable<RefiningRule["probabilityBranches"]>[number], targetName: string, chance?: number) {
-  const mainLevel = branch.context?.mainItemLevel?.value || 0;
+function renderDynamicFormula(rule: RefiningRule, branch: ProbabilityBranch, targetName: string, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
+  const mainLevel = branch.context?.mainItemLevel?.value || mainLevelOverride || 0;
   const diffCode = branch.context?.levelDifference?.code;
   const mainLevels = mainLevel ? [mainLevel] : [];
   const materialLevelList = materialLevels(mainLevel, diffCode);
+  const materialGroup = materialGroupOverride || rule.readable?.material;
   const mainToken = `${gradeTextFromLevels(mainLevels)}${groupShortLabel(rule.readable?.main, "main")}`;
-  const materialToken = `${gradeTextFromLevels(materialLevelList)}${groupShortLabel(rule.readable?.material, "material")}`;
+  const materialToken = `${gradeTextFromLevels(materialLevelList)}${groupShortLabel(materialGroup, "material")}`;
   const blockedItemIds = new Set((rule.requiredItems || []).map(item => item.id));
   return `
     <span class="formula-line">
@@ -555,16 +655,16 @@ function renderDynamicFormula(rule: RefiningRule, branch: NonNullable<RefiningRu
       <span class="formula-eq">=</span>
       ${renderGroupToken(mainToken, rule.readable?.main, mainLevels, blockedItemIds)}
       <span class="formula-plus">+</span>
-      ${renderGroupToken(materialToken, rule.readable?.material, materialLevelList, blockedItemIds)}
+      ${renderGroupToken(materialToken, materialGroup, materialLevelList, blockedItemIds)}
     </span>
   `;
 }
 
-function dynamicFormulaText(rule: RefiningRule, branch: NonNullable<RefiningRule["probabilityBranches"]>[number], targetName: string, chance?: number) {
-  const mainLevel = branch.context?.mainItemLevel?.value || 0;
+function dynamicFormulaText(rule: RefiningRule, branch: ProbabilityBranch, targetName: string, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
+  const mainLevel = branch.context?.mainItemLevel?.value || mainLevelOverride || 0;
   const diffCode = branch.context?.levelDifference?.code;
   const mainToken = `${gradeTextFromLevels(mainLevel ? [mainLevel] : [])}${groupShortLabel(rule.readable?.main, "main")}`;
-  const materialToken = `${gradeTextFromLevels(materialLevels(mainLevel, diffCode))}${groupShortLabel(rule.readable?.material, "material")}`;
+  const materialToken = `${gradeTextFromLevels(materialLevels(mainLevel, diffCode))}${groupShortLabel(materialGroupOverride || rule.readable?.material, "material")}`;
   return `${targetName} = ${mainToken} + ${materialToken}${chance != null ? ` ${Number.isInteger(chance) ? chance : chance.toFixed(2)}%` : ""}`;
 }
 
@@ -604,11 +704,14 @@ function exactRefiningSources(item: Equipment) {
 }
 
 function dynamicRefiningSources(item: Equipment) {
-  const entries: Array<{ kind: string; title: string; probability?: number; plain: string; html: string }> = [];
+  const matches: DynamicSourceMatch[] = [];
   const seen = new Set<string>();
   for (const rule of refiningRules.filter(rule => rule.type === "dynamic-refining")) {
     for (const branch of rule.probabilityBranches || []) {
       for (const outcome of branch.outcomes) {
+        const inferredMainLevel = outcome.outputs
+          .map(output => mainLevelForOutputTarget(output, item, branch.context))
+          .find(level => level != null);
         const matchedChance = outcome.outputs
           .map(output => outputChanceForItem(output, item, branch.context, outcome.chancePercent))
           .find(chance => chance != null);
@@ -616,17 +719,19 @@ function dynamicRefiningSources(item: Equipment) {
         const key = `${rule.id}:${JSON.stringify(branch.context)}:${matchedChance}:${outcome.outputs.map(outputLabel).join("|")}`;
         if (seen.has(key)) continue;
         seen.add(key);
-        entries.push({
-          kind: "dynamic",
-          title: "动态炼化",
-          probability: matchedChance,
-          plain: dynamicFormulaText(rule, branch, itemName(item), matchedChance),
-          html: renderDynamicFormula(rule, branch, itemName(item), matchedChance),
-        });
+        matches.push({ rule, branch, probability: matchedChance, mainLevel: inferredMainLevel || branch.context?.mainItemLevel?.value || 0 });
       }
     }
   }
-  return entries.sort((a, b) => (b.probability || 0) - (a.probability || 0));
+  return mergeDynamicMatches(matches)
+    .map(match => ({
+      kind: "dynamic",
+      title: "动态炼化",
+      probability: match.probability,
+      plain: dynamicFormulaText(match.rule, match.branch, itemName(item), match.probability, match.mainLevel, match.materialGroup),
+      html: renderDynamicFormula(match.rule, match.branch, itemName(item), match.probability, match.mainLevel, match.materialGroup),
+    }))
+    .sort((a, b) => (b.probability || 0) - (a.probability || 0));
 }
 
 function getSources(item: Equipment) {
@@ -824,7 +929,7 @@ function renderTargetRoutes() {
   `;
 }
 
-function branchMatchesItems(branch: NonNullable<RefiningRule["probabilityBranches"]>[number], main: Equipment, material: Equipment) {
+function branchMatchesItems(branch: ProbabilityBranch, main: Equipment, material: Equipment) {
   const mainLevel = levelValueForItem(main);
   const materialLevel = levelValueForItem(material);
   const context = branch.context;
@@ -876,7 +981,7 @@ function renderInputPairRoutes() {
         .flatMap(branch => branch.outcomes
           .map(outcome => ({
             ...outcome,
-            outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context)),
+            outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context, levelValueForItem(main))),
           }))
           .filter(outcome => outcome.outputs.length)
           .map(outcome => ({ rule, branch, outcome }))))
@@ -896,7 +1001,7 @@ function renderInputPairRoutes() {
       ${dynamicMatches.map(({ rule, branch, outcome }) => `
         <div class="route-detail dynamic">
           <div class="route-title"><strong>动态炼化</strong>${renderProbability(outcome.chancePercent)}</div>
-          <span class="formula-line">${renderFormulaItem(itemName(main as Equipment))}<span class="formula-plus">+</span>${renderFormulaItem(itemName(material as Equipment))}<span class="formula-eq">=</span>${outcome.outputs.map(output => renderOutputLink(output, branch.context, outcome.chancePercent)).join(" / ")}</span>
+          <span class="formula-line">${renderFormulaItem(itemName(main as Equipment))}<span class="formula-plus">+</span>${renderFormulaItem(itemName(material as Equipment))}<span class="formula-eq">=</span>${outcome.outputs.map(output => renderOutputLink(output, branch.context, outcome.chancePercent, levelValueForItem(main as Equipment))).join(" / ")}</span>
           <small>${escapeHtml(branch.context?.levelDifference?.label || "固定条件")}</small>
         </div>
       `).join("")}
