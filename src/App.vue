@@ -107,6 +107,11 @@ import refiningJson from "./data/refining-rules.json";
 import { quizAnswers } from "./data/quiz";
 import type { Equipment, Output, Recipe, RefiningGroup, RefiningRule } from "./types";
 
+const itemDisplayNameOverrides: Record<string, string> = {
+  I05N: "罪神之枪A",
+  I061: "罪神之枪S",
+};
+
 const allEquipment = (equipmentJson as { items: Equipment[] }).items;
 const equipment = dedupeCatalogItems(allEquipment);
 const recipes = (recipesJson as { recipes: Recipe[] }).recipes;
@@ -139,8 +144,9 @@ const itemTypeToClass: Record<string, string> = {
 const itemById = new Map(allEquipment.map(item => [item.id, item]));
 const itemByName = new Map<string, Equipment>();
 for (const item of equipment) {
-  const name = cleanGameText(item.name);
-  if (!itemByName.has(name)) itemByName.set(name, item);
+  for (const name of itemAliases(item)) {
+    if (!itemByName.has(name)) itemByName.set(name, item);
+  }
 }
 
 type State = {
@@ -206,7 +212,7 @@ function cleanGameText(value = "") {
 function dedupeCatalogItems(items: Equipment[]) {
   const seen = new Set<string>();
   return items.filter(item => {
-    const key = cleanGameText(item.name);
+    const key = itemName(item);
     if (!key) return true;
     if (seen.has(key)) return false;
     seen.add(key);
@@ -235,8 +241,16 @@ function iconUrl(item: Equipment) {
   return assetUrl(item.icon?.realesrganX4 || item.icon?.png128 || item.icon?.png);
 }
 
-function itemName(item: Equipment) {
+function rawItemName(item: Equipment) {
   return cleanGameText(item.name);
+}
+
+function itemName(item: Equipment) {
+  return itemDisplayNameOverrides[item.id] || rawItemName(item);
+}
+
+function itemAliases(item: Equipment) {
+  return Array.from(new Set([itemName(item), rawItemName(item), item.id].filter(Boolean)));
 }
 
 function baseGrade(level = "") {
@@ -258,13 +272,17 @@ function levelValueForItem(item: Equipment) {
 }
 
 function outputLabel(output: Output) {
-  if (output.kind === "fixed") return cleanGameText(output.name || output.id || output.expression);
+  if (output.kind === "fixed") {
+    const item = output.id ? itemById.get(output.id) : undefined;
+    return item ? itemName(item) : cleanGameText(output.name || output.id || output.expression);
+  }
   const level = output.levelExpression?.replace("Uc[120]", "主物品等级") || "?";
   return `${level}级随机池`;
 }
 
 function materialLabel(input: { name: string; id?: string; quantity?: number }) {
-  const name = cleanGameText(input.name || input.id || "");
+  const item = input.id ? itemById.get(input.id) : undefined;
+  const name = item ? itemName(item) : cleanGameText(input.name || input.id || "");
   return `${name}${(input.quantity || 1) > 1 ? ` x${input.quantity}` : ""}`;
 }
 
@@ -492,7 +510,7 @@ function readItemByName(name: string) {
   const exact = itemByName.get(clean);
   if (exact) return exact;
   const needle = normalize(clean);
-  return equipment.find(item => normalize(itemName(item)).includes(needle));
+  return equipment.find(item => itemAliases(item).some(alias => normalize(alias).includes(needle)));
 }
 
 function outputMatchesItem(output: Output, item: Equipment) {
@@ -506,12 +524,12 @@ function outputMatchesName(output: Output, name: string) {
 
 function groupShortLabel(group: RefiningGroup | undefined, role: "main" | "material" = "main") {
   if (!group) return "分类";
+  if (role === "material" && group.attributes.length === 1 && group.label.includes("非法师武器")) return `${group.attributes[0]}/战武`;
   if (role === "material" && group.attributes.length === 1 && group.label.includes("法师武器")) return `${group.attributes[0]}/法武`;
-  if (role === "material" && group.attributes.length === 1 && group.label.includes("非法师武器")) return `${group.attributes[0]}/非法武`;
   if (role === "material" && group.attributes.length === 1 && group.attributes[0] !== "全能") return group.attributes[0];
   if (group.label.includes("全能型武器") && group.slots.length > 1 && group.attributes.length === 1) return "全能武/饰/衣/鞋";
-  if (group.label.includes("全能型武器") && group.label.includes("非法师武器")) return "全能武/非法武";
-  if (group.label.includes("非法师武器")) return "非法武";
+  if (group.label.includes("全能型武器") && group.label.includes("非法师武器")) return "全能武/战武";
+  if (group.label.includes("非法师武器")) return "战武";
   if (group.label.includes("法师武器")) return "法武";
   if (group.label.includes("全能型武器")) return "全能武";
   if (role === "material" && group.attributes.length > 1 && group.attributes.length < refiningAttributes.length) return group.attributes.join("/");
@@ -675,8 +693,8 @@ function recipeSources(item: Equipment) {
       kind: "recipe",
       title: "合成卷轴",
       probability: 100,
-      plain: `${recipe.materials.map(materialLabel).join(" + ")} = ${cleanGameText(recipe.result.name)} 100%`,
-      html: `<span class="formula-line">${recipe.materials.map(material => renderFormulaItem(materialLabel(material))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${renderFormulaItem(recipe.result.name)}</span>`,
+      plain: `${recipe.materials.map(materialLabel).join(" + ")} = ${itemNameById(recipe.result.id)} 100%`,
+      html: `<span class="formula-line">${recipe.materials.map(material => renderFormulaItem(materialLabel(material))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${renderFormulaItem(itemNameById(recipe.result.id))}</span>`,
     }));
 }
 
@@ -685,21 +703,112 @@ function isSynthesisScrollRule(rule: RefiningRule) {
   if (!output) return false;
   return recipes.some(recipe =>
     (recipe.result.id === output.id || cleanGameText(recipe.result.name) === cleanGameText(output.name || ""))
-    && (rule.requiredItems || []).some(input => input.id === recipe.scroll.id),
+    && requiredInputs(rule).some(input => input.id === recipe.scroll.id),
   );
 }
 
+function isPenglaiVariantRule(rule: RefiningRule) {
+  return rule.functionName === "BSK" && rule.possibleOutputs.some(output => output.id === "I07X");
+}
+
+function itemNameById(id: string) {
+  return itemById.get(id) ? itemName(itemById.get(id) as Equipment) : id;
+}
+
+function renderPenglaiFormula() {
+  const alternatives = ["I07T", "I07W", "I07Y"]
+    .map(id => renderFormulaItem(itemNameById(id)))
+    .join('<span class="formula-alt-sep">/</span>');
+  return `
+    <span class="formula-line">
+      ${renderFormulaItem(itemNameById("I04I"))}
+      <span class="formula-plus">+</span>
+      <span class="formula-alternatives">${alternatives}</span>
+      <span class="formula-eq">=</span>
+      ${renderFormulaItem(itemNameById("I07X"))}
+    </span>
+  `;
+}
+
+function exactSpecialNote(rule: RefiningRule) {
+  if (isPenglaiVariantRule(rule)) return "须弥仙人【真】专属炼化：仙气葫芦 / 仙气葫芦+ / 变异葫芦为同一公式的材料变体，共用一次炼化机会。";
+  const outputIds = new Set(rule.possibleOutputs.map(output => output.id));
+  if (outputIds.has("I06W")) return "工会主席专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I077")) return "星月游侠专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07D")) return "灵谷药师专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07E")) return "大队长专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07N")) return "金色魔王专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07U")) return "古代军师【司马懿】皮肤形态专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07S")) return "神蝉侍女【白藤儿】皮肤形态专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I083")) return "赤色斗神【兰多夫.奥尔杰】皮肤形态专属炼化，成功后该炼化机会关闭。";
+  if (outputIds.has("I07Z") || outputIds.has("I080") || outputIds.has("I07B")) return "特殊一次性炼化，成功后该炼化机会关闭。";
+  return "";
+}
+
+function renderExactFormula(rule: RefiningRule) {
+  if (isPenglaiVariantRule(rule)) return renderPenglaiFormula();
+  return `<span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>`;
+}
+
+function exactFormulaPlain(rule: RefiningRule) {
+  if (isPenglaiVariantRule(rule)) {
+    return `${itemNameById("I04I")} + ${itemNameById("I07T")} / ${itemNameById("I07W")} / ${itemNameById("I07Y")} = ${itemNameById("I07X")} 100%`;
+  }
+  return `${(rule.requiredItems || []).map(materialLabel).join(" + ")} = ${rule.possibleOutputs.map(outputLabel).join(" / ")} 100%`;
+}
+
+function renderExactRoute(rule: RefiningRule, title = "精确炼化", missing: NonNullable<RefiningRule["requiredItems"]> = []) {
+  const note = exactSpecialNote(rule);
+  return `
+    <div class="route-detail exact">
+      <div class="route-title"><strong>${escapeHtml(title)}</strong>${renderProbability(100)}</div>
+      ${renderExactFormula(rule)}
+      ${missing.length ? `<p>还需要：${missing.map(input => renderFormulaItem(materialLabel(input))).join("、")}</p>` : ""}
+      ${note ? `<small>${escapeHtml(note)}</small>` : ""}
+    </div>
+  `;
+}
+
+function requiredInputs(rule: RefiningRule) {
+  return [
+    ...(rule.requiredItems || []),
+    ...(rule.requiredItemGroups || []).flatMap(group => group.items),
+  ];
+}
+
+function missingRequiredInputs(rule: RefiningRule, selected: Set<string>) {
+  const missing = (rule.requiredItems || [])
+    .filter(input => !selected.has(input.id) && !selected.has(cleanGameText(input.name)));
+  const missingGroups = (rule.requiredItemGroups || [])
+    .filter(group => !group.items.some(input => selected.has(input.id) || selected.has(cleanGameText(input.name))))
+    .map(group => ({
+      id: group.label,
+      name: group.label,
+      expression: group.label,
+    }));
+  return [...missing, ...missingGroups];
+}
+
+function mergeExactDisplayRules(rules: RefiningRule[]) {
+  const seenPenglai = rules.some(isPenglaiVariantRule);
+  return [
+    ...rules.filter(rule => !isPenglaiVariantRule(rule)),
+    ...(seenPenglai ? [rules.find(isPenglaiVariantRule) as RefiningRule] : []),
+  ];
+}
+
 function exactRefiningSources(item: Equipment) {
-  return refiningRules
+  const rules = refiningRules
     .filter(rule => rule.type === "exact-refining")
     .filter(rule => !isSynthesisScrollRule(rule))
-    .filter(rule => rule.possibleOutputs.some(output => outputMatchesItem(output, item)))
+    .filter(rule => rule.possibleOutputs.some(output => outputMatchesItem(output, item)));
+  return mergeExactDisplayRules(rules)
     .map(rule => ({
       kind: "exact",
       title: "精确炼化",
       probability: 100,
-      plain: `${(rule.requiredItems || []).map(materialLabel).join(" + ")} = ${rule.possibleOutputs.map(outputLabel).join(" / ")} 100%`,
-      html: `<span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>`,
+      plain: exactFormulaPlain(rule),
+      html: `${renderExactFormula(rule)}${exactSpecialNote(rule) ? `<small>${escapeHtml(exactSpecialNote(rule))}</small>` : ""}`,
     }));
 }
 
@@ -741,9 +850,10 @@ function getSources(item: Equipment) {
 function fuzzyItems(query: string, limit = 8) {
   const needle = normalize(query);
   if (!needle) return [];
+  const searchNeedle = normalizeForSearch(query);
   return equipment
-    .map(item => ({ item, name: normalizeForSearch(itemName(item)) }))
-    .filter(entry => entry.name.includes(normalizeForSearch(query)) || searchableText(entry.item).includes(normalizeForSearch(query)))
+    .map(item => ({ item, names: itemAliases(item).map(normalizeForSearch) }))
+    .filter(entry => entry.names.some(name => name.includes(searchNeedle)) || searchableText(entry.item).includes(searchNeedle))
     .slice(0, limit)
     .map(entry => entry.item);
 }
@@ -751,8 +861,9 @@ function fuzzyItems(query: string, limit = 8) {
 function filterItems() {
   const nameNeedle = normalize(state.nameQuery);
   const attrNeedle = normalizeForSearch(state.attrQuery);
+  const searchName = normalizeForSearch(state.nameQuery);
   return equipment.filter(item => {
-    const nameOk = !nameNeedle || normalizeForSearch(itemName(item)).includes(normalizeForSearch(state.nameQuery));
+    const nameOk = !nameNeedle || itemAliases(item).some(name => normalizeForSearch(name).includes(searchName));
     const attrOk = !attrNeedle || searchableText(item, false).includes(attrNeedle);
     const refiningOk = !state.refiningAttribute || item.refining?.attribute === state.refiningAttribute;
     const slotOk = !state.equipmentSlot || item.refining?.slot === state.equipmentSlot;
@@ -773,6 +884,8 @@ function searchableText(item: Equipment, includeRefining = true) {
     item.refining?.slot === "饰品" ? "首饰" : "",
   ];
   return normalizeForSearch([
+    itemName(item),
+    rawItemName(item),
     ...parsed.attributes,
     ...parsed.effects,
     ...parsed.exclusive,
@@ -908,12 +1021,7 @@ function renderTargetRoutes() {
         </div>
       </div>
       <div class="route-stack">
-        ${exactRules.map(rule => `
-          <div class="route-detail exact">
-            <div class="route-title"><strong>精确炼化</strong>${renderProbability(100)}</div>
-            <span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>
-          </div>
-        `).join("")}
+        ${mergeExactDisplayRules(exactRules).map(rule => renderExactRoute(rule)).join("")}
       </div>
     `;
   }
@@ -962,9 +1070,9 @@ function renderInputPairRoutes() {
         material ? itemName(material) : "",
         cleanGameText(state.assistantMain),
         cleanGameText(state.assistantMaterial),
-      ].filter(Boolean));
-      const hits = (rule.requiredItems || []).filter(input => selected.has(input.id) || selected.has(cleanGameText(input.name)));
-      const missing = (rule.requiredItems || []).filter(input => !selected.has(input.id) && !selected.has(cleanGameText(input.name)));
+      ].filter((value): value is string => Boolean(value)));
+      const hits = requiredInputs(rule).filter(input => selected.has(input.id) || selected.has(cleanGameText(input.name)));
+      const missing = missingRequiredInputs(rule, selected);
       return { rule, hits, missing };
     })
     .filter(match => match.hits.length)
@@ -991,13 +1099,7 @@ function renderInputPairRoutes() {
     ${renderFuzzySuggestions(state.assistantMain, "assistantMain")}
     ${renderFuzzySuggestions(state.assistantMaterial, "assistantMaterial")}
     <div class="route-stack">
-      ${exactMatches.map(({ rule, missing }) => `
-        <div class="route-detail exact">
-          <div class="route-title"><strong>精确炼化${missing.length ? " · 缺材料" : ""}</strong>${renderProbability(100)}</div>
-          <span class="formula-line">${(rule.requiredItems || []).map(input => renderFormulaItem(materialLabel(input))).join('<span class="formula-plus">+</span>')}<span class="formula-eq">=</span>${rule.possibleOutputs.map(output => renderOutputLink(output)).join(" / ")}</span>
-          ${missing.length ? `<p>还需要：${missing.map(input => renderFormulaItem(materialLabel(input))).join("、")}</p>` : ""}
-        </div>
-      `).join("")}
+      ${exactMatches.map(({ rule, missing }) => renderExactRoute(rule, `精确炼化${missing.length ? " · 缺材料" : ""}`, missing)).join("")}
       ${dynamicMatches.map(({ rule, branch, outcome }) => `
         <div class="route-detail dynamic">
           <div class="route-title"><strong>动态炼化</strong>${renderProbability(outcome.chancePercent)}</div>

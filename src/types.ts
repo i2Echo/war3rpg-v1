@@ -66,6 +66,11 @@ export type RefiningRule = {
     blockedItems: string[];
   };
   requiredItems?: Array<{ id: string; name: string; expression: string; quantity?: number }>;
+  requiredItemGroups?: Array<{
+    mode: "one-of";
+    label: string;
+    items: Array<{ id: string; name: string; expression: string; quantity?: number }>;
+  }>;
   condition?: string;
   possibleOutputs: Output[];
   probabilityBranches?: Array<{

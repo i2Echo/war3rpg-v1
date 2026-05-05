@@ -590,6 +590,19 @@ input::placeholder {
   font-weight: 850;
 }
 
+.formula-alternatives {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+}
+
+.formula-alt-sep {
+  color: var(--muted);
+  font-weight: 850;
+}
+
 .item-link,
 .token-item {
   border: 1px solid var(--line);
