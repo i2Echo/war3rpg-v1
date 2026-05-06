@@ -1407,9 +1407,12 @@ function onClick(event: MouseEvent) {
     return;
   }
 
+  const clickedInSimPanel = clickedElement(event, ".sim-panel");
+
   if (draggableItem) {
     event.stopPropagation();
     openItemByName(draggableItem.dataset.itemName || draggableItem.textContent || "");
+    if (clickedInSimPanel && state.isDrawerLayout) state.simOpen = false;
     return;
   }
 
@@ -1417,6 +1420,7 @@ function onClick(event: MouseEvent) {
   if (itemLink) {
     event.stopPropagation();
     openItemByName(itemLink.dataset.itemName || itemLink.textContent || "");
+    if (clickedInSimPanel && state.isDrawerLayout) state.simOpen = false;
     return;
   }
 
@@ -1644,8 +1648,15 @@ function positionTokenPopover(target: EventTarget | Element | null) {
 
   const margin = 14;
   const gap = 8;
-  const width = Math.max(220, Math.min(360, window.innerWidth - margin * 2));
   const rect = token.getBoundingClientRect();
+  const panel = token.closest<HTMLElement>(".sim-panel");
+  const panelHasTransform = panel && getComputedStyle(panel).transform !== "none";
+  const panelRect = panelHasTransform
+    ? panel.getBoundingClientRect()
+    : { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+
+  const containerWidth = panelRect.width;
+  const width = Math.max(220, Math.min(360, containerWidth - margin * 2));
   const left = Math.max(margin, Math.min(rect.left, window.innerWidth - width - margin));
   const below = window.innerHeight - rect.bottom - margin - gap;
   const above = rect.top - margin - gap;
@@ -1653,15 +1664,14 @@ function positionTokenPopover(target: EventTarget | Element | null) {
   const maxHeight = Math.max(120, Math.min(420, placeBelow ? below : above));
   const rawTop = placeBelow ? rect.bottom + gap : rect.top - maxHeight - gap;
   const top = Math.max(margin, Math.min(rawTop, window.innerHeight - maxHeight - margin));
-  const panel = token.closest<HTMLElement>(".sim-panel");
-  const panelRect = panel && getComputedStyle(panel).transform !== "none"
-    ? panel.getBoundingClientRect()
-    : { left: 0, top: 0 };
 
-  popover.style.left = `${left - panelRect.left}px`;
-  popover.style.top = `${top - panelRect.top}px`;
-  popover.style.width = `${width}px`;
-  popover.style.maxHeight = `${maxHeight}px`;
+  const safeLeft = Math.max(0, Math.min(left - panelRect.left, containerWidth - width));
+  const safeTop = Math.max(0, Math.min(top - panelRect.top, panelRect.height - maxHeight));
+
+  popover.style.left = `${safeLeft}px`;
+  popover.style.top = `${safeTop}px`;
+  popover.style.width = `${Math.min(width, containerWidth)}px`;
+  popover.style.maxHeight = `${Math.min(maxHeight, panelRect.height)}px`;
   activeToken = token;
 }
 
