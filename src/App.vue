@@ -49,7 +49,7 @@
       <span>不可商用</span>
     </footer>
     <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
-      ‹
+      <span class="material-symbols-rounded ui-icon" aria-hidden="true">keyboard_arrow_left</span>
     </button>
     <div v-if="state.simOpen" class="sim-scrim" id="sim-scrim"></div>
     <button
@@ -60,17 +60,21 @@
       :aria-hidden="state.showToTop ? 'false' : 'true'"
       :data-open="state.showToTop ? 'true' : 'false'"
       :tabindex="state.showToTop ? 0 : -1"
-    >↑</button>
+    >
+      <span class="material-symbols-rounded ui-icon" aria-hidden="true">arrow_upward</span>
+    </button>
     <div v-if="selectedItem" class="detail-shell" v-html="detailHtml"></div>
     <div v-if="state.quizOpen" class="modal-shell" role="dialog" aria-label="帝都答题答案">
       <div class="quiz-modal t-modal is-open">
         <div class="modal-head">
           <div>
             <span class="category">v2.4.6</span>
-            <h2>帝都答题</h2>
-          </div>
-          <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">×</button>
+          <h2>帝都答题</h2>
         </div>
+        <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">
+          <span class="material-symbols-rounded ui-icon" aria-hidden="true">close</span>
+        </button>
+      </div>
         <div class="quiz-tabs">
           <button
             v-for="tab in quizTabs"
@@ -198,6 +202,10 @@ function escapeHtml(value: string) {
     '"': "&quot;",
     "'": "&#39;",
   })[char] ?? char);
+}
+
+function renderIcon(name: string, className = "ui-icon") {
+  return `<span class="material-symbols-rounded ${className}" aria-hidden="true">${name}</span>`;
 }
 
 function cleanGameText(value = "") {
@@ -900,7 +908,7 @@ function renderInput(id: string, label: string, value: string, placeholder: stri
       <span class="field-label">${label}</span>
       <span class="field-shell">
         <input id="${id}" data-state-key="${String(stateKey)}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off" />
-        ${value ? `<button class="clear-input" type="button" data-clear="${String(stateKey)}" aria-label="清除 ${escapeHtml(label)}">×</button>` : ""}
+        ${value ? `<button class="clear-input" type="button" data-clear="${String(stateKey)}" aria-label="清除 ${escapeHtml(label)}">${renderIcon("close")}</button>` : ""}
       </span>
     </label>
   `;
@@ -970,16 +978,23 @@ function renderCard(item: Equipment) {
       `<em class="route-rate ${probabilityClass(sources[0].probability)}">$1</em>`,
     );
   return `
-    <article class="equipment-card" data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" tabindex="0" draggable="true">
+    <article class="equipment-card t-resize" data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" data-card-expanded="false" tabindex="0" draggable="true">
       <div class="card-image">
         <img class="item-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" loading="lazy" />
         <span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span>
       </div>
       <div class="card-body">
         <span class="category">装备 · ${escapeHtml(item.refining?.label || item.kind || "未分类")}</span>
-        <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
-        ${renderAttributeEffects(item, true)}
-        <p class="lore">${escapeHtml(parsed.lore.join("") || "暂无说明")}</p>
+        <div class="card-title-row">
+          <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
+          <button class="card-expand-toggle" type="button" data-toggle-card-details aria-expanded="false" aria-label="展开装备说明">
+            ${renderIcon("expand_more", "ui-icon card-expand-icon")}
+          </button>
+        </div>
+        <div class="card-expand-content">
+          ${renderAttributeEffects(item, true)}
+          <p class="lore">${escapeHtml(parsed.lore.join("") || "暂无说明")}</p>
+        </div>
       </div>
       <div class="card-route">
         <span>${compactRouteHtml}</span>
@@ -1114,7 +1129,7 @@ function renderInputPairRoutes() {
 
 function renderSimulationPanel() {
   const materialLabel = state.assistantMain && state.assistantMaterial
-    ? `材料 <button class="swap-button" id="swap-assistant-items" type="button" aria-label="互换主装备与材料">⇅</button>`
+    ? `材料 <button class="swap-button" id="swap-assistant-items" type="button" aria-label="互换主装备与材料">${renderIcon("swap_vert")}</button>`
     : "材料";
   const canClear = state.assistantTarget || state.assistantMain || state.assistantMaterial;
   return `
@@ -1181,7 +1196,7 @@ function renderDetail(item: Equipment, opening: boolean) {
           <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(item.refining?.label || "未分类")}</span>
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))} · <span style="font-weight: normal;font-size: 24px;">${escapeHtml(itemDisplayGrade(item))}</span></h2>
         </div>
-        <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">×</button>
+        <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">${renderIcon("close")}</button>
       </div>
       <section class="detail-section">
         <h3>属性功能</h3>
@@ -1210,7 +1225,7 @@ function renderQuizModal(opening: boolean) {
             <span class="category">v2.4.6</span>
             <h2>帝都答题</h2>
           </div>
-          <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">×</button>
+          <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">${renderIcon("close")}</button>
         </div>
         <div class="quiz-tabs">
           ${quizTabs.map(tab => `<button type="button" class="${state.quizTab === tab ? "active" : ""}" data-quiz-tab="${escapeHtml(tab)}">${escapeHtml(tab)}</button>`).join("")}
@@ -1291,6 +1306,15 @@ function resetTagFilters() {
   state.refiningAttribute = "";
   state.equipmentSlot = "";
   state.grade = "";
+}
+
+function toggleCardDetails(toggle: HTMLElement) {
+  const card = toggle.closest<HTMLElement>(".equipment-card");
+  if (!card) return;
+  const nextExpanded = card.classList.toggle("is-expanded");
+  card.dataset.cardExpanded = nextExpanded ? "true" : "false";
+  toggle.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
+  toggle.setAttribute("aria-label", nextExpanded ? "收起装备说明" : "展开装备说明");
 }
 
 function openItemByName(name: string) {
@@ -1404,6 +1428,13 @@ function onClick(event: MouseEvent) {
   if (suggestion) {
     event.stopPropagation();
     setStateValue(suggestion.dataset.pick as keyof State, suggestion.dataset.value || "");
+    return;
+  }
+
+  const cardDetailsToggle = clickedElement(event, "[data-toggle-card-details]");
+  if (cardDetailsToggle) {
+    event.stopPropagation();
+    toggleCardDetails(cardDetailsToggle);
     return;
   }
 

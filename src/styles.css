@@ -19,6 +19,8 @@
   --motion-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-enter: cubic-bezier(0.16, 1, 0.3, 1);
   --motion-exit: cubic-bezier(0.7, 0, 0.84, 0);
+  --resize-dur: 300ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --panel-open-dur: 400ms;
   --panel-close-dur: 350ms;
   --panel-translate-y: 100px;
@@ -57,6 +59,30 @@ input {
 
 button {
   cursor: pointer;
+}
+
+.material-symbols-rounded {
+  display: inline-flex;
+  direction: ltr;
+  font-family: "Material Symbols Rounded";
+  font-feature-settings: "liga";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ui-icon {
+  width: 1em;
+  height: 1em;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
 }
 
 .topbar {
@@ -384,15 +410,25 @@ input::placeholder {
 
 .catalog-grid {
   display: grid;
+  align-items: start;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
+.t-resize {
+  transition:
+    width  var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+  will-change: width, height;
+}
+
 .equipment-card {
   position: relative;
+  align-self: start;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  cursor: pointer;
   overflow: visible;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -453,11 +489,29 @@ input::placeholder {
 
 .card-body {
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto auto 1fr;
   flex: 1 1 auto;
   gap: 10px;
   min-height: 288px;
   padding: 14px;
+}
+
+.card-title-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.card-expand-toggle {
+  display: none;
+}
+
+.card-expand-content {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
 }
 
 .equipment-card h2 {
@@ -882,7 +936,6 @@ input::placeholder {
   border-radius: 50%;
   padding: 0;
   font-size: 22px;
-  line-height: 1;
 }
 
 .detail-section {
@@ -1068,7 +1121,59 @@ input::placeholder {
   }
 
   .card-body {
+    grid-template-rows: auto auto auto;
+    gap: 8px;
     min-height: 0;
+  }
+
+  .card-expand-toggle {
+    display: inline-grid;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--accent-dark);
+    padding: 0;
+    font-size: 22px;
+  }
+
+  .card-expand-toggle:hover,
+  .card-expand-toggle:focus-visible {
+    background: #fff2df;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .card-expand-icon {
+    font-size: 22px;
+    line-height: 1;
+    transition: transform 180ms var(--motion-smooth);
+  }
+
+  .card-expand-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-4px);
+    transition:
+      max-height var(--resize-dur) var(--resize-ease),
+      opacity 180ms var(--motion-smooth),
+      transform 220ms var(--motion-smooth);
+  }
+
+  .equipment-card.is-expanded .card-expand-content {
+    max-height: 380px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .equipment-card.is-expanded .card-expand-icon {
+    transform: rotate(180deg);
   }
 
   .detail-shell,
@@ -1207,7 +1312,7 @@ input::placeholder {
   background: transparent;
   color: rgba(159, 51, 39, 0.48);
   box-shadow: none;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 650;
 }
 
@@ -1379,7 +1484,7 @@ input::placeholder {
   background: #ffffff;
   color: var(--accent-dark);
   box-shadow: var(--shadow);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 900;
 }
 
@@ -1407,7 +1512,16 @@ input::placeholder {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .t-resize {
+    transition: none !important;
+  }
+
   .t-panel-slide {
+    transition: none !important;
+  }
+
+  .card-expand-content,
+  .card-expand-icon {
     transition: none !important;
   }
 }
@@ -1416,6 +1530,26 @@ input::placeholder {
 .sim-scrim,
 .pick-shell {
   display: none;
+}
+
+.sim-anchor::before {
+  content: "";
+  position: absolute;
+  inset: -8px 0 -8px auto;
+  z-index: -1;
+  width: 36px;
+  background: var(--anchor-bg);
+  clip-path: path("M36 0 C36 9 31 13 24 17 C13 24 8 29 8 39 C8 48 13 54 24 61 C31 65 36 69 36 78 L36 0 Z");
+  filter:
+    drop-shadow(-1px 0 0 rgba(159, 51, 39, 0.2))
+    drop-shadow(-10px 10px 22px rgba(159, 51, 39, 0.16));
+  pointer-events: none;
+}
+
+.sim-anchor .ui-icon {
+  position: relative;
+  z-index: 1;
+  transform: translateX(5px);
 }
 
 .detail-shell,
@@ -1564,24 +1698,26 @@ input::placeholder {
   }
 
   .sim-anchor {
+    --anchor-bg: rgba(207, 95, 66, 0.28);
     position: fixed;
     right: 0;
     top: 50%;
     z-index: 89;
     display: grid;
-    width: 32px;
-    height: 72px;
+    isolation: isolate;
+    overflow: visible;
+    width: 36px;
+    height: 62px;
     place-items: center;
-    border: 1px solid var(--line);
-    border-right: 0;
-    border-radius: 18px 0 0 18px;
-    background: rgba(255, 253, 248, 0.9);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--accent-dark);
-    box-shadow: var(--shadow);
+    box-shadow: none;
     font-size: 24px;
     font-weight: 900;
     transform: translateY(-50%);
-    transition: right 260ms var(--motion-smooth), background 200ms var(--motion-smooth);
+    transition: right 260ms var(--motion-smooth), color 200ms var(--motion-smooth), filter 200ms var(--motion-smooth);
   }
 
   .sim-scrim {
@@ -1642,24 +1778,26 @@ input::placeholder {
   }
 
   .sim-anchor {
+    --anchor-bg: rgba(207, 95, 66, 0.28);
     position: fixed;
     right: 0;
     top: 50%;
     z-index: 89;
     display: grid;
-    width: 32px;
-    height: 72px;
+    isolation: isolate;
+    overflow: visible;
+    width: 36px;
+    height: 62px;
     place-items: center;
-    border: 1px solid var(--line);
-    border-right: 0;
-    border-radius: 18px 0 0 18px;
-    background: rgba(255, 253, 248, 0.9);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
     color: var(--accent-dark);
-    box-shadow: var(--shadow);
+    box-shadow: none;
     font-size: 24px;
     font-weight: 900;
     transform: translateY(-50%);
-    transition: right 260ms var(--motion-smooth), background 200ms var(--motion-smooth);
+    transition: right 260ms var(--motion-smooth), color 200ms var(--motion-smooth), filter 200ms var(--motion-smooth);
   }
 
   .sim-scrim {
