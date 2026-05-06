@@ -47,13 +47,11 @@
       </section>
     </main>
     <footer class="site-footer">
-      <span>© 爱吃海苔的猫</span>
+      <span>© {{ currentYear }} 爱吃海苔的猫</span>
       <span class="footer-separator" aria-hidden="true">·</span>
       <a class="footer-contact" href="mailto:sama2echo@gmail.com" aria-label="发送邮件到 sama2echo@gmail.com">
         <span class="material-symbols-rounded ui-icon" aria-hidden="true">mail</span>
       </a>
-      <span class="footer-separator" aria-hidden="true">·</span>
-      <span>不可商用</span>
     </footer>
     <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
       <span class="material-symbols-rounded ui-icon" aria-hidden="true">keyboard_arrow_left</span>
@@ -145,6 +143,7 @@ const hotTags = ["梵天纹章", "天皇祭冠", "古代神铠", "奥姆幽刃",
 const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
+const currentYear = new Date().getFullYear();
 const itemTypeToClass: Record<string, string> = {
   ITEM_TYPE_PERMANENT: "Permanent",
   ITEM_TYPE_PURCHASABLE: "Purchasable",
