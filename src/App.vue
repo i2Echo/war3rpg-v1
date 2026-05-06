@@ -11,6 +11,8 @@
     @pointerup="clearLongPress"
     @pointercancel="clearLongPress"
     @pointerleave="clearLongPress"
+    @contextmenu="onContextMenu"
+    @selectstart="onSelectStart"
     @scroll.capture="onScrollCapture"
     @dragstart="onDragStart"
     @dragover="onDragOver"
@@ -275,6 +277,14 @@ function itemDisplayGrade(item: Equipment) {
   return cleanGameText(item.level || item.refining?.displayLevel || "未知");
 }
 
+function displayRefiningLabel(label = "") {
+  return cleanGameText(label).replaceAll("非法师武器", "战士武器");
+}
+
+function itemCategoryLabel(item: Equipment) {
+  return displayRefiningLabel(item.refining?.label || item.kind || "未分类");
+}
+
 function levelValueForItem(item: Equipment) {
   return item.refining?.itemLevel || Number(Object.entries(levelToGrade).find(([, grade]) => grade === baseGrade(item.level))?.[0] || 0);
 }
@@ -290,13 +300,23 @@ function outputLabel(output: Output) {
 
 function materialLabel(input: { name: string; id?: string; quantity?: number }) {
   const item = input.id ? itemById.get(input.id) : undefined;
-  const name = item ? itemName(item) : cleanGameText(input.name || input.id || "");
+  const name = item ? itemName(item) : displayRefiningLabel(input.name || input.id || "");
   return `${name}${(input.quantity || 1) > 1 ? ` x${input.quantity}` : ""}`;
 }
 
 function renderItemLink(name: string, className = "item-link") {
   const clean = cleanGameText(name);
   return `<button class="${className}" type="button" data-item-name="${escapeHtml(clean)}">${escapeHtml(clean)}</button>`;
+}
+
+function renderGearTag(item: Equipment, label = itemName(item)) {
+  const clean = cleanGameText(label);
+  return `
+    <button class="gear-tag ${gradeClass(item.level)}" type="button" data-draggable-item data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" draggable="true">
+      ${escapeHtml(clean)}
+      <small>${escapeHtml(tagLabelForItem(item))}</small>
+    </button>
+  `;
 }
 
 type ProbabilityBranch = NonNullable<RefiningRule["probabilityBranches"]>[number];
@@ -374,10 +394,17 @@ function dynamicOutputEligible(output: Output, context?: BranchContext, mainLeve
 function renderTokenItems(items: Equipment[], chance?: number) {
   return items.map(item => `
     <span class="token-choice">
-      ${renderItemLink(itemName(item), "token-item")}
+      ${renderGearTag(item)}
       ${chance == null ? "" : renderProbability(chance)}
     </span>
   `).join("");
+}
+
+function renderTokenHint() {
+  return `
+    <span class="token-hint token-hint-desktop">可将可选装备拖入继续查询</span>
+    <span class="token-hint token-hint-mobile">可长按可选装备继续查询</span>
+  `;
 }
 
 function renderRandomPoolToken(output: Output, context?: BranchContext, chance?: number, mainLevelOverride?: number) {
@@ -394,6 +421,7 @@ function renderRandomPoolToken(output: Output, context?: BranchContext, chance?:
         <span class="token-items">
           ${renderTokenItems(candidates, itemChance) || "<em>没有匹配装备</em>"}
         </span>
+        ${candidates.length ? renderTokenHint() : ""}
       </span>
     </span>
   `;
@@ -421,12 +449,7 @@ function renderFormulaItem(name: string) {
   const clean = cleanGameText(name);
   const item = itemByName.get(clean.replace(/\s+x\d+$/i, ""));
   if (!item) return renderItemLink(clean);
-  return `
-    <span class="gear-tag ${gradeClass(item.level)}">
-      ${renderItemLink(clean)}
-      <small>${escapeHtml(tagLabelForItem(item))}</small>
-    </span>
-  `;
+  return renderGearTag(item, clean);
 }
 
 function probabilityClass(value?: number) {
@@ -657,10 +680,11 @@ function renderGroupToken(label: string, group: RefiningGroup | undefined, level
       ${escapeHtml(label)}
       <span class="token-popover">
         <strong>${escapeHtml(label)} 可选项</strong>
-        <span>${escapeHtml(group?.label || "未分类")}</span>
+        <span>${escapeHtml(displayRefiningLabel(group?.label || "未分类"))}</span>
         <span class="token-items">
-          ${candidates.map(item => renderItemLink(itemName(item), "token-item")).join("") || "<em>没有匹配装备</em>"}
+          ${renderTokenItems(candidates) || "<em>没有匹配装备</em>"}
         </span>
+        ${candidates.length ? renderTokenHint() : ""}
       </span>
     </span>
   `;
@@ -884,6 +908,7 @@ function searchableText(item: Equipment, includeRefining = true) {
   const parsed = splitDescription(item);
   const aliases = [
     item.refining?.label,
+    displayRefiningLabel(item.refining?.label),
     item.refining?.slot,
     item.refining?.attribute,
     item.refining?.label === "法师武器" ? "法武" : "",
@@ -984,7 +1009,7 @@ function renderCard(item: Equipment) {
         <span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span>
       </div>
       <div class="card-body">
-        <span class="category">装备 · ${escapeHtml(item.refining?.label || item.kind || "未分类")}</span>
+        <span class="category">装备 · ${escapeHtml(itemCategoryLabel(item))}</span>
         <div class="card-title-row">
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
           <button class="card-expand-toggle" type="button" data-toggle-card-details aria-expanded="false" aria-label="展开装备说明">
@@ -1045,7 +1070,7 @@ function renderTargetRoutes() {
       <img src="${escapeHtml(iconUrl(target))}" alt="" />
       <div>
         <strong>${escapeHtml(itemName(target))}</strong>
-        <span>${escapeHtml(itemDisplayGrade(target))} · ${escapeHtml(target.refining?.label || "未分类")}</span>
+        <span>${escapeHtml(itemDisplayGrade(target))} · ${escapeHtml(itemCategoryLabel(target))}</span>
       </div>
     </div>
     <div class="route-stack">${renderRouteList(target)}</div>
@@ -1172,7 +1197,7 @@ function renderMobilePickModal(opening: boolean) {
           <img src="${escapeHtml(iconUrl(item))}" alt="" />
           <div>
             <strong>${escapeHtml(itemName(item))}</strong>
-            <span>${escapeHtml(itemDisplayGrade(item))} · ${escapeHtml(item.refining?.label || "未分类")}</span>
+            <span>${escapeHtml(itemDisplayGrade(item))} · ${escapeHtml(itemCategoryLabel(item))}</span>
           </div>
         </div>
         <div class="pick-actions">
@@ -1193,7 +1218,7 @@ function renderDetail(item: Equipment, opening: boolean) {
       <div class="detail-head">
         <img class="detail-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" />
         <div>
-          <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(item.refining?.label || "未分类")}</span>
+          <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(displayRefiningLabel(item.refining?.label || "未分类"))}</span>
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))} · <span style="font-weight: normal;font-size: 24px;">${escapeHtml(itemDisplayGrade(item))}</span></h2>
         </div>
         <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">${renderIcon("close")}</button>
@@ -1371,7 +1396,20 @@ function onInput(event: Event) {
 }
 
 function onClick(event: MouseEvent) {
-  const itemLink = clickedElement(event, ".item-link, .token-item");
+  const draggableItem = clickedElement(event, "[data-draggable-item]");
+  if (draggableItem && longPressedItemId === draggableItem.dataset.itemId) {
+    longPressedItemId = "";
+    event.stopPropagation();
+    return;
+  }
+
+  if (draggableItem) {
+    event.stopPropagation();
+    openItemByName(draggableItem.dataset.itemName || draggableItem.textContent || "");
+    return;
+  }
+
+  const itemLink = clickedElement(event, ".item-link");
   if (itemLink) {
     event.stopPropagation();
     openItemByName(itemLink.dataset.itemName || itemLink.textContent || "");
@@ -1539,10 +1577,10 @@ let longPressTimer = 0;
 let longPressedItemId = "";
 
 function onPointerDown(event: PointerEvent) {
-  const card = clickedElement(event, ".equipment-card");
-  if (!card || !window.matchMedia("(max-width: 1040px)").matches || event.pointerType === "mouse") return;
+  const itemSource = clickedElement(event, ".equipment-card, [data-draggable-item]");
+  if (!itemSource || !window.matchMedia("(max-width: 1040px)").matches || event.pointerType === "mouse") return;
   clearLongPress();
-  const itemId = card.dataset.itemId || "";
+  const itemId = itemSource.dataset.itemId || "";
   longPressTimer = window.setTimeout(() => {
     longPressedItemId = itemId;
     state.mobilePickItemId = itemId;
@@ -1555,9 +1593,23 @@ function clearLongPress() {
 
 function onDragStart(event: DragEvent) {
   const card = clickedElement(event, ".equipment-card");
-  if (!card) return;
-  event.dataTransfer?.setData("text/plain", card.dataset.itemName || "");
-  event.dataTransfer?.setData("application/x-war3-item", card.dataset.itemName || "");
+  const itemSource = card || clickedElement(event, "[data-draggable-item]");
+  if (!itemSource) return;
+  event.stopPropagation();
+  if (event.dataTransfer) event.dataTransfer.effectAllowed = "copy";
+  event.dataTransfer?.setData("text/plain", itemSource.dataset.itemName || "");
+  event.dataTransfer?.setData("application/x-war3-item", itemSource.dataset.itemName || "");
+}
+
+function onContextMenu(event: MouseEvent) {
+  if (!clickedElement(event, ".equipment-card, [data-draggable-item]")) return;
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+function onSelectStart(event: Event) {
+  if (!clickedElement(event, ".equipment-card, [data-draggable-item]")) return;
+  event.preventDefault();
 }
 
 function onDragOver(event: DragEvent) {
