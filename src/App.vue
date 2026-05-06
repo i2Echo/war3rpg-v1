@@ -48,6 +48,11 @@
     </main>
     <footer class="site-footer">
       <span>© 爱吃海苔的猫</span>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <a class="footer-contact" href="mailto:sama2echo@gmail.com" aria-label="发送邮件到 sama2echo@gmail.com">
+        <span class="material-symbols-rounded ui-icon" aria-hidden="true">mail</span>
+      </a>
+      <span class="footer-separator" aria-hidden="true">·</span>
       <span>不可商用</span>
     </footer>
     <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
@@ -402,8 +407,8 @@ function renderTokenItems(items: Equipment[], chance?: number) {
 
 function renderTokenHint() {
   return `
-    <span class="token-hint token-hint-desktop">可将可选装备拖入继续查询</span>
-    <span class="token-hint token-hint-mobile">可长按可选装备继续查询</span>
+    <span class="token-hint token-hint-desktop">将可选装备拖入继续查询</span>
+    <span class="token-hint token-hint-mobile">长按可选装备继续查询</span>
   `;
 }
 
@@ -1167,7 +1172,7 @@ function renderSimulationPanel() {
       <button class="sim-clear-button" id="clear-simulation" type="button" aria-label="一键清除炼化查询" ${canClear ? "" : "disabled"}>清除</button>
     </div>
     <div class="sim-section">
-      <span class="sim-section-label">路线反查</span>
+      <span class="sim-section-label">路线反查 <span class="sim-section-hint"> 支持连续查询</span></span>
       <div class="sim-drop" data-drop-slot="assistantTarget">
         ${renderInput("assistant-target", "目标装备", state.assistantTarget, "输入 / 拖入目标装备", "assistantTarget")}
       </div>
