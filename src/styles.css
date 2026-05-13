@@ -103,7 +103,7 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  min-width: 0;
+  min-width: 250px;
   color: var(--ink);
   font-weight: 800;
   text-decoration: none;
@@ -132,9 +132,19 @@ button {
   font-weight: 850;
 }
 
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .nav-pill,
 .reset-button,
 .quiz-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-height: 38px;
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -142,6 +152,7 @@ button {
   color: var(--ink);
   padding: 8px 16px;
   font-weight: 750;
+  text-decoration: none;
 }
 
 .nav-pill {
@@ -151,11 +162,23 @@ button {
   white-space: nowrap;
 }
 
+.nav-pill-secondary {
+  background: #ffffff;
+  color: var(--accent-dark);
+  border: 1px solid rgba(207, 95, 66, 0.3);
+}
+
 .nav-pill:hover,
 .nav-pill:focus-visible {
   transform: none;
   filter: none;
   outline: none;
+}
+
+.nav-pill-secondary:hover,
+.nav-pill-secondary:focus-visible {
+  background: #fff3e6;
+  border-color: rgba(207, 95, 66, 0.5);
 }
 
 main {
@@ -1127,6 +1150,10 @@ input::placeholder {
   .topbar {
     align-items: flex-start;
     gap: 10px;
+  }
+
+  .topbar-nav {
+    width: 100%;
   }
 
   .brand span:nth-child(2) {

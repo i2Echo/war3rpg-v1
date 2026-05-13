@@ -27,8 +27,16 @@
         <span>西方世界的劫难3 · 装备图鉴</span>
         <span class="brand-version">v2.4.6</span>
       </a>
-      <nav>
+      <nav class="topbar-nav" aria-label="顶部功能">
         <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
+        <a
+          class="nav-pill nav-pill-secondary"
+          href="https://war3rpg.677233.xyz/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          旧版入口
+        </a>
       </nav>
     </header>
     <main>
