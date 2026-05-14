@@ -22,11 +22,20 @@
     @touchend="onTouchEnd"
   >
     <header class="topbar">
-      <a class="brand" href="#">
-        <span class="brand-mark">W3</span>
-        <span>西方世界的劫难3 · 装备图鉴</span>
+      <div class="brand">
+        <button
+          class="brand-mark"
+          id="brand-theme-toggle"
+          type="button"
+          :aria-label="state.theme === 'mono' ? '切换为原始风格' : '切换为黑白简洁风格'"
+          :aria-pressed="state.theme === 'mono'"
+          :title="state.theme === 'mono' ? '切换为原始风格' : '切换为黑白简洁风格'"
+        >
+          {{ state.theme === "mono" ? "BW" : "W3" }}
+        </button>
+        <span class="brand-title">西方世界的劫难3 · 装备图鉴</span>
         <span class="brand-version">v2.4.6</span>
-      </a>
+      </div>
       <nav class="topbar-nav" aria-label="顶部功能">
         <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
         <a
@@ -44,7 +53,7 @@
         <div>
           <p class="notice">装备图鉴 · 炼化路线</p>
           <h1>西方世界的劫难3 · 装备图鉴</h1>
-          <p>{{ equipment.length }} 件装备，{{ recipes.length }} 条合成卷轴，{{ refiningRules.length }} 条炼化规则。</p>
+          <p>{{ equipmentCount }} 件装备，{{ recipeCount }} 条合成卷轴，{{ refiningRuleCount }} 条炼化规则。</p>
         </div>
       </section>
 
@@ -58,11 +67,11 @@
       <span>© {{ currentYear }} 爱吃海苔的猫</span>
       <span class="footer-separator" aria-hidden="true">·</span>
       <a class="footer-contact" href="mailto:sama2echo@gmail.com" aria-label="发送邮件到 sama2echo@gmail.com">
-        <span class="material-symbols-rounded ui-icon" aria-hidden="true">mail</span>
+        <span v-html="renderIcon('mail')"></span>
       </a>
     </footer>
     <button v-if="!state.simOpen" class="sim-anchor" id="sim-anchor" type="button" aria-label="展开炼化查询">
-      <span class="material-symbols-rounded ui-icon" aria-hidden="true">keyboard_arrow_left</span>
+      <span v-html="renderIcon('keyboard_arrow_left')"></span>
     </button>
     <div v-if="state.simOpen" class="sim-scrim" id="sim-scrim"></div>
     <button
@@ -74,7 +83,7 @@
       :data-open="state.showToTop ? 'true' : 'false'"
       :tabindex="state.showToTop ? 0 : -1"
     >
-      <span class="material-symbols-rounded ui-icon" aria-hidden="true">arrow_upward</span>
+      <span v-html="renderIcon('arrow_upward')"></span>
     </button>
     <div v-if="selectedItem" class="detail-shell" v-html="detailHtml"></div>
     <div v-if="state.quizOpen" class="modal-shell" role="dialog" aria-label="帝都答题答案">
@@ -85,7 +94,7 @@
           <h2>帝都答题</h2>
         </div>
         <button class="icon-button" id="close-quiz" type="button" aria-label="关闭帝都答题">
-          <span class="material-symbols-rounded ui-icon" aria-hidden="true">close</span>
+          <span v-html="renderIcon('close')"></span>
         </button>
       </div>
         <div class="quiz-tabs">
@@ -118,9 +127,9 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, watch } from "vue";
-import equipmentJson from "./data/equipment.json";
-import recipesJson from "./data/recipes.json";
-import refiningJson from "./data/refining-rules.json";
+import equipmentUrl from "./data/equipment.catalog.json?url";
+import recipesUrl from "./data/recipes.catalog.json?url";
+import refiningUrl from "./data/refining-rules.catalog.json?url";
 import { quizAnswers } from "./data/quiz";
 import type { Equipment, Output, Recipe, RefiningGroup, RefiningRule } from "./types";
 
@@ -129,10 +138,10 @@ const itemDisplayNameOverrides: Record<string, string> = {
   I061: "罪神之枪S",
 };
 
-const allEquipment = (equipmentJson as { items: Equipment[] }).items;
-const equipment = dedupeCatalogItems(allEquipment);
-const recipes = (recipesJson as { recipes: Recipe[] }).recipes;
-const refiningRules = (refiningJson as unknown as { rules: RefiningRule[] }).rules;
+let allEquipment: Equipment[] = [];
+let equipment: Equipment[] = [];
+let recipes: Recipe[] = [];
+let refiningRules: RefiningRule[] = [];
 
 const gradeInfo = {
   G: { label: "白色 G", color: "#8d8d93" },
@@ -152,6 +161,9 @@ const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
 const currentYear = new Date().getFullYear();
+const initialCatalogLimit = 72;
+const catalogLimitStep = 72;
+const lazyImagePlaceholder = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
 const itemTypeToClass: Record<string, string> = {
   ITEM_TYPE_PERMANENT: "Permanent",
   ITEM_TYPE_PURCHASABLE: "Purchasable",
@@ -159,13 +171,8 @@ const itemTypeToClass: Record<string, string> = {
   ITEM_TYPE_CAMPAIGN: "Campaign",
 };
 
-const itemById = new Map(allEquipment.map(item => [item.id, item]));
+const itemById = new Map<string, Equipment>();
 const itemByName = new Map<string, Equipment>();
-for (const item of equipment) {
-  for (const name of itemAliases(item)) {
-    if (!itemByName.has(name)) itemByName.set(name, item);
-  }
-}
 
 type State = {
   nameQuery: string;
@@ -184,7 +191,12 @@ type State = {
   mobilePickItemId: string;
   showToTop: boolean;
   isDrawerLayout: boolean;
+  theme: Theme;
+  dataVersion: number;
+  visibleLimit: number;
 };
+
+type Theme = "classic" | "mono";
 
 const state = reactive<State>({
   nameQuery: "",
@@ -203,11 +215,17 @@ const state = reactive<State>({
   mobilePickItemId: "",
   showToTop: false,
   isDrawerLayout: false,
+  theme: "classic",
+  dataVersion: 0,
+  visibleLimit: initialCatalogLimit,
 });
 
+const themeStorageKey = "war3rpg-theme";
 let composing = false;
 let lockedScrollY = 0;
 let activeToken: HTMLElement | undefined;
+let lazyImageObserver: IntersectionObserver | undefined;
+let catalogMoreObserver: IntersectionObserver | undefined;
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -219,7 +237,45 @@ function escapeHtml(value: string) {
 }
 
 function renderIcon(name: string, className = "ui-icon") {
-  return `<span class="material-symbols-rounded ${className}" aria-hidden="true">${name}</span>`;
+  const icons: Record<string, string> = {
+    arrow_upward: '<path d="M12 19V5" /><path d="m5 12 7-7 7 7" />',
+    close: '<path d="M18 6 6 18" /><path d="m6 6 12 12" />',
+    expand_more: '<path d="m6 9 6 6 6-6" />',
+    keyboard_arrow_left: '<path d="m15 18-6-6 6-6" />',
+    mail: '<path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" />',
+    swap_vert: '<path d="M7 7h10" /><path d="m14 4 3 3-3 3" /><path d="M17 17H7" /><path d="m10 14-3 3 3 3" />',
+  };
+  return `<svg class="${className}" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${icons[name] || ""}</svg>`;
+}
+
+function readJson<T>(url: string) {
+  return fetch(url).then(response => response.json() as Promise<T>);
+}
+
+async function loadCatalogData() {
+  const [equipmentData, recipesData, refiningData] = await Promise.all([
+    readJson<{ items: Equipment[] }>(equipmentUrl),
+    readJson<{ recipes: Recipe[] }>(recipesUrl),
+    readJson<{ rules: RefiningRule[] }>(refiningUrl),
+  ]);
+
+  allEquipment = equipmentData.items;
+  equipment = dedupeCatalogItems(allEquipment);
+  recipes = recipesData.recipes;
+  refiningRules = refiningData.rules;
+  rebuildCatalogIndexes();
+  state.dataVersion += 1;
+}
+
+function rebuildCatalogIndexes() {
+  itemById.clear();
+  itemByName.clear();
+  for (const item of allEquipment) itemById.set(item.id, item);
+  for (const item of equipment) {
+    for (const name of itemAliases(item)) {
+      if (!itemByName.has(name)) itemByName.set(name, item);
+    }
+  }
 }
 
 function cleanGameText(value = "") {
@@ -261,6 +317,16 @@ function assetUrl(path?: string) {
 
 function iconUrl(item: Equipment) {
   return assetUrl(item.icon?.realesrganX4 || item.icon?.png128 || item.icon?.png);
+}
+
+function thumbnailUrl(item: Equipment) {
+  const source = item.icon?.realesrganX4 || item.icon?.png128 || item.icon?.png;
+  const thumb = source?.replace("icons/jpg-128/", "icons/jpg-64/");
+  return assetUrl(thumb || source);
+}
+
+function renderLazyImage(className: string, classicSrc: string, alt: string, monoSrc = classicSrc) {
+  return `<img class="${className} lazy-image" src="${lazyImagePlaceholder}" data-src-classic="${escapeHtml(classicSrc)}" data-src-mono="${escapeHtml(monoSrc)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async" />`;
 }
 
 function rawItemName(item: Equipment) {
@@ -999,7 +1065,7 @@ function renderFuzzySuggestions(query: string, target: "assistantTarget" | "assi
   if (!query || !hits.length) return "";
   return `
     <div class="suggestions">
-      ${hits.map(item => `<button class="suggestion-item ${gradeClass(item.level)}" type="button" data-pick="${target}" data-value="${escapeHtml(itemName(item))}"><img src="${escapeHtml(iconUrl(item))}" alt="" /><strong>${escapeHtml(itemName(item))}</strong><span>${escapeHtml(itemDisplayGrade(item))}</span></button>`).join("")}
+      ${hits.map(item => `<button class="suggestion-item ${gradeClass(item.level)}" type="button" data-pick="${target}" data-value="${escapeHtml(itemName(item))}"><img src="${escapeHtml(thumbnailUrl(item))}" alt="" loading="lazy" decoding="async" /><strong>${escapeHtml(itemName(item))}</strong><span>${escapeHtml(itemDisplayGrade(item))}</span></button>`).join("")}
     </div>
   `;
 }
@@ -1017,13 +1083,14 @@ function renderCard(item: Equipment) {
   return `
     <article class="equipment-card t-resize" data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" data-card-expanded="false" tabindex="0" draggable="true">
       <div class="card-image">
-        <img class="item-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" loading="lazy" />
+        ${renderLazyImage("item-icon", iconUrl(item), itemName(item), thumbnailUrl(item))}
         <span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span>
       </div>
       <div class="card-body">
         <span class="category">装备 · ${escapeHtml(itemCategoryLabel(item))}</span>
         <div class="card-title-row">
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
+          <span class="card-grade-text">${escapeHtml(itemDisplayGrade(item))}</span>
           <button class="card-expand-toggle" type="button" data-toggle-card-details aria-expanded="false" aria-label="展开装备说明">
             ${renderIcon("expand_more", "ui-icon card-expand-icon")}
           </button>
@@ -1281,7 +1348,10 @@ function renderQuizModal(opening: boolean) {
   `;
 }
 
-const selectedItem = computed(() => state.selectedItemId ? itemById.get(state.selectedItemId) : undefined);
+const equipmentCount = computed(() => (state.dataVersion, equipment.length));
+const recipeCount = computed(() => (state.dataVersion, recipes.length));
+const refiningRuleCount = computed(() => (state.dataVersion, refiningRules.length));
+const selectedItem = computed(() => (state.dataVersion, state.selectedItemId ? itemById.get(state.selectedItemId) : undefined));
 const hasBlockingLayer = computed(() => Boolean(
   selectedItem.value || state.quizOpen || state.mobilePickItemId || (state.simOpen && state.isDrawerLayout),
 ));
@@ -1289,6 +1359,18 @@ const hasBlockingLayer = computed(() => Boolean(
 watch(hasBlockingLayer, locked => {
   setPageScrollLock(locked);
 }, { immediate: true });
+
+watch(() => [
+  state.dataVersion,
+  state.visibleLimit,
+  state.nameQuery,
+  state.attrQuery,
+  state.refiningAttribute,
+  state.equipmentSlot,
+  state.grade,
+], () => {
+  nextTick(prepareCatalogLoading);
+}, { flush: "post" });
 
 const filterHtml = computed(() => `
   <span class="filter-kicker">Search</span>
@@ -1314,7 +1396,10 @@ const filterHtml = computed(() => `
 `);
 
 const catalogHtml = computed(() => {
+  if (!state.dataVersion) return `<div class="empty-note wide">正在加载装备数据...</div>`;
   const items = filterItems();
+  const visibleItems = items.slice(0, state.visibleLimit);
+  const hasMore = visibleItems.length < items.length;
 
   return `
     <div class="catalog-head">
@@ -1324,14 +1409,15 @@ const catalogHtml = computed(() => {
       </div>
     </div>
     <div class="catalog-grid">
-      ${items.map(renderCard).join("") || `<div class="empty-note wide">没有匹配结果，换一个名称、属性或品级试试。</div>`}
+      ${visibleItems.map(renderCard).join("") || `<div class="empty-note wide">没有匹配结果，换一个名称、属性或品级试试。</div>`}
     </div>
+    ${hasMore ? `<button class="load-more-button" id="load-more-catalog" type="button">加载更多 · ${visibleItems.length}/${items.length}</button><div class="catalog-more-sentinel" id="catalog-more-sentinel" aria-hidden="true"></div>` : ""}
   `;
 });
 
-const simulationHtml = computed(() => renderSimulationPanel());
+const simulationHtml = computed(() => (state.dataVersion, renderSimulationPanel()));
 const detailHtml = computed(() => selectedItem.value ? renderDetail(selectedItem.value, false) : "");
-const mobilePickHtml = computed(() => renderMobilePickModal(false));
+const mobilePickHtml = computed(() => (state.dataVersion, renderMobilePickModal(false)));
 
 function setStateValue(key: keyof State, value: string) {
   if (typeof state[key] === "string") {
@@ -1343,6 +1429,14 @@ function resetTagFilters() {
   state.refiningAttribute = "";
   state.equipmentSlot = "";
   state.grade = "";
+}
+
+function resetCatalogLimit() {
+  state.visibleLimit = initialCatalogLimit;
+}
+
+function loadMoreCatalogItems() {
+  state.visibleLimit += catalogLimitStep;
 }
 
 function toggleCardDetails(toggle: HTMLElement) {
@@ -1385,7 +1479,10 @@ function clickedElement(event: Event, selector: string) {
 
 function setTextState(key: keyof State, value: string, input?: HTMLInputElement) {
   setStateValue(key, value);
-  if ((key === "nameQuery" || key === "attrQuery") && value) resetTagFilters();
+  if (key === "nameQuery" || key === "attrQuery") {
+    state.visibleLimit = initialCatalogLimit;
+    if (value) resetTagFilters();
+  }
   rememberFocus(input);
 }
 
@@ -1408,6 +1505,11 @@ function onInput(event: Event) {
 }
 
 function onClick(event: MouseEvent) {
+  if (clickedElement(event, "#brand-theme-toggle")) {
+    setTheme(state.theme === "mono" ? "classic" : "mono");
+    return;
+  }
+
   const draggableItem = clickedElement(event, "[data-draggable-item]");
   if (draggableItem && longPressedItemId === draggableItem.dataset.itemId) {
     longPressedItemId = "";
@@ -1442,18 +1544,21 @@ function onClick(event: MouseEvent) {
   const gradeButton = clickedElement(event, "[data-grade]");
   if (gradeButton) {
     state.grade = gradeButton.dataset.grade || "";
+    resetCatalogLimit();
     return;
   }
 
   const refiningButton = clickedElement(event, "[data-refining-attribute]");
   if (refiningButton) {
     state.refiningAttribute = refiningButton.dataset.refiningAttribute || "";
+    resetCatalogLimit();
     return;
   }
 
   const slotButton = clickedElement(event, "[data-equipment-slot]");
   if (slotButton) {
     state.equipmentSlot = slotButton.dataset.equipmentSlot || "";
+    resetCatalogLimit();
     return;
   }
 
@@ -1461,6 +1566,7 @@ function onClick(event: MouseEvent) {
   if (hotButton) {
     state.nameQuery = hotButton.dataset.hotTag || "";
     resetTagFilters();
+    resetCatalogLimit();
     return;
   }
 
@@ -1475,6 +1581,12 @@ function onClick(event: MouseEvent) {
     state.refiningAttribute = "";
     state.equipmentSlot = "";
     state.grade = "";
+    resetCatalogLimit();
+    return;
+  }
+
+  if (clickedElement(event, "#load-more-catalog")) {
+    loadMoreCatalogItems();
     return;
   }
 
@@ -1722,6 +1834,58 @@ function updateDrawerLayout() {
   state.isDrawerLayout = window.innerWidth <= 760;
 }
 
+function catalogImageSource(image: HTMLImageElement) {
+  return state.theme === "mono"
+    ? image.dataset.srcMono || image.dataset.srcClassic || ""
+    : image.dataset.srcClassic || image.dataset.srcMono || "";
+}
+
+function syncLoadedCatalogImageSources() {
+  document.querySelectorAll<HTMLImageElement>("img.lazy-image[data-loaded='true']").forEach(image => {
+    const src = catalogImageSource(image);
+    if (src && image.getAttribute("src") !== src) image.src = src;
+  });
+}
+
+function prepareCatalogLoading() {
+  if (!lazyImageObserver) {
+    lazyImageObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting || !(entry.target instanceof HTMLImageElement)) continue;
+        const src = catalogImageSource(entry.target);
+        if (!src) continue;
+        entry.target.onload = () => entry.target.classList.add("loaded");
+        entry.target.src = src;
+        if (entry.target.complete) entry.target.classList.add("loaded");
+        entry.target.dataset.loaded = "true";
+        lazyImageObserver?.unobserve(entry.target);
+      }
+    }, { rootMargin: "420px 0px" });
+  }
+
+  document.querySelectorAll<HTMLImageElement>("img.lazy-image:not([data-loaded='true'])").forEach(image => {
+    lazyImageObserver?.observe(image);
+  });
+
+  catalogMoreObserver?.disconnect();
+  const sentinel = document.getElementById("catalog-more-sentinel");
+  if (sentinel) {
+    catalogMoreObserver = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      catalogMoreObserver?.disconnect();
+      loadMoreCatalogItems();
+    }, { rootMargin: "680px 0px" });
+    catalogMoreObserver.observe(sentinel);
+  }
+}
+
+function setTheme(theme: Theme) {
+  state.theme = theme;
+  document.documentElement.dataset.theme = theme;
+  window.localStorage.setItem(themeStorageKey, theme);
+  nextTick(syncLoadedCatalogImageSources);
+}
+
 function setPageScrollLock(locked: boolean) {
   const root = document.documentElement;
   const body = document.body;
@@ -1743,6 +1907,11 @@ function setPageScrollLock(locked: boolean) {
 }
 
 onMounted(() => {
+  const savedTheme = window.localStorage.getItem(themeStorageKey);
+  setTheme(savedTheme === "mono" ? "mono" : "classic");
+  loadCatalogData().catch(error => {
+    console.error("Failed to load catalog data", error);
+  });
   updateDrawerLayout();
   updateShowToTop();
   window.addEventListener("resize", updateDrawerLayout);
@@ -1751,6 +1920,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   setPageScrollLock(false);
+  lazyImageObserver?.disconnect();
+  catalogMoreObserver?.disconnect();
   window.removeEventListener("resize", updateDrawerLayout);
   window.removeEventListener("scroll", updateShowToTop);
 });

@@ -61,28 +61,11 @@ button {
   cursor: pointer;
 }
 
-.material-symbols-rounded {
-  display: inline-flex;
-  direction: ltr;
-  font-family: "Material Symbols Rounded";
-  font-feature-settings: "liga";
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 1;
-  text-transform: none;
-  white-space: nowrap;
-  word-wrap: normal;
-  -webkit-font-smoothing: antialiased;
-}
-
 .ui-icon {
   width: 1em;
   height: 1em;
-  align-items: center;
-  justify-content: center;
   flex: 0 0 auto;
+  display: inline-block;
 }
 
 .topbar {
@@ -119,6 +102,12 @@ button {
   border-radius: 50%;
   background: #ffffff;
   color: var(--accent-dark);
+  padding: 0;
+  font-weight: 900;
+}
+
+.brand-title {
+  min-width: 0;
 }
 
 .brand-version {
@@ -526,6 +515,15 @@ input::placeholder {
   object-fit: cover;
 }
 
+.lazy-image {
+  opacity: 0;
+  transition: opacity 160ms var(--motion-smooth);
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
 .grade-badge {
   display: inline-flex;
   align-items: center;
@@ -563,6 +561,10 @@ input::placeholder {
 }
 
 .card-expand-toggle {
+  display: none;
+}
+
+.card-grade-text {
   display: none;
 }
 
@@ -646,6 +648,24 @@ input::placeholder {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.load-more-button {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.catalog-more-sentinel {
+  height: 1px;
 }
 
 .route-rate {
@@ -1961,5 +1981,462 @@ input::placeholder {
     background: #ffffff;
     color: var(--ink);
     font-weight: 850;
+  }
+}
+
+:root[data-theme="mono"] {
+  color: #0a0a0a;
+  background: #ffffff;
+  --ink: #0a0a0a;
+  --body: #343434;
+  --muted: #737373;
+  --paper: #ffffff;
+  --canvas: #ffffff;
+  --line: #dedede;
+  --line-strong: #0a0a0a;
+  --accent: #0a0a0a;
+  --accent-dark: #0a0a0a;
+  --blue: #0a0a0a;
+  --green: #0a0a0a;
+  --shadow: none;
+  --panel-blur: 0;
+}
+
+:root[data-theme="mono"] body {
+  background: #ffffff;
+}
+
+:root[data-theme="mono"] .topbar {
+  min-height: 70px;
+  border-bottom-color: #0a0a0a;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+}
+
+:root[data-theme="mono"] .brand {
+  gap: 12px;
+  font-weight: 760;
+}
+
+:root[data-theme="mono"] .brand-mark {
+  border-color: #0a0a0a;
+  border-radius: 0;
+  background: #0a0a0a;
+  color: #ffffff;
+  font-size: 12px;
+}
+
+:root[data-theme="mono"] .brand-mark:hover,
+:root[data-theme="mono"] .brand-mark:focus-visible {
+  background: #ffffff;
+  color: #0a0a0a;
+  outline: 2px solid #0a0a0a;
+  outline-offset: 3px;
+}
+
+:root[data-theme="mono"] .brand-version,
+:root[data-theme="mono"] .nav-pill,
+:root[data-theme="mono"] .nav-pill-secondary,
+:root[data-theme="mono"] .reset-button,
+:root[data-theme="mono"] .load-more-button,
+:root[data-theme="mono"] .quiz-tabs button,
+:root[data-theme="mono"] .filter-toggle,
+:root[data-theme="mono"] .grade-pill,
+:root[data-theme="mono"] .hot-tags button,
+:root[data-theme="mono"] .sim-clear-button,
+:root[data-theme="mono"] .item-link,
+:root[data-theme="mono"] .route-token,
+:root[data-theme="mono"] .gear-tag,
+:root[data-theme="mono"] .pick-actions button {
+  border-color: #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+  box-shadow: none;
+}
+
+:root[data-theme="mono"] .nav-pill,
+:root[data-theme="mono"] .quiz-tabs button.active {
+  border-color: #0a0a0a;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+:root[data-theme="mono"] .nav-pill-secondary {
+  border-color: #d8d8d8;
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .nav-pill:hover,
+:root[data-theme="mono"] .nav-pill:focus-visible,
+:root[data-theme="mono"] .nav-pill-secondary:hover,
+:root[data-theme="mono"] .nav-pill-secondary:focus-visible,
+:root[data-theme="mono"] .filter-toggle:hover,
+:root[data-theme="mono"] .filter-toggle:focus-visible,
+:root[data-theme="mono"] .load-more-button:hover,
+:root[data-theme="mono"] .load-more-button:focus-visible,
+:root[data-theme="mono"] .sim-clear-button:hover,
+:root[data-theme="mono"] .sim-clear-button:focus-visible,
+:root[data-theme="mono"] .clear-input:hover,
+:root[data-theme="mono"] .icon-button:hover {
+  border-color: #0a0a0a;
+  background: #f5f5f5;
+  color: #0a0a0a;
+  outline: none;
+}
+
+:root[data-theme="mono"] main {
+  width: min(1500px, 100%);
+}
+
+:root[data-theme="mono"] .hero {
+  min-height: 220px;
+  padding: 42px 0 32px;
+  border-bottom-color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .notice {
+  border: 1px solid #0a0a0a;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+  padding: 7px 10px;
+}
+
+:root[data-theme="mono"] .hero .notice {
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .hero h1 {
+  max-width: 980px;
+  font-weight: 760;
+}
+
+:root[data-theme="mono"] .query-band {
+  gap: 22px;
+}
+
+:root[data-theme="mono"] .filter-panel,
+:root[data-theme="mono"] .sim-panel,
+:root[data-theme="mono"] .assistant-pane,
+:root[data-theme="mono"] .equipment-card,
+:root[data-theme="mono"] .detail-panel,
+:root[data-theme="mono"] .quiz-modal,
+:root[data-theme="mono"] .pick-card,
+:root[data-theme="mono"] .route-popover,
+:root[data-theme="mono"] .token-popover,
+:root[data-theme="mono"] .assistant-target,
+:root[data-theme="mono"] .suggestions button,
+:root[data-theme="mono"] .route-detail,
+:root[data-theme="mono"] .empty-note,
+:root[data-theme="mono"] .quiz-row {
+  border-color: #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+:root[data-theme="mono"] .filter-panel,
+:root[data-theme="mono"] .sim-panel {
+  border-color: #0a0a0a;
+}
+
+:root[data-theme="mono"] input {
+  border-color: #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+:root[data-theme="mono"] input:focus {
+  border-color: #0a0a0a;
+  box-shadow: inset 0 0 0 1px #0a0a0a;
+}
+
+:root[data-theme="mono"] input::placeholder {
+  color: #9a9a9a;
+}
+
+:root[data-theme="mono"] .equipment-card:hover,
+:root[data-theme="mono"] .equipment-card:focus-visible {
+  border-color: #0a0a0a;
+  box-shadow: none;
+  transform: none;
+}
+
+:root[data-theme="mono"] .card-image {
+  border-bottom-color: #d8d8d8;
+  border-radius: 0;
+  background: #f6f6f6;
+}
+
+:root[data-theme="mono"] .item-icon,
+:root[data-theme="mono"] .detail-icon,
+:root[data-theme="mono"] .assistant-target img,
+:root[data-theme="mono"] .suggestions img {
+  border-color: #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+:root[data-theme="mono"] .attribute-chip,
+:root[data-theme="mono"] .effect-chip,
+:root[data-theme="mono"] .exclusive-chip {
+  border-color: #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .effect-chip,
+:root[data-theme="mono"] .exclusive-chip {
+  border-left-color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .grade-g,
+:root[data-theme="mono"] .grade-f,
+:root[data-theme="mono"] .grade-e,
+:root[data-theme="mono"] .grade-d,
+:root[data-theme="mono"] .grade-c,
+:root[data-theme="mono"] .grade-b,
+:root[data-theme="mono"] .grade-a,
+:root[data-theme="mono"] .grade-s,
+:root[data-theme="mono"] .suggestions .suggestion-item,
+:root[data-theme="mono"] .assistant-target.selected-target {
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .grade-badge,
+:root[data-theme="mono"] .grade-badge.grade-g,
+:root[data-theme="mono"] .grade-badge.grade-f,
+:root[data-theme="mono"] .grade-badge.grade-e,
+:root[data-theme="mono"] .grade-badge.grade-d,
+:root[data-theme="mono"] .grade-badge.grade-c,
+:root[data-theme="mono"] .grade-badge.grade-b,
+:root[data-theme="mono"] .grade-badge.grade-a,
+:root[data-theme="mono"] .grade-badge.grade-s {
+  border-color: #0a0a0a;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+  text-shadow: none;
+}
+
+:root[data-theme="mono"] .grade-pill.active {
+  border-color: #0a0a0a;
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+:root[data-theme="mono"] .grade-pill.active small {
+  color: #ffffff;
+}
+
+:root[data-theme="mono"] .probability,
+:root[data-theme="mono"] .rate-100,
+:root[data-theme="mono"] .rate-high,
+:root[data-theme="mono"] .rate-mid,
+:root[data-theme="mono"] .rate-low,
+:root[data-theme="mono"] .rate-very-low,
+:root[data-theme="mono"] .prob-perfect,
+:root[data-theme="mono"] .prob-high,
+:root[data-theme="mono"] .prob-mid,
+:root[data-theme="mono"] .prob-low,
+:root[data-theme="mono"] .prob-rare {
+  border: 1px solid #d8d8d8;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .detail-shell,
+:root[data-theme="mono"] .modal-shell,
+:root[data-theme="mono"] .pick-shell {
+  background: rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="mono"] .detail-panel {
+  border-left: 1px solid #0a0a0a;
+}
+
+:root[data-theme="mono"] .quiz-row span {
+  border-radius: 0;
+  background: #f5f5f5;
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .sim-anchor {
+  --anchor-bg: rgba(0, 0, 0, 0.16);
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .sim-anchor::before {
+  filter:
+    drop-shadow(-1px 0 0 rgba(0, 0, 0, 0.2))
+    drop-shadow(-10px 10px 22px rgba(0, 0, 0, 0.08));
+}
+
+:root[data-theme="mono"] .to-top {
+  border-color: #0a0a0a;
+  border-radius: 0;
+  background: #ffffff;
+  color: #0a0a0a;
+}
+
+:root[data-theme="mono"] .catalog-grid {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+:root[data-theme="mono"] .equipment-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  column-gap: 0;
+  min-height: 0;
+}
+
+:root[data-theme="mono"] .card-image {
+  grid-row: 1 / span 2;
+  display: flex;
+  min-height: 0;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  border-right: 1px solid #d8d8d8;
+  border-bottom: 0;
+  padding: 14px;
+}
+
+:root[data-theme="mono"] .item-icon {
+  width: 46px;
+  height: 46px;
+}
+
+:root[data-theme="mono"] .card-image .grade-badge {
+  position: static;
+  display: none;
+}
+
+:root[data-theme="mono"] .card-body {
+  grid-template-rows: auto auto auto;
+  gap: 7px;
+  min-height: 0;
+  padding: 13px 16px 10px;
+}
+
+:root[data-theme="mono"] .card-title-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+}
+
+:root[data-theme="mono"] .card-expand-toggle {
+  display: none;
+}
+
+:root[data-theme="mono"] .card-grade-text {
+  display: inline-flex;
+  color: #343434;
+  font-size: 11px;
+  font-weight: 680;
+  white-space: nowrap;
+}
+
+:root[data-theme="mono"] .card-expand-content {
+  display: grid;
+  gap: 7px;
+  max-height: none;
+  overflow: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+:root[data-theme="mono"] .equipment-card h2 {
+  font-size: 17px;
+  font-weight: 760;
+}
+
+:root[data-theme="mono"] .equipment-card .category {
+  color: #737373;
+  font-size: 11px;
+  font-weight: 650;
+  text-transform: none;
+}
+
+:root[data-theme="mono"] .attribute-list {
+  gap: 0 8px;
+}
+
+:root[data-theme="mono"] .attribute-chip {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #343434;
+  font-size: 12px;
+  font-weight: 620;
+}
+
+:root[data-theme="mono"] .attribute-chip:not(:last-child)::after {
+  content: " /";
+  color: #9a9a9a;
+}
+
+:root[data-theme="mono"] .effect-list {
+  display: grid;
+  gap: 5px;
+}
+
+:root[data-theme="mono"] .effect-chip,
+:root[data-theme="mono"] .exclusive-chip {
+  border: 0;
+  border-left: 2px solid #0a0a0a;
+  background: transparent;
+  padding: 3px 0 3px 9px;
+  color: #343434;
+  font-size: 12px;
+  font-weight: 520;
+  line-height: 1.45;
+}
+
+:root[data-theme="mono"] .lore {
+  display: none;
+}
+
+:root[data-theme="mono"] .card-route {
+  grid-column: 2;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  border-top-color: #eeeeee;
+  padding: 8px 16px 12px;
+  color: #737373;
+  font-size: 11px;
+  font-weight: 620;
+}
+
+:root[data-theme="mono"] .card-route span {
+  -webkit-line-clamp: 1;
+}
+
+@media (max-width: 680px) {
+  :root[data-theme="mono"] .equipment-card {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  :root[data-theme="mono"] .card-image {
+    padding: 12px 10px;
+  }
+
+  :root[data-theme="mono"] .item-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  :root[data-theme="mono"] .card-body {
+    padding: 11px 12px 8px;
+  }
+
+  :root[data-theme="mono"] .card-route {
+    padding: 7px 12px 11px;
   }
 }
