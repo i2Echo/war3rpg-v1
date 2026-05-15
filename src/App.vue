@@ -37,7 +37,7 @@
         <span class="brand-title">西方世界的劫难3 · 装备图鉴</span>
         <span class="brand-version">v2.4.6</span>
       </div>
-      <div class="topbar-search" v-html="topbarSearchHtml"></div>
+      <div class="topbar-search" :class="{ open: state.mobileSearchPopoverOpen }" v-html="topbarSearchHtml"></div>
       <nav class="topbar-nav" aria-label="顶部功能">
         <a
           class="nav-pill nav-pill-secondary"
@@ -185,6 +185,7 @@ type State = {
   equipmentSlot: string;
   grade: string;
   searchHistory: string[];
+  mobileSearchPopoverOpen: boolean;
   filtersOpen: boolean;
   selectedItemId: string;
   assistantTarget: string;
@@ -211,6 +212,7 @@ const state = reactive<State>({
   equipmentSlot: "",
   grade: "",
   searchHistory: [],
+  mobileSearchPopoverOpen: false,
   filtersOpen: false,
   selectedItemId: "",
   assistantTarget: "",
@@ -1660,6 +1662,10 @@ function onInput(event: Event) {
 }
 
 function onClick(event: MouseEvent) {
+  if (!clickedElement(event, ".topbar-search")) {
+    state.mobileSearchPopoverOpen = false;
+  }
+
   if (clickedElement(event, "#brand-theme-toggle")) {
     setTheme(state.theme === "mono" ? "classic" : "mono");
     return;
@@ -1727,6 +1733,7 @@ function onClick(event: MouseEvent) {
     commitSearchHistory(state.nameQuery);
     resetTagFilters();
     resetCatalogLimit();
+    state.mobileSearchPopoverOpen = false;
     return;
   }
 
@@ -1736,6 +1743,7 @@ function onClick(event: MouseEvent) {
     commitSearchHistory(state.nameQuery);
     resetTagFilters();
     resetCatalogLimit();
+    state.mobileSearchPopoverOpen = false;
     return;
   }
 
@@ -1746,11 +1754,13 @@ function onClick(event: MouseEvent) {
   }
 
   if (clickedElement(event, "#toggle-filters")) {
+    state.mobileSearchPopoverOpen = false;
     state.filtersOpen = state.isMobileLayout ? true : !state.filtersOpen;
     return;
   }
 
   if (clickedElement(event, "[data-open-filters]")) {
+    state.mobileSearchPopoverOpen = false;
     state.filtersOpen = true;
     return;
   }
@@ -1901,6 +1911,12 @@ let longPressTimer = 0;
 let longPressedItemId = "";
 
 function onPointerDown(event: PointerEvent) {
+  if (clickedElement(event, ".topbar-search")) {
+    state.mobileSearchPopoverOpen = true;
+  } else if (state.mobileSearchPopoverOpen) {
+    state.mobileSearchPopoverOpen = false;
+  }
+
   const itemSource = clickedElement(event, ".equipment-card, [data-draggable-item]");
   if (!itemSource || !window.matchMedia("(max-width: 1040px)").matches || event.pointerType === "mouse") return;
   clearLongPress();
@@ -2016,6 +2032,9 @@ function onPointerOver(event: PointerEvent) {
 }
 
 function onFocusIn(event: FocusEvent) {
+  if (clickedElement(event, ".topbar-search")) {
+    state.mobileSearchPopoverOpen = true;
+  }
   scheduleTokenPopover(event.target, true);
 }
 
@@ -2055,7 +2074,10 @@ function updateShowToTop() {
 function updateDrawerLayout() {
   state.isMobileLayout = window.innerWidth <= 680;
   state.isDrawerLayout = window.innerWidth <= 760;
-  if (!state.isMobileLayout) state.filtersOpen = false;
+  if (!state.isMobileLayout) {
+    state.filtersOpen = false;
+    state.mobileSearchPopoverOpen = false;
+  }
 }
 
 function catalogImageSource(image: HTMLImageElement) {

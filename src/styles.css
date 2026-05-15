@@ -2594,6 +2594,7 @@ input::placeholder {
     padding: 12px;
   }
 
+  .topbar-search.open .mobile-search-popover,
   .topbar-search:focus-within .mobile-search-popover {
     display: grid;
   }
