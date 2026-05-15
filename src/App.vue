@@ -6,6 +6,7 @@
     @compositionend="onCompositionEnd"
     @keydown="onKeydown"
     @focusin="onFocusIn"
+    @focusout="onFocusOut"
     @pointerdown="onPointerDown"
     @pointerover="onPointerOver"
     @pointerup="clearLongPress"
@@ -31,11 +32,12 @@
           :aria-pressed="state.theme === 'mono'"
           :title="state.theme === 'mono' ? '切换为原始风格' : '切换为黑白简洁风格'"
         >
-          {{ state.theme === "mono" ? "BW" : "W3" }}
+          W3
         </button>
         <span class="brand-title">西方世界的劫难3 · 装备图鉴</span>
         <span class="brand-version">v2.4.6</span>
       </div>
+      <div class="topbar-search" v-html="topbarSearchHtml"></div>
       <nav class="topbar-nav" aria-label="顶部功能">
         <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
         <a
@@ -58,7 +60,7 @@
       </section>
 
       <section class="query-band">
-        <aside class="filter-panel" v-html="filterHtml"></aside>
+        <aside class="filter-panel" :class="{ 'mobile-filters-open': state.filtersOpen }" v-html="filterHtml"></aside>
         <section class="catalog-area" v-html="catalogHtml"></section>
         <aside class="sim-panel" :class="{ open: state.simOpen }" aria-label="炼化查询" v-html="simulationHtml"></aside>
       </section>
@@ -85,6 +87,9 @@
     >
       <span v-html="renderIcon('arrow_upward')"></span>
     </button>
+    <div v-if="state.filtersOpen && state.isMobileLayout" class="filter-sheet-shell" id="filter-sheet-scrim">
+      <div class="filter-sheet" role="dialog" aria-label="筛选条件" v-html="filterSheetHtml"></div>
+    </div>
     <div v-if="selectedItem" class="detail-shell" v-html="detailHtml"></div>
     <div v-if="state.quizOpen" class="modal-shell" role="dialog" aria-label="帝都答题答案">
       <div class="quiz-modal t-modal is-open">
@@ -161,8 +166,8 @@ const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
 const currentYear = new Date().getFullYear();
-const initialCatalogLimit = 72;
-const catalogLimitStep = 72;
+const initialCatalogLimit = 24;
+const catalogLimitStep = 48;
 const lazyImagePlaceholder = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
 const itemTypeToClass: Record<string, string> = {
   ITEM_TYPE_PERMANENT: "Permanent",
@@ -176,10 +181,10 @@ const itemByName = new Map<string, Equipment>();
 
 type State = {
   nameQuery: string;
-  attrQuery: string;
   refiningAttribute: string;
   equipmentSlot: string;
   grade: string;
+  searchHistory: string[];
   filtersOpen: boolean;
   selectedItemId: string;
   assistantTarget: string;
@@ -190,9 +195,11 @@ type State = {
   simOpen: boolean;
   mobilePickItemId: string;
   showToTop: boolean;
+  isMobileLayout: boolean;
   isDrawerLayout: boolean;
   theme: Theme;
   dataVersion: number;
+  routeDataLoaded: boolean;
   visibleLimit: number;
 };
 
@@ -200,10 +207,10 @@ type Theme = "classic" | "mono";
 
 const state = reactive<State>({
   nameQuery: "",
-  attrQuery: "",
   refiningAttribute: "",
   equipmentSlot: "",
   grade: "",
+  searchHistory: [],
   filtersOpen: false,
   selectedItemId: "",
   assistantTarget: "",
@@ -214,18 +221,23 @@ const state = reactive<State>({
   simOpen: false,
   mobilePickItemId: "",
   showToTop: false,
+  isMobileLayout: false,
   isDrawerLayout: false,
   theme: "classic",
   dataVersion: 0,
+  routeDataLoaded: false,
   visibleLimit: initialCatalogLimit,
 });
 
 const themeStorageKey = "war3rpg-theme";
+const searchHistoryStorageKey = "war3rpg-search-history";
 let composing = false;
 let lockedScrollY = 0;
 let activeToken: HTMLElement | undefined;
 let lazyImageObserver: IntersectionObserver | undefined;
 let catalogMoreObserver: IntersectionObserver | undefined;
+let routeDataPromise: Promise<void> | undefined;
+let routeDataTimer = 0;
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -253,18 +265,37 @@ function readJson<T>(url: string) {
 }
 
 async function loadCatalogData() {
-  const [equipmentData, recipesData, refiningData] = await Promise.all([
-    readJson<{ items: Equipment[] }>(equipmentUrl),
-    readJson<{ recipes: Recipe[] }>(recipesUrl),
-    readJson<{ rules: RefiningRule[] }>(refiningUrl),
-  ]);
+  const equipmentData = await readJson<{ items: Equipment[] }>(equipmentUrl);
 
   allEquipment = equipmentData.items;
   equipment = dedupeCatalogItems(allEquipment);
-  recipes = recipesData.recipes;
-  refiningRules = refiningData.rules;
   rebuildCatalogIndexes();
   state.dataVersion += 1;
+  scheduleRouteDataLoad();
+}
+
+function ensureRouteData() {
+  if (state.routeDataLoaded) return routeDataPromise || Promise.resolve();
+  window.clearTimeout(routeDataTimer);
+  routeDataPromise ||= Promise.all([
+    readJson<{ recipes: Recipe[] }>(recipesUrl),
+    readJson<{ rules: RefiningRule[] }>(refiningUrl),
+  ]).then(([recipesData, refiningData]) => {
+    recipes = recipesData.recipes;
+    refiningRules = refiningData.rules;
+    state.routeDataLoaded = true;
+    state.dataVersion += 1;
+  });
+  return routeDataPromise;
+}
+
+function scheduleRouteDataLoad() {
+  window.clearTimeout(routeDataTimer);
+  routeDataTimer = window.setTimeout(() => {
+    ensureRouteData().catch(error => {
+      console.error("Failed to load route data", error);
+    });
+  }, 2500);
 }
 
 function rebuildCatalogIndexes() {
@@ -969,16 +1000,15 @@ function fuzzyItems(query: string, limit = 8) {
 }
 
 function filterItems() {
-  const nameNeedle = normalize(state.nameQuery);
-  const attrNeedle = normalizeForSearch(state.attrQuery);
-  const searchName = normalizeForSearch(state.nameQuery);
+  const queryNeedle = normalizeForSearch(state.nameQuery);
   return equipment.filter(item => {
-    const nameOk = !nameNeedle || itemAliases(item).some(name => normalizeForSearch(name).includes(searchName));
-    const attrOk = !attrNeedle || searchableText(item, false).includes(attrNeedle);
+    const queryOk = !queryNeedle
+      || itemAliases(item).some(name => normalizeForSearch(name).includes(queryNeedle))
+      || searchableText(item).includes(queryNeedle);
     const refiningOk = !state.refiningAttribute || item.refining?.attribute === state.refiningAttribute;
     const slotOk = !state.equipmentSlot || item.refining?.slot === state.equipmentSlot;
     const gradeOk = !state.grade || baseGrade(item.level) === state.grade;
-    return nameOk && attrOk && refiningOk && slotOk && gradeOk;
+    return queryOk && refiningOk && slotOk && gradeOk;
   });
 }
 
@@ -1005,15 +1035,105 @@ function searchableText(item: Equipment, includeRefining = true) {
   ].join(" "));
 }
 
-function renderInput(id: string, label: string, value: string, placeholder: string, stateKey: keyof State) {
+function renderInput(id: string, label: string, value: string, placeholder: string, stateKey: keyof State, className = "") {
   return `
-    <label class="field">
+    <label class="field ${className}">
       <span class="field-label">${label}</span>
       <span class="field-shell">
         <input id="${id}" data-state-key="${String(stateKey)}" value="${escapeHtml(value)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off" />
         ${value ? `<button class="clear-input" type="button" data-clear="${String(stateKey)}" aria-label="清除 ${escapeHtml(label)}">${renderIcon("close")}</button>` : ""}
       </span>
     </label>
+  `;
+}
+
+function renderSearchHistory() {
+  if (!state.searchHistory.length) return "";
+  return `
+    <div class="search-history">
+      <div class="search-popover-head">
+        <span>历史</span>
+        <button id="clear-search-history" type="button">清空</button>
+      </div>
+      <div class="search-chip-list">
+        ${state.searchHistory.map(query => `<button type="button" data-search-history="${escapeHtml(query)}">${escapeHtml(query)}</button>`).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function renderDesktopSearchHistory() {
+  const history = renderSearchHistory();
+  return history ? `<div class="desktop-search-history">${history}</div>` : "";
+}
+
+function renderQuickSearches() {
+  return `
+    <div class="quick-searches">
+      <div class="search-popover-head"><span>快筛</span></div>
+      ${renderHotTags()}
+    </div>
+  `;
+}
+
+function renderTopbarSearch() {
+  return `
+    <label class="topbar-search-field">
+      <span class="visually-hidden">模糊查询</span>
+      <span class="field-shell">
+        <input id="mobile-name-query" data-state-key="nameQuery" value="${escapeHtml(state.nameQuery)}" placeholder="查询装备名/攻速/专属" autocomplete="off" />
+        ${state.nameQuery ? `<button class="clear-input" type="button" data-clear="nameQuery" aria-label="清除模糊查询">${renderIcon("close")}</button>` : ""}
+      </span>
+    </label>
+    <div class="mobile-search-popover">
+      ${renderSearchHistory()}
+      ${renderQuickSearches()}
+    </div>
+  `;
+}
+
+function mobileFilterLabel(label: string, value: string) {
+  return escapeHtml(value || label);
+}
+
+function renderMobileFilterBar() {
+  return `
+    <div class="mobile-filter-bar">
+      <button class="mobile-filter-chip ${state.refiningAttribute ? "active" : ""}" type="button" data-open-filters aria-label="筛选属性">${mobileFilterLabel("属性", state.refiningAttribute)}</button>
+      <button class="mobile-filter-chip ${state.equipmentSlot ? "active" : ""}" type="button" data-open-filters aria-label="筛选类别">${mobileFilterLabel("类别", state.equipmentSlot)}</button>
+      <button class="mobile-filter-chip ${state.grade ? "active" : ""}" type="button" data-open-filters aria-label="筛选品级">${mobileFilterLabel("品级", state.grade)}</button>
+      <button id="toggle-filters" class="filter-toggle mobile-filter-toggle" type="button">${state.filtersOpen ? "收起" : "筛选"}</button>
+    </div>
+  `;
+}
+
+function renderFilterSheet() {
+  return `
+    <div class="filter-sheet-head">
+      <div>
+        <span class="category">Filters</span>
+        <h2>筛选条件</h2>
+      </div>
+      <button class="icon-button" id="close-filter-sheet" type="button" aria-label="关闭筛选">${renderIcon("close")}</button>
+    </div>
+    <div class="filter-sheet-body">
+      <div class="field">
+        <span>炼化属性</span>
+        ${renderRefiningAttributeFilters()}
+      </div>
+      <div class="field">
+        <span>装备类别</span>
+        ${renderEquipmentSlotFilters()}
+      </div>
+      <div class="field">
+        <span>装备品级</span>
+        ${renderGradeFilters()}
+      </div>
+    </div>
+    <div class="filter-sheet-actions">
+      <button id="reset-filters" class="reset-button" type="button">重置筛选</button>
+      <button id="apply-filter-sheet" class="filter-sheet-done" type="button">完成</button>
+    </div>
   `;
 }
 
@@ -1071,15 +1191,7 @@ function renderFuzzySuggestions(query: string, target: "assistantTarget" | "assi
 }
 
 function renderCard(item: Equipment) {
-  const sources = getSources(item);
   const parsed = splitDescription(item);
-  const compactRoute = sources[0]?.plain || "暂无解析到来源";
-  const compactRouteHtml = sources[0]?.probability == null
-    ? escapeHtml(compactRoute)
-    : escapeHtml(compactRoute).replace(
-      /(\d+(?:\.\d+)?%)(?!.*\d(?:\.\d+)?%)/,
-      `<em class="route-rate ${probabilityClass(sources[0].probability)}">$1</em>`,
-    );
   return `
     <article class="equipment-card t-resize" data-item-id="${escapeHtml(item.id)}" data-item-name="${escapeHtml(itemName(item))}" data-card-expanded="false" tabindex="0" draggable="true">
       <div class="card-image">
@@ -1100,14 +1212,12 @@ function renderCard(item: Equipment) {
           <p class="lore">${escapeHtml(parsed.lore.join("") || "暂无说明")}</p>
         </div>
       </div>
-      <div class="card-route">
-        <span>${compactRouteHtml}</span>
-      </div>
     </article>
   `;
 }
 
 function renderRouteList(item: Equipment) {
+  if (!state.routeDataLoaded) return `<p class="empty-note">正在加载炼化与合成路线...</p>`;
   const sources = getSources(item);
   if (!sources.length) return `<p class="empty-note">没有在当前解析数据中找到合成或炼化来源。</p>`;
   return sources.map(source => `
@@ -1353,7 +1463,7 @@ const recipeCount = computed(() => (state.dataVersion, recipes.length));
 const refiningRuleCount = computed(() => (state.dataVersion, refiningRules.length));
 const selectedItem = computed(() => (state.dataVersion, state.selectedItemId ? itemById.get(state.selectedItemId) : undefined));
 const hasBlockingLayer = computed(() => Boolean(
-  selectedItem.value || state.quizOpen || state.mobilePickItemId || (state.simOpen && state.isDrawerLayout),
+  selectedItem.value || state.quizOpen || state.mobilePickItemId || (state.simOpen && state.isDrawerLayout) || (state.filtersOpen && state.isMobileLayout),
 ));
 
 watch(hasBlockingLayer, locked => {
@@ -1362,9 +1472,9 @@ watch(hasBlockingLayer, locked => {
 
 watch(() => [
   state.dataVersion,
+  state.routeDataLoaded,
   state.visibleLimit,
   state.nameQuery,
-  state.attrQuery,
   state.refiningAttribute,
   state.equipmentSlot,
   state.grade,
@@ -1372,12 +1482,15 @@ watch(() => [
   nextTick(prepareCatalogLoading);
 }, { flush: "post" });
 
+const topbarSearchHtml = computed(() => renderTopbarSearch());
+const filterSheetHtml = computed(() => renderFilterSheet());
 const filterHtml = computed(() => `
   <span class="filter-kicker">Search</span>
-  ${renderInput("name-query", "名称查询", state.nameQuery, "例如：西方圣枪", "nameQuery")}
+  ${renderInput("name-query", "模糊查询", state.nameQuery, "查询装备名/攻速/专属", "nameQuery", "catalog-search-field")}
+  ${renderDesktopSearchHistory()}
   ${renderHotTags()}
+  ${renderMobileFilterBar()}
   <div class="advanced-filters t-resize ${state.filtersOpen ? "open" : ""}" data-open="${state.filtersOpen ? "true" : "false"}">
-    ${renderInput("attr-query", "能力属性", state.attrQuery, "攻击力 / 吸血 / 专属", "attrQuery")}
     <div class="field">
       <span>炼化属性</span>
       ${renderRefiningAttributeFilters()}
@@ -1391,8 +1504,9 @@ const filterHtml = computed(() => `
       ${renderGradeFilters()}
     </div>
   </div>
-  <button id="toggle-filters" class="filter-toggle" type="button">${state.filtersOpen ? "收起筛选" : "展开筛选"}</button>
-  <button id="reset-filters" class="reset-button" type="button">重置筛选</button>
+  <div class="filter-actions">
+    <button id="reset-filters" class="reset-button" type="button">重置筛选</button>
+  </div>
 `);
 
 const catalogHtml = computed(() => {
@@ -1433,6 +1547,41 @@ function resetTagFilters() {
 
 function resetCatalogLimit() {
   state.visibleLimit = initialCatalogLimit;
+}
+
+function isSearchHistoryQueryValid(value: string) {
+  const query = cleanGameText(value).trim();
+  return Boolean(query) && fuzzyItems(query, 1).length > 0;
+}
+
+function normalizeSearchHistory(entries: unknown[]) {
+  const seen = new Set<string>();
+  return entries
+    .filter((entry): entry is string => typeof entry === "string")
+    .map(entry => cleanGameText(entry).trim())
+    .filter(entry => entry && !seen.has(entry) && isSearchHistoryQueryValid(entry) && seen.add(entry))
+    .slice(0, 8);
+}
+
+function commitSearchHistory(value = state.nameQuery) {
+  const query = cleanGameText(value).trim();
+  if (!isSearchHistoryQueryValid(query)) return;
+  state.searchHistory = normalizeSearchHistory([query, ...state.searchHistory]);
+  window.localStorage.setItem(searchHistoryStorageKey, JSON.stringify(state.searchHistory));
+}
+
+function loadSearchHistory() {
+  const raw = window.localStorage.getItem(searchHistoryStorageKey);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      state.searchHistory = normalizeSearchHistory(parsed);
+      window.localStorage.setItem(searchHistoryStorageKey, JSON.stringify(state.searchHistory));
+    }
+  } catch {
+    state.searchHistory = [];
+  }
 }
 
 function loadMoreCatalogItems() {
@@ -1479,7 +1628,10 @@ function clickedElement(event: Event, selector: string) {
 
 function setTextState(key: keyof State, value: string, input?: HTMLInputElement) {
   setStateValue(key, value);
-  if (key === "nameQuery" || key === "attrQuery") {
+  if (key === "assistantTarget" || key === "assistantMain" || key === "assistantMaterial") {
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
+  }
+  if (key === "nameQuery") {
     state.visibleLimit = initialCatalogLimit;
     if (value) resetTagFilters();
   }
@@ -1521,6 +1673,7 @@ function onClick(event: MouseEvent) {
 
   if (draggableItem) {
     event.stopPropagation();
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
     openItemByName(draggableItem.dataset.itemName || draggableItem.textContent || "");
     if (clickedInSimPanel && state.isDrawerLayout) state.simOpen = false;
     return;
@@ -1529,6 +1682,7 @@ function onClick(event: MouseEvent) {
   const itemLink = clickedElement(event, ".item-link");
   if (itemLink) {
     event.stopPropagation();
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
     openItemByName(itemLink.dataset.itemName || itemLink.textContent || "");
     if (clickedInSimPanel && state.isDrawerLayout) state.simOpen = false;
     return;
@@ -1536,7 +1690,9 @@ function onClick(event: MouseEvent) {
 
   const clearButton = clickedElement(event, "[data-clear]");
   if (clearButton) {
-    setStateValue(clearButton.dataset.clear as keyof State, "");
+    const key = clearButton.dataset.clear as keyof State;
+    setStateValue(key, "");
+    if (key === "nameQuery") resetCatalogLimit();
     rememberFocus();
     return;
   }
@@ -1565,23 +1721,53 @@ function onClick(event: MouseEvent) {
   const hotButton = clickedElement(event, "[data-hot-tag]");
   if (hotButton) {
     state.nameQuery = hotButton.dataset.hotTag || "";
+    commitSearchHistory(state.nameQuery);
     resetTagFilters();
     resetCatalogLimit();
     return;
   }
 
+  const historyButton = clickedElement(event, "[data-search-history]");
+  if (historyButton) {
+    state.nameQuery = historyButton.dataset.searchHistory || "";
+    commitSearchHistory(state.nameQuery);
+    resetTagFilters();
+    resetCatalogLimit();
+    return;
+  }
+
+  if (clickedElement(event, "#clear-search-history")) {
+    state.searchHistory = [];
+    window.localStorage.removeItem(searchHistoryStorageKey);
+    return;
+  }
+
   if (clickedElement(event, "#toggle-filters")) {
-    state.filtersOpen = !state.filtersOpen;
+    state.filtersOpen = state.isMobileLayout ? true : !state.filtersOpen;
+    return;
+  }
+
+  if (clickedElement(event, "[data-open-filters]")) {
+    state.filtersOpen = true;
     return;
   }
 
   if (clickedElement(event, "#reset-filters")) {
     state.nameQuery = "";
-    state.attrQuery = "";
     state.refiningAttribute = "";
     state.equipmentSlot = "";
     state.grade = "";
     resetCatalogLimit();
+    return;
+  }
+
+  if (clickedElement(event, "#close-filter-sheet, #apply-filter-sheet")) {
+    state.filtersOpen = false;
+    return;
+  }
+
+  if (event.target instanceof HTMLElement && event.target.classList.contains("filter-sheet-shell")) {
+    state.filtersOpen = false;
     return;
   }
 
@@ -1610,6 +1796,7 @@ function onClick(event: MouseEvent) {
   }
 
   if (clickedElement(event, "#sim-anchor")) {
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
     state.simOpen = !state.simOpen;
     return;
   }
@@ -1635,6 +1822,7 @@ function onClick(event: MouseEvent) {
 
   const pickSlot = clickedElement(event, "[data-pick-slot]");
   if (pickSlot) {
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
     const item = itemById.get(state.mobilePickItemId);
     if (item) setStateValue(pickSlot.dataset.pickSlot as keyof State, itemName(item));
     state.mobilePickItemId = "";
@@ -1686,6 +1874,7 @@ function onClick(event: MouseEvent) {
 
   const card = clickedElement(event, ".equipment-card");
   if (card) {
+    ensureRouteData().catch(error => console.error("Failed to load route data", error));
     const itemId = card.dataset.itemId || "";
     if (longPressedItemId === itemId) {
       longPressedItemId = "";
@@ -1697,6 +1886,10 @@ function onClick(event: MouseEvent) {
 
 function onKeydown(event: KeyboardEvent) {
   if (event.key !== "Enter") return;
+  if (event.target instanceof HTMLInputElement && event.target.dataset.stateKey === "nameQuery") {
+    commitSearchHistory(event.target.value);
+    return;
+  }
   const card = clickedElement(event, ".equipment-card");
   if (card) state.selectedItemId = card.dataset.itemId || "";
 }
@@ -1803,6 +1996,12 @@ function onFocusIn(event: FocusEvent) {
   positionTokenPopover(event.target);
 }
 
+function onFocusOut(event: FocusEvent) {
+  if (event.target instanceof HTMLInputElement && event.target.dataset.stateKey === "nameQuery") {
+    commitSearchHistory(event.target.value);
+  }
+}
+
 function onScrollCapture() {
   if (!activeToken?.isConnected || !activeToken.matches(":hover, :focus, :focus-within")) return;
   positionTokenPopover(activeToken);
@@ -1831,7 +2030,9 @@ function updateShowToTop() {
 }
 
 function updateDrawerLayout() {
+  state.isMobileLayout = window.innerWidth <= 680;
   state.isDrawerLayout = window.innerWidth <= 760;
+  if (!state.isMobileLayout) state.filtersOpen = false;
 }
 
 function catalogImageSource(image: HTMLImageElement) {
@@ -1909,9 +2110,11 @@ function setPageScrollLock(locked: boolean) {
 onMounted(() => {
   const savedTheme = window.localStorage.getItem(themeStorageKey);
   setTheme(savedTheme === "mono" ? "mono" : "classic");
-  loadCatalogData().catch(error => {
-    console.error("Failed to load catalog data", error);
-  });
+  loadCatalogData()
+    .then(loadSearchHistory)
+    .catch(error => {
+      console.error("Failed to load catalog data", error);
+    });
   updateDrawerLayout();
   updateShowToTop();
   window.addEventListener("resize", updateDrawerLayout);
@@ -1920,6 +2123,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   setPageScrollLock(false);
+  window.clearTimeout(routeDataTimer);
   lazyImageObserver?.disconnect();
   catalogMoreObserver?.disconnect();
   window.removeEventListener("resize", updateDrawerLayout);
