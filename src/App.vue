@@ -39,7 +39,6 @@
       </div>
       <div class="topbar-search" v-html="topbarSearchHtml"></div>
       <nav class="topbar-nav" aria-label="顶部功能">
-        <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
         <a
           class="nav-pill nav-pill-secondary"
           href="https://war3rpg.677233.xyz/"
@@ -48,6 +47,7 @@
         >
           旧版入口
         </a>
+        <button class="nav-pill" id="quiz-open" type="button">帝都答题</button>
       </nav>
     </header>
     <main>
@@ -166,7 +166,7 @@ const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
 const currentYear = new Date().getFullYear();
-const initialCatalogLimit = 24;
+const initialCatalogLimit = 12;
 const catalogLimitStep = 48;
 const lazyImagePlaceholder = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
 const itemTypeToClass: Record<string, string> = {
@@ -238,6 +238,8 @@ let lazyImageObserver: IntersectionObserver | undefined;
 let catalogMoreObserver: IntersectionObserver | undefined;
 let routeDataPromise: Promise<void> | undefined;
 let routeDataTimer = 0;
+let tokenPopoverFrame = 0;
+let pendingTokenTarget: EventTarget | Element | null = null;
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, char => ({
     "&": "&amp;",
@@ -352,8 +354,9 @@ function iconUrl(item: Equipment) {
 
 function thumbnailUrl(item: Equipment) {
   const source = item.icon?.realesrganX4 || item.icon?.png128 || item.icon?.png;
-  const thumb = source?.replace("icons/jpg-128/", "icons/jpg-64/");
-  return assetUrl(thumb || source);
+  const normalizedSource = source?.replaceAll("\\", "/");
+  const thumb = normalizedSource?.replace("icons/jpg-128/", "icons/jpg-64/");
+  return assetUrl(thumb || normalizedSource);
 }
 
 function renderLazyImage(className: string, classicSrc: string, alt: string, monoSrc = classicSrc) {
@@ -1342,7 +1345,7 @@ function renderInputPairRoutes() {
 }
 
 function renderSimulationPanel() {
-  const materialLabel = state.assistantMain && state.assistantMaterial
+  const materialLabel = state.assistantMain || state.assistantMaterial
     ? `材料 <button class="swap-button" id="swap-assistant-items" type="button" aria-label="互换主装备与材料">${renderIcon("swap_vert")}</button>`
     : "材料";
   const canClear = state.assistantTarget || state.assistantMain || state.assistantMaterial;
@@ -1920,6 +1923,11 @@ function onDragStart(event: DragEvent) {
   if (event.dataTransfer) event.dataTransfer.effectAllowed = "copy";
   event.dataTransfer?.setData("text/plain", itemSource.dataset.itemName || "");
   event.dataTransfer?.setData("application/x-war3-item", itemSource.dataset.itemName || "");
+  if (itemSource.closest(".detail-panel") && !state.isMobileLayout) {
+    window.requestAnimationFrame(() => {
+      state.selectedItemId = "";
+    });
+  }
 }
 
 function onContextMenu(event: MouseEvent) {
@@ -1957,7 +1965,10 @@ function positionTokenPopover(target: EventTarget | Element | null) {
   const element = target instanceof Element ? target : undefined;
   const token = element?.closest<HTMLElement>(".sim-panel .route-token");
   const popover = token?.querySelector<HTMLElement>(".token-popover");
-  if (!token || !popover) return;
+  if (!token || !popover) {
+    activeToken = undefined;
+    return;
+  }
 
   const margin = 14;
   const gap = 8;
@@ -1988,12 +1999,24 @@ function positionTokenPopover(target: EventTarget | Element | null) {
   activeToken = token;
 }
 
+function scheduleTokenPopover(target: EventTarget | Element | null, force = false) {
+  const element = target instanceof Element ? target : undefined;
+  const token = element?.closest<HTMLElement>(".sim-panel .route-token");
+  if (!force && token && token === activeToken) return;
+  pendingTokenTarget = token || target;
+  if (tokenPopoverFrame) return;
+  tokenPopoverFrame = window.requestAnimationFrame(() => {
+    tokenPopoverFrame = 0;
+    positionTokenPopover(pendingTokenTarget);
+  });
+}
+
 function onPointerOver(event: PointerEvent) {
-  positionTokenPopover(event.target);
+  scheduleTokenPopover(event.target);
 }
 
 function onFocusIn(event: FocusEvent) {
-  positionTokenPopover(event.target);
+  scheduleTokenPopover(event.target, true);
 }
 
 function onFocusOut(event: FocusEvent) {
@@ -2004,7 +2027,7 @@ function onFocusOut(event: FocusEvent) {
 
 function onScrollCapture() {
   if (!activeToken?.isConnected || !activeToken.matches(":hover, :focus, :focus-within")) return;
-  positionTokenPopover(activeToken);
+  scheduleTokenPopover(activeToken, true);
 }
 
 let swipeStartX = 0;
@@ -2124,6 +2147,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   setPageScrollLock(false);
   window.clearTimeout(routeDataTimer);
+  window.cancelAnimationFrame(tokenPopoverFrame);
   lazyImageObserver?.disconnect();
   catalogMoreObserver?.disconnect();
   window.removeEventListener("resize", updateDrawerLayout);
