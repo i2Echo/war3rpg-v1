@@ -165,6 +165,7 @@ const hotTags = ["梵天纹章", "天皇祭冠", "古代神铠", "奥姆幽刃",
 const quizTabs = Object.keys(quizAnswers) as Array<keyof typeof quizAnswers>;
 const refiningAttributes = ["全能", "力量", "敏捷", "智力"] as const;
 const equipmentSlots = ["衣服", "鞋子", "武器", "饰品"] as const;
+const deprecatedItemIds = new Set(["I04M", "I04U"]);
 const currentYear = new Date().getFullYear();
 const initialCatalogLimit = 12;
 const catalogLimitStep = 48;
@@ -399,6 +400,10 @@ function itemCategoryLabel(item: Equipment) {
   return displayRefiningLabel(item.refining?.label || item.kind || "未分类");
 }
 
+function itemStatusLabel(item: Equipment) {
+  return deprecatedItemIds.has(item.id) ? " · 已废弃" : "";
+}
+
 function levelValueForItem(item: Equipment) {
   return item.refining?.itemLevel || Number(Object.entries(levelToGrade).find(([, grade]) => grade === baseGrade(item.level))?.[0] || 0);
 }
@@ -434,6 +439,10 @@ function renderGearTag(item: Equipment, label = itemName(item)) {
 }
 
 type ProbabilityBranch = NonNullable<RefiningRule["probabilityBranches"]>[number];
+
+const overlapRuleId = "dynamic-refining-15";
+const canghuanJieyiId = "I00S";
+const chihuangTianyiId = "I00R";
 type BranchContext = NonNullable<ProbabilityBranch["context"]>;
 type DynamicSourceMatch = {
   rule: RefiningRule;
@@ -804,32 +813,74 @@ function renderGroupToken(label: string, group: RefiningGroup | undefined, level
   `;
 }
 
-function renderDynamicFormula(rule: RefiningRule, branch: ProbabilityBranch, targetName: string, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
+function isCanghuanChihuangOverlapBranch(rule: RefiningRule, branch: ProbabilityBranch) {
+  return rule.id === overlapRuleId
+    && branch.context?.levelDifference?.code === "same-level"
+    && branch.context?.mainItemLevel?.value === 8;
+}
+
+function exactMainItemForOverlapTarget(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment) {
+  if (!isCanghuanChihuangOverlapBranch(rule, branch)) return undefined;
+  if (target.id !== canghuanJieyiId) return undefined;
+  return itemById.get(chihuangTianyiId);
+}
+
+function excludedMainItemsForOverlapTarget(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment) {
+  if (!isCanghuanChihuangOverlapBranch(rule, branch)) return new Set<string>();
+  if (target.id !== chihuangTianyiId) return new Set<string>();
+  return new Set<string>([chihuangTianyiId]);
+}
+
+function mainTokenLabel(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, mainLevels: number[]) {
+  const exactMainItem = exactMainItemForOverlapTarget(rule, branch, target);
+  if (exactMainItem) return itemName(exactMainItem);
+  const baseLabel = `${gradeTextFromLevels(mainLevels)}${groupShortLabel(rule.readable?.main, "main")}`;
+  return excludedMainItemsForOverlapTarget(rule, branch, target).size ? `${baseLabel}（不含炽凰天衣）` : baseLabel;
+}
+
+function renderDynamicFormula(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
   const mainLevel = branch.context?.mainItemLevel?.value || mainLevelOverride || 0;
   const diffCode = branch.context?.levelDifference?.code;
   const mainLevels = mainLevel ? [mainLevel] : [];
   const materialLevelList = materialLevels(mainLevel, diffCode);
   const materialGroup = materialGroupOverride || rule.readable?.material;
-  const mainToken = `${gradeTextFromLevels(mainLevels)}${groupShortLabel(rule.readable?.main, "main")}`;
+  const exactMainItem = exactMainItemForOverlapTarget(rule, branch, target);
+  const excludedMainItemIds = excludedMainItemsForOverlapTarget(rule, branch, target);
+  const mainToken = mainTokenLabel(rule, branch, target, mainLevels);
   const materialToken = `${gradeTextFromLevels(materialLevelList)}${groupShortLabel(materialGroup, "material")}`;
-  const blockedItemIds = new Set((rule.requiredItems || []).map(item => item.id));
+  const blockedItemIds = new Set([...((rule.requiredItems || []).map(item => item.id)), ...excludedMainItemIds]);
   return `
     <span class="formula-line">
-      ${renderFormulaItem(targetName)}
+      ${renderFormulaItem(itemName(target))}
       <span class="formula-eq">=</span>
-      ${renderGroupToken(mainToken, rule.readable?.main, mainLevels, blockedItemIds)}
+      ${exactMainItem ? renderFormulaItem(itemName(exactMainItem)) : renderGroupToken(mainToken, rule.readable?.main, mainLevels, blockedItemIds)}
       <span class="formula-plus">+</span>
       ${renderGroupToken(materialToken, materialGroup, materialLevelList, blockedItemIds)}
     </span>
   `;
 }
 
-function dynamicFormulaText(rule: RefiningRule, branch: ProbabilityBranch, targetName: string, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
+function dynamicFormulaText(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
   const mainLevel = branch.context?.mainItemLevel?.value || mainLevelOverride || 0;
   const diffCode = branch.context?.levelDifference?.code;
-  const mainToken = `${gradeTextFromLevels(mainLevel ? [mainLevel] : [])}${groupShortLabel(rule.readable?.main, "main")}`;
+  const mainToken = mainTokenLabel(rule, branch, target, mainLevel ? [mainLevel] : []);
   const materialToken = `${gradeTextFromLevels(materialLevels(mainLevel, diffCode))}${groupShortLabel(materialGroupOverride || rule.readable?.material, "material")}`;
-  return `${targetName} = ${mainToken} + ${materialToken}${chance != null ? ` ${Number.isInteger(chance) ? chance : chance.toFixed(2)}%` : ""}`;
+  return `${itemName(target)} = ${mainToken} + ${materialToken}${chance != null ? ` ${Number.isInteger(chance) ? chance : chance.toFixed(2)}%` : ""}`;
+}
+
+function isEligibleOverlapSimulationOutput(rule: RefiningRule, branch: ProbabilityBranch, output: Output, main: Equipment) {
+  if (!isCanghuanChihuangOverlapBranch(rule, branch) || output.kind !== "fixed") return true;
+  if (output.id !== canghuanJieyiId && output.id !== chihuangTianyiId) return true;
+  return main.id === chihuangTianyiId ? output.id === canghuanJieyiId : output.id === chihuangTianyiId;
+}
+
+function dynamicRuleBlockedItemIds(rule: RefiningRule) {
+  return new Set((rule.requiredItems || []).map(item => item.id));
+}
+
+function isAllowedDynamicSelection(rule: RefiningRule, main: Equipment, material: Equipment) {
+  const blockedItemIds = dynamicRuleBlockedItemIds(rule);
+  return !blockedItemIds.has(main.id) && !blockedItemIds.has(material.id);
 }
 
 function recipeSources(item: Equipment) {
@@ -983,8 +1034,8 @@ function dynamicRefiningSources(item: Equipment) {
       kind: "dynamic",
       title: "动态炼化",
       probability: match.probability,
-      plain: dynamicFormulaText(match.rule, match.branch, itemName(item), match.probability, match.mainLevel, match.materialGroup),
-      html: renderDynamicFormula(match.rule, match.branch, itemName(item), match.probability, match.mainLevel, match.materialGroup),
+      plain: dynamicFormulaText(match.rule, match.branch, item, match.probability, match.mainLevel, match.materialGroup),
+      html: renderDynamicFormula(match.rule, match.branch, item, match.probability, match.mainLevel, match.materialGroup),
     }))
     .sort((a, b) => (b.probability || 0) - (a.probability || 0));
 }
@@ -1204,7 +1255,7 @@ function renderCard(item: Equipment) {
         <span class="grade-badge ${gradeClass(item.level)}">${escapeHtml(itemDisplayGrade(item))}</span>
       </div>
       <div class="card-body">
-        <span class="category">装备 · ${escapeHtml(itemCategoryLabel(item))}</span>
+        <span class="category">装备 · ${escapeHtml(itemCategoryLabel(item))}${escapeHtml(itemStatusLabel(item))}</span>
         <div class="card-title-row">
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))}</h2>
           <span class="card-grade-text">${escapeHtml(itemDisplayGrade(item))}</span>
@@ -1318,12 +1369,14 @@ function renderInputPairRoutes() {
     ? refiningRules
       .filter(rule => rule.type === "dynamic-refining")
       .filter(rule => (rule.mainHpValues || []).includes(Number(main.refining?.hp)) && (rule.materialHpValues || []).includes(Number(material.refining?.hp)))
+      .filter(rule => isAllowedDynamicSelection(rule, main, material))
       .flatMap(rule => (rule.probabilityBranches || [])
         .filter(branch => branchMatchesItems(branch, main, material))
         .flatMap(branch => branch.outcomes
           .map(outcome => ({
             ...outcome,
-            outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context, levelValueForItem(main))),
+            outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context, levelValueForItem(main)))
+              .filter(output => isEligibleOverlapSimulationOutput(rule, branch, output, main)),
           }))
           .filter(outcome => outcome.outputs.length)
           .map(outcome => ({ rule, branch, outcome }))))
@@ -1412,7 +1465,7 @@ function renderDetail(item: Equipment, opening: boolean) {
       <div class="detail-head">
         <img class="detail-icon" src="${escapeHtml(iconUrl(item))}" alt="${escapeHtml(itemName(item))}" />
         <div>
-          <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(displayRefiningLabel(item.refining?.label || "未分类"))}</span>
+          <span class="category">${escapeHtml(item.kind || "装备")} · ${escapeHtml(displayRefiningLabel(item.refining?.label || "未分类"))}${escapeHtml(itemStatusLabel(item))}</span>
           <h2 class="${gradeClass(item.level)}">${escapeHtml(itemName(item))} · <span style="font-weight: normal;font-size: 24px;">${escapeHtml(itemDisplayGrade(item))}</span></h2>
         </div>
         <button class="icon-button" id="close-detail" type="button" aria-label="关闭详情">${renderIcon("close")}</button>
