@@ -440,9 +440,12 @@ function renderGearTag(item: Equipment, label = itemName(item)) {
 
 type ProbabilityBranch = NonNullable<RefiningRule["probabilityBranches"]>[number];
 
-const overlapRuleId = "dynamic-refining-15";
+const canghuanChihuangOverlapRuleId = "dynamic-refining-15";
+const yinheCanghuanOverlapRuleId = "dynamic-refining-5";
 const canghuanJieyiId = "I00S";
 const chihuangTianyiId = "I00R";
+const yinheHuanxingxieId = "I01C";
+const jiaohuangJinpaoId = "I00O";
 type BranchContext = NonNullable<ProbabilityBranch["context"]>;
 type DynamicSourceMatch = {
   rule: RefiningRule;
@@ -814,7 +817,13 @@ function renderGroupToken(label: string, group: RefiningGroup | undefined, level
 }
 
 function isCanghuanChihuangOverlapBranch(rule: RefiningRule, branch: ProbabilityBranch) {
-  return rule.id === overlapRuleId
+  return rule.id === canghuanChihuangOverlapRuleId
+    && branch.context?.levelDifference?.code === "same-level"
+    && branch.context?.mainItemLevel?.value === 8;
+}
+
+function isYinheCanghuanOverlapBranch(rule: RefiningRule, branch: ProbabilityBranch) {
+  return rule.id === yinheCanghuanOverlapRuleId
     && branch.context?.levelDifference?.code === "same-level"
     && branch.context?.mainItemLevel?.value === 8;
 }
@@ -831,11 +840,30 @@ function excludedMainItemsForOverlapTarget(rule: RefiningRule, branch: Probabili
   return new Set<string>([chihuangTianyiId]);
 }
 
+function exactMaterialItemForOverlapTarget(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment) {
+  if (!isYinheCanghuanOverlapBranch(rule, branch)) return undefined;
+  if (target.id !== yinheHuanxingxieId) return undefined;
+  return itemById.get(jiaohuangJinpaoId);
+}
+
+function excludedMaterialItemsForOverlapTarget(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment) {
+  if (!isYinheCanghuanOverlapBranch(rule, branch)) return new Set<string>();
+  if (target.id !== canghuanJieyiId) return new Set<string>();
+  return new Set<string>([jiaohuangJinpaoId]);
+}
+
 function mainTokenLabel(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, mainLevels: number[]) {
   const exactMainItem = exactMainItemForOverlapTarget(rule, branch, target);
   if (exactMainItem) return itemName(exactMainItem);
   const baseLabel = `${gradeTextFromLevels(mainLevels)}${groupShortLabel(rule.readable?.main, "main")}`;
   return excludedMainItemsForOverlapTarget(rule, branch, target).size ? `${baseLabel}（不含炽凰天衣）` : baseLabel;
+}
+
+function materialTokenLabel(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, materialLevels: number[], materialGroup: RefiningGroup | undefined) {
+  const exactMaterialItem = exactMaterialItemForOverlapTarget(rule, branch, target);
+  if (exactMaterialItem) return itemName(exactMaterialItem);
+  const baseLabel = `${gradeTextFromLevels(materialLevels)}${groupShortLabel(materialGroup, "material")}`;
+  return excludedMaterialItemsForOverlapTarget(rule, branch, target).size ? `${baseLabel}（不含教皇禁袍）` : baseLabel;
 }
 
 function renderDynamicFormula(rule: RefiningRule, branch: ProbabilityBranch, target: Equipment, chance?: number, mainLevelOverride?: number, materialGroupOverride?: RefiningGroup) {
@@ -846,16 +874,22 @@ function renderDynamicFormula(rule: RefiningRule, branch: ProbabilityBranch, tar
   const materialGroup = materialGroupOverride || rule.readable?.material;
   const exactMainItem = exactMainItemForOverlapTarget(rule, branch, target);
   const excludedMainItemIds = excludedMainItemsForOverlapTarget(rule, branch, target);
+  const exactMaterialItem = exactMaterialItemForOverlapTarget(rule, branch, target);
+  const excludedMaterialItemIds = excludedMaterialItemsForOverlapTarget(rule, branch, target);
   const mainToken = mainTokenLabel(rule, branch, target, mainLevels);
-  const materialToken = `${gradeTextFromLevels(materialLevelList)}${groupShortLabel(materialGroup, "material")}`;
-  const blockedItemIds = new Set([...((rule.requiredItems || []).map(item => item.id)), ...excludedMainItemIds]);
+  const materialToken = materialTokenLabel(rule, branch, target, materialLevelList, materialGroup);
+  const blockedItemIds = new Set([
+    ...((rule.requiredItems || []).map(item => item.id)),
+    ...excludedMainItemIds,
+    ...excludedMaterialItemIds,
+  ]);
   return `
     <span class="formula-line">
       ${renderFormulaItem(itemName(target))}
       <span class="formula-eq">=</span>
       ${exactMainItem ? renderFormulaItem(itemName(exactMainItem)) : renderGroupToken(mainToken, rule.readable?.main, mainLevels, blockedItemIds)}
       <span class="formula-plus">+</span>
-      ${renderGroupToken(materialToken, materialGroup, materialLevelList, blockedItemIds)}
+      ${exactMaterialItem ? renderFormulaItem(itemName(exactMaterialItem)) : renderGroupToken(materialToken, materialGroup, materialLevelList, blockedItemIds)}
     </span>
   `;
 }
@@ -864,14 +898,25 @@ function dynamicFormulaText(rule: RefiningRule, branch: ProbabilityBranch, targe
   const mainLevel = branch.context?.mainItemLevel?.value || mainLevelOverride || 0;
   const diffCode = branch.context?.levelDifference?.code;
   const mainToken = mainTokenLabel(rule, branch, target, mainLevel ? [mainLevel] : []);
-  const materialToken = `${gradeTextFromLevels(materialLevels(mainLevel, diffCode))}${groupShortLabel(materialGroupOverride || rule.readable?.material, "material")}`;
+  const materialToken = materialTokenLabel(
+    rule,
+    branch,
+    target,
+    materialLevels(mainLevel, diffCode),
+    materialGroupOverride || rule.readable?.material,
+  );
   return `${itemName(target)} = ${mainToken} + ${materialToken}${chance != null ? ` ${Number.isInteger(chance) ? chance : chance.toFixed(2)}%` : ""}`;
 }
 
-function isEligibleOverlapSimulationOutput(rule: RefiningRule, branch: ProbabilityBranch, output: Output, main: Equipment) {
-  if (!isCanghuanChihuangOverlapBranch(rule, branch) || output.kind !== "fixed") return true;
-  if (output.id !== canghuanJieyiId && output.id !== chihuangTianyiId) return true;
-  return main.id === chihuangTianyiId ? output.id === canghuanJieyiId : output.id === chihuangTianyiId;
+function isEligibleOverlapSimulationOutput(rule: RefiningRule, branch: ProbabilityBranch, output: Output, main: Equipment, material: Equipment) {
+  if (output.kind !== "fixed") return true;
+  if (isCanghuanChihuangOverlapBranch(rule, branch) && (output.id === canghuanJieyiId || output.id === chihuangTianyiId)) {
+    return main.id === chihuangTianyiId ? output.id === canghuanJieyiId : output.id === chihuangTianyiId;
+  }
+  if (isYinheCanghuanOverlapBranch(rule, branch) && (output.id === yinheHuanxingxieId || output.id === canghuanJieyiId)) {
+    return material.id === jiaohuangJinpaoId ? output.id === yinheHuanxingxieId : output.id === canghuanJieyiId;
+  }
+  return true;
 }
 
 function dynamicRuleBlockedItemIds(rule: RefiningRule) {
@@ -1376,7 +1421,7 @@ function renderInputPairRoutes() {
           .map(outcome => ({
             ...outcome,
             outputs: outcome.outputs.filter(output => dynamicOutputEligible(output, branch.context, levelValueForItem(main)))
-              .filter(output => isEligibleOverlapSimulationOutput(rule, branch, output, main)),
+              .filter(output => isEligibleOverlapSimulationOutput(rule, branch, output, main, material)),
           }))
           .filter(outcome => outcome.outputs.length)
           .map(outcome => ({ rule, branch, outcome }))))
